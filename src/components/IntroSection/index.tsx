@@ -69,7 +69,7 @@ const IntroSection: FC<IntroSectionProps> = ({ introData }) => {
 
   return (
     <section className="relative w-full bg-neutral-900">
-      {/* Logo positioned at top center */}
+    
       <div className="absolute inset-x-0 top-0 flex justify-center py-4 z-20">
         <Image
           src="/images/logo/logo-elita.png"
@@ -90,14 +90,14 @@ const IntroSection: FC<IntroSectionProps> = ({ introData }) => {
         {introData.map((item, idx) => {
           const isHovered = hoveredIdx === idx;
 
-          // Desktop width calculations
+     
           const desktopWidth = isHovered
             ? "600px"
             : hoveredIdx !== null
             ? `calc((100% - 600px) / ${introData.length - 1})`
             : `${100 / introData.length}%`;
 
-          // Mobile height calculations
+
           const mobileHeight = isHovered ? "400px" : "280px";
 
           return (
