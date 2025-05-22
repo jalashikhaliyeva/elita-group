@@ -1,9 +1,9 @@
 import React from "react";
+import Container from "../../layout/Container";
 
 function Hero() {
   return (
-    <div className="relative w-full h-[600px] flex items-center justify-start overflow-hidden">
-      {/* Video element with loop and muted attributes for autoplay */}
+    <div className="relative w-full h-[300px] md:h-[620px] flex items-center justify-start overflow-hidden">
       <video
         autoPlay
         loop
@@ -16,22 +16,15 @@ function Hero() {
       </video>
 
       {/* Gradient overlay */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(0deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.25) 100%)",
-        }}
-      />
 
-      {/* Text content with proper contrast and spacing */}
-      <div className="relative z-10 px-8 md:px-16 lg:px-24 max-w-3xl">
-        <h1 className="text-5xl md:text-[96px] font-archivo font-normal text-white tracking-tight leading-tight">
-          Design
-        </h1>
-        {/* <p className="mt-4 text-xl text-white opacity-90 max-w-lg">
-          Creating meaningful experiences through thoughtful design principles
-        </p> */}
+      <div className="flex flex-col md:flex-row md:justify-between md:items-start">
+        <Container>
+        
+
+          <p className="text-5xl md:text-[96px] text-white font-archivo opacity-90 ">
+            Dizayn
+          </p>
+        </Container>
       </div>
     </div>
   );
