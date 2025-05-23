@@ -9,7 +9,7 @@ import Footer from "@/src/components/layout/Footer";
 
 function Design() {
   return (
-    <div>
+    <>
       <Container>
         <Header activeItem="dizayn" />
       </Container>
@@ -24,7 +24,7 @@ function Design() {
          <Footer />
       </Container>
      
-    </div>
+    </>
   );
 }
 
