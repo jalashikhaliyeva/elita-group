@@ -2,6 +2,7 @@ import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { RxDotFilled } from "react-icons/rx";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 function Header({ activeItem = "dizayn" }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -79,7 +80,7 @@ function Header({ activeItem = "dizayn" }) {
 
           <div className="flex items-center">
             <span className="text-textBase text-lg cursor-pointer transition-colors duration-300 hover:text-amber-700">
-              AZE
+              <LanguageSwitcher />    
             </span>
           </div>
 
@@ -142,7 +143,7 @@ function Header({ activeItem = "dizayn" }) {
         <div className="flex gap-4">
           <div className="flex ">
             <span className="text-textBase text-xl cursor-pointer transition-colors duration-300 hover:text-amber-700">
-              AZE
+            <LanguageSwitcher />
             </span>
           </div>
           <button
