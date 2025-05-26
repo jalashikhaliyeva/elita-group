@@ -77,13 +77,13 @@ const IntroSection: FC<IntroSectionProps> = ({ introData }) => {
         router.push("/dizayn");
         break;
       case 1:
-        router.push("/temir");
+        router.push("/dizayn");
         break;
       case 2:
-        router.push("/mebel");
+        router.push("/dizayn");
         break;
       case 3:
-        router.push("/hamam");
+        router.push("/dizayn");
         break;
       default:
         break;

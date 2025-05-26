@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { RxDotFilled } from "react-icons/rx";
 import LanguageSwitcher from "./LanguageSwitcher";
+import Link from "next/link";
 
 function Header({ activeItem = "dizayn" }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,9 +20,9 @@ function Header({ activeItem = "dizayn" }) {
   ];
 
   const dropdownItems = [
-    { id: "about", label: "About" },
-    { id: "contact", label: "Contact" },
-    { id: "faq", label: "FAQ" },
+    { id: "about", label: "About", href: "/haqqimizda" },
+    { id: "contact", label: "Contact", href: "/haqqimizda" },
+    { id: "faq", label: "FAQ", href: "/haqqimizda" },
   ];
 
   useEffect(() => {
@@ -111,19 +112,19 @@ function Header({ activeItem = "dizayn" }) {
               onMouseLeave={() => setIsMenuOpen(false)}
             >
               {dropdownItems.map((item) => (
-                <a
-                  key={item.id}
-                  href="#"
-                  className="block px-4 py-2 text-textBase text-lg hover:bg-amber-50 hover:text-amber-700 transition-colors duration-200"
-                >
-                  {item.label}
-                </a>
+                <Link key={item.id} href={item.href} passHref>
+                  <p
+                    className="block px-4 py-2 text-textBase text-lg hover:bg-amber-50 hover:text-amber-700 transition-colors duration-200"
+                    onClick={() => setIsMenuOpen(false)} // close menu on click
+                  >
+                    {item.label}
+                  </p>
+                </Link>
               ))}
             </div>
           </div>
         </div>
       </div>
-
       <div className="flex md:hidden justify-between items-center w-full py-3 px-4">
         <div>
           <Image
@@ -197,13 +198,14 @@ function Header({ activeItem = "dizayn" }) {
           <div className="border-t border-gray-200 w-4/5 pt-6 mt-6">
             <div className="flex flex-col items-center gap-6">
               {dropdownItems.map((item) => (
-                <a
-                  key={item.id}
-                  href="#"
-                  className="text-textBase text-xl hover:text-amber-700 transition-colors duration-200"
-                >
-                  {item.label}
-                </a>
+                <Link key={item.id} href={item.href} passHref>
+                  <p
+                    className="text-textBase text-xl hover:text-amber-700 transition-colors duration-200"
+                    onClick={() => setIsMobileMenuOpen(false)} // close mobile menu
+                  >
+                    {item.label}
+                  </p>
+                </Link>
               ))}
             </div>
           </div>
