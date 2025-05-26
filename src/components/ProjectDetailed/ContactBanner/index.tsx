@@ -1,20 +1,23 @@
+import Image from "next/image";
 import React from "react";
 
 function ContactBanner() {
   return (
     <div className="bg-elements px-8 py-12 relative">
-      {/* Lamp positioned at top-left */}
+  
       <div className="absolute top-0 left-8 hidden md:block">
-        <img
+        <Image
+        width={250}
+        height={190}
           src="/images/icons/lamp.png"
           alt="Lamp"
           className="w-[250px] h-[190px] object-contain"
         />
       </div>
 
-      {/* Main content container */}
+
       <div className="flex flex-col md:flex-row items-center justify-between pt-8">
-        {/* Left side with contact info */}
+
         <div className="text-white md:ml-10 pb-5 font-archivo">
           <h2 className="text-4xl font-light mb-6">Bizimlə əlaqə</h2>
           <div className="space-y-2">

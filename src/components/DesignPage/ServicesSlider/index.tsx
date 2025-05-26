@@ -1,10 +1,10 @@
 import Image from "next/image";
-import { useRouter } from "next/router";  // ①
+import { useRouter } from "next/router"; 
 import React from "react";
 
 type Service = {
   name: string;
-  slug: string;    // slug for the URL
+  slug: string;   
   img: string;
 };
 
@@ -27,14 +27,14 @@ const services: Service[] = [
 ];
 
 function ServicesSlider() {
-  const router = useRouter();            // ②
+  const router = useRouter();           
 
   return (
     <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-11 pb-7 md:pb-14">
       {services.map(({ name, slug, img }) => (
         <div
           key={slug}
-          onClick={() => router.push(`/dizayn/${slug}`)}   // ③
+          onClick={() => router.push(`/dizayn/${slug}`)} 
           className="group relative flex cursor-pointer flex-col gap-6 p-5 transition-all duration-700 hover:bg-elementSecondaryBg overflow-hidden"
         >
           <div className="relative overflow-hidden h-[200px] md:h-[500px]">

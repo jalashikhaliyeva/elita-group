@@ -21,9 +21,8 @@ function Design() {
       <Container>
         <ServicesSection />
         <ServicesSlider />
-         <Footer />
+        <Footer />
       </Container>
-     
     </>
   );
 }
