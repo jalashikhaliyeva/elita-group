@@ -24,7 +24,7 @@ function Breadcrumb() {
         </svg>
       </div>
 
-      <p className="font-manrope text-base font-normal leading-6 text-elementSecondary">
+      <p className="font-manrope text-base font-normal leading-6 text-amber-700">
         Layihə
       </p>
     </div>
