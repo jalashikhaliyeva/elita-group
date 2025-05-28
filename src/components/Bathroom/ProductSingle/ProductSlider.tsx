@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import Image from "next/image";
+import React, { useState, useRef, useEffect } from "react";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 function ProductSlider() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -10,17 +11,21 @@ function ProductSlider() {
 
   // Sample product images - replace with your actual images
   const productImages = [
-    { id: 1, src: '/images/bath/item1.png' },
-    { id: 2, src: '/images/bath/item2.png' },
-    { id: 3, src: '/images/bath/item3.png' },
+    { id: 1, src: "/images/bath/item1.png" },
+    { id: 2, src: "/images/bath/item2.png" },
+    { id: 3, src: "/images/bath/item3.png" },
   ];
 
   const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev === 0 ? productImages.length - 1 : prev - 1));
+    setCurrentIndex((prev) =>
+      prev === 0 ? productImages.length - 1 : prev - 1
+    );
   };
 
   const goToNext = () => {
-    setCurrentIndex((prev) => (prev === productImages.length - 1 ? 0 : prev + 1));
+    setCurrentIndex((prev) =>
+      prev === productImages.length - 1 ? 0 : prev + 1
+    );
   };
 
   const goToImage = (index: number) => {
@@ -52,8 +57,11 @@ function ProductSlider() {
     if (thumbnailsRef.current) {
       const thumbWidth = 100; // Adjust based on your thumbnail width
       thumbnailsRef.current.scrollTo({
-        left: currentIndex * thumbWidth - thumbnailsRef.current.offsetWidth / 2 + thumbWidth / 2,
-        behavior: 'smooth',
+        left:
+          currentIndex * thumbWidth -
+          thumbnailsRef.current.offsetWidth / 2 +
+          thumbWidth / 2,
+        behavior: "smooth",
       });
     }
   }, [currentIndex]);
@@ -62,12 +70,14 @@ function ProductSlider() {
     <div className="product-slider">
       {/* Main Image with Navigation Arrows */}
       <div className="relative w-full h-[300px] md:h-[450px] bg-[#E9EDEA] rounded-lg overflow-hidden mb-4">
-        <img
+        <Image
+          width={400}
+          height={400}
           src={productImages[currentIndex].src}
           alt={`Product ${currentIndex + 1}`}
           className="w-full h-full object-contain"
         />
-        
+
         {/* Navigation Arrows */}
         <button
           onClick={goToPrevious}
@@ -96,10 +106,14 @@ function ProductSlider() {
             key={image.id}
             onClick={() => goToImage(index)}
             className={`flex-shrink-0 w-32 h-32 overflow-hidden border-2 transition-all snap-center ${
-              currentIndex === index ? 'border-neutral-200' : 'border-transparent'
+              currentIndex === index
+                ? "border-neutral-200"
+                : "border-transparent"
             }`}
           >
-            <img
+            <Image
+              width={500}
+              height={500}
               src={image.src}
               alt={`Thumbnail ${index + 1}`}
               className="w-full h-full object-cover"
