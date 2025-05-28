@@ -24,7 +24,7 @@ i18n
   .use(LanguageDetector)
   .init({
     resources,
-    supportedLngs: ["en", "az"],
+    supportedLngs: ["en", "az" , "ru"],
     fallbackLng: "az",
     detection: {
       order: ["localStorage", "cookie", "htmlTag", "path", "subdomain"],

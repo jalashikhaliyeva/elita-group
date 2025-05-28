@@ -172,7 +172,7 @@ const IntroSection: FC<IntroSectionProps> = ({ introData }) => {
               {/* Content layer */}
               <div className="relative z-10 flex flex-col justify-between h-full w-full">
                 <div className="flex justify-between items-center text-base md:text-xl text-lightSageGreen font-medium leading-7">
-                  <p>0{idx + 1}</p>
+                  <p className="font-archivo">0{idx + 1}</p>
                   <svg
                     width="100"
                     height="2"
@@ -188,7 +188,7 @@ const IntroSection: FC<IntroSectionProps> = ({ introData }) => {
                 <div className="flex flex-col mt-auto">
                   <h2
                     className={`
-                    text-2xl md:text-3xl font-semibold text-lightSageGreen leading-8 
+                    text-2xl md:text-3xl font-archivo  font-semibold text-lightSageGreen leading-8 
                     transform transition-all duration-1000 ease-in-out 
                     ${!isMobile && "group-hover:-translate-y-4"}
                   `}
@@ -206,11 +206,11 @@ const IntroSection: FC<IntroSectionProps> = ({ introData }) => {
                     }
                   `}
                   >
-                    <p className="text-lightSageGreen text-sm md:text-base leading-6 font-normal mb-4 md:mb-6">
+                    <p className="text-lightSageGreen font-manrope text-sm md:text-base leading-6 font-normal mb-4 md:mb-6">
                       {item.description}
                     </p>
                     <div 
-                      className="text-white leading-4 font-normal text-sm md:text-base flex flex-row items-center gap-2"
+                      className="text-white leading-4 font-archivo font-normal text-sm md:text-base flex flex-row items-center gap-2"
                       onClick={(e) => {
                         e.stopPropagation();
                         handleNavigate(idx);

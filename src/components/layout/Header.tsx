@@ -4,8 +4,10 @@ import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import { RxDotFilled } from "react-icons/rx";
 import LanguageSwitcher from "./LanguageSwitcher";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 function Header({ activeItem = "dizayn" }) {
+  const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -13,16 +15,16 @@ function Header({ activeItem = "dizayn" }) {
   const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   const menuItems = [
-    { id: "dizayn", label: "Dizayn" },
-    { id: "temir", label: "Təmir və tikinti" },
-    { id: "mebel", label: "Mebel" },
-    { id: "hamam", label: "Hamam aksessuarları" },
+    { id: "dizayn", label: t("design"), href: "/dizayn" },
+    { id: "temir", label: t("repair_construction"), href: "/temir" },
+    { id: "mebel", label: t("furniture"), href: "/mebel" },
+    { id: "hamam", label: t("bath_accessories"), href: "/hamam" },
   ];
 
   const dropdownItems = [
-    { id: "about", label: "About", href: "/haqqimizda" },
-    { id: "contact", label: "Contact", href: "/haqqimizda" },
-    { id: "faq", label: "FAQ", href: "/haqqimizda" },
+    { id: "about", label: t("about"), href: "/haqqimizda" },
+    { id: "contact", label: t("contact"), href: "/haqqimizda" },
+    { id: "blog", label: "Bloq", href: "/blog" },
   ];
 
   useEffect(() => {
@@ -51,31 +53,34 @@ function Header({ activeItem = "dizayn" }) {
 
   return (
     <div className="flex flex-col w-full font-archivo">
-      {/* Desktop Header */}
       <div className="hidden md:flex justify-between w-full py-3 px-4">
         <div>
-          <Image
-            src="/images/logo/logo-elita2.png"
-            width={90}
-            height={20}
-            quality={100}
-            alt="Elita Logo"
-          />
+          <Link href="/" passHref>
+            <Image
+              src="/images/logo/logo-elita2.png"
+              width={90}
+              height={20}
+              quality={100}
+              alt="Elita Logo"
+            />
+          </Link>
         </div>
 
         <div className="flex gap-4 lg:gap-8 font-archivo">
           {menuItems.map((item) => (
             <div key={item.id} className="flex items-center">
-              {activeItem === item.id ? (
-                <div className="flex items-center gap-1 underline decoration-[1px] underline-offset-8 decoration-amber-700">
-                  <RxDotFilled className="text-amber-700 text-2xl" />
-                  <span className="text-textBase text-lg">{item.label}</span>
-                </div>
-              ) : (
-                <span className="text-textBase text-lg transition-colors duration-300 cursor-pointer hover:text-amber-700">
-                  {item.label}
-                </span>
-              )}
+              <Link href={item.href} passHref>
+                {activeItem === item.id ? (
+                  <div className="flex items-center gap-1 underline decoration-[1px] underline-offset-8 decoration-amber-700 cursor-pointer">
+                    <RxDotFilled className="text-amber-700 text-2xl" />
+                    <span className="text-textBase text-lg">{item.label}</span>
+                  </div>
+                ) : (
+                  <span className="text-textBase text-lg transition-colors duration-300 cursor-pointer hover:text-amber-700">
+                    {item.label}
+                  </span>
+                )}
+              </Link>
             </div>
           ))}
 
@@ -182,16 +187,18 @@ function Header({ activeItem = "dizayn" }) {
         <div className="flex flex-col items-center gap-6 mt-10">
           {menuItems.map((item) => (
             <div key={item.id} className="flex items-center">
-              {activeItem === item.id ? (
-                <div className="flex items-center gap-1 underline decoration-[1px] underline-offset-8 decoration-amber-700">
-                  <RxDotFilled className="text-amber-700 text-2xl" />
-                  <span className="text-textBase text-xl">{item.label}</span>
-                </div>
-              ) : (
-                <span className="text-textBase text-xl transition-colors duration-300 cursor-pointer hover:text-amber-700">
-                  {item.label}
-                </span>
-              )}
+              <Link href={item.href} passHref>
+                {activeItem === item.id ? (
+                  <div className="flex items-center gap-1 underline decoration-[1px] underline-offset-8 decoration-amber-700 cursor-pointer">
+                    <RxDotFilled className="text-amber-700 text-2xl" />
+                    <span className="text-textBase text-xl">{item.label}</span>
+                  </div>
+                ) : (
+                  <span className="text-textBase text-xl transition-colors duration-300 cursor-pointer hover:text-amber-700">
+                    {item.label}
+                  </span>
+                )}
+              </Link>
             </div>
           ))}
 
@@ -201,7 +208,7 @@ function Header({ activeItem = "dizayn" }) {
                 <Link key={item.id} href={item.href} passHref>
                   <p
                     className="text-textBase text-xl hover:text-amber-700 transition-colors duration-200"
-                    onClick={() => setIsMobileMenuOpen(false)} // close mobile menu
+                    onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {item.label}
                   </p>

@@ -9,16 +9,16 @@ function Construction() {
   return (
     <>
       <Container>
-        <Header activeItem="temir" />
+        <Header activeItem="mebel" />
       </Container>
       <Hero />
 
       <Container>
         <AboutSection />
+      <Footer />
+
       </Container>
-      <Container>
-        <Footer />
-      </Container>
+
     </>
   );
 }

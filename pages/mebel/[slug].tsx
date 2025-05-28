@@ -1,4 +1,3 @@
-import ProductSingle from "@/src/components/Bathroom/ProductSingle";
 import Breadcrumb from "@/src/components/layout/Breadcrumb";
 import Container from "@/src/components/layout/Container";
 import Footer from "@/src/components/layout/Footer";
@@ -10,20 +9,23 @@ import ProjectImages from "@/src/components/ProjectDetailed/ProjectImages";
 import ProjectVideo from "@/src/components/ProjectDetailed/ProjectVideo";
 import React from "react";
 
-function BathroomDetailed() {
+function ProjectDetailed() {
   return (
     <>
       <Container>
-        <Header activeItem="dizayn" />
+        <Header activeItem="mebel" />
       </Container>
       <Container>
         <Breadcrumb />
       </Container>
+      <Hero />
       <Container>
-       <ProductSingle />
+        <ProjectDetails />
+        <ProjectVideo />
+        <ProjectImages />
       </Container>
 
-     
+      <ContactBanner />
       <Container>
         <Footer />
       </Container>
@@ -31,4 +33,4 @@ function BathroomDetailed() {
   );
 }
 
-export default BathroomDetailed;
+export default ProjectDetailed;
