@@ -1,13 +1,29 @@
 import Image from "next/image";
 import React from "react";
+import { MissionData } from "@/src/types";
 
-function MissionAndVision() {
+interface MissionAndVisionProps {
+  data: MissionData[] | null;
+  aboutData: {
+    image_1: string;
+    image_2: string;
+  };
+}
+
+const MissionAndVision: React.FC<MissionAndVisionProps> = ({
+  data,
+  aboutData,
+}) => {
+  const valuesItem = data?.[0];
+  const visionItem = data?.[1];
+  const missionItem = data?.[2];
+
   return (
     <div className="flex flex-col py-14">
-      {/* Mission */}
+      {/* Mission Section */}
       <div className="flex flex-col md:flex-row justify-between w-full pb-10">
-        {/* SVG + Text */}
         <div className="flex flex-row items-center gap-5 w-full md:w-[45%]">
+          {/* SVG Icon */}
           <div className="flex-shrink-0">
             <svg
               width="76"
@@ -15,7 +31,6 @@ function MissionAndVision() {
               viewBox="0 0 76 282"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="w-12 h-auto md:w-[76px]"
             >
               <g clip-path="url(#clip0_10670_2917)">
                 <path
@@ -38,20 +53,17 @@ function MissionAndVision() {
           </div>
           <div className="flex flex-col gap-3">
             <h1 className="text-textBase font-archivo text-3xl font-medium leading-8">
-              Missiyamız
+              {missionItem?.title ?? "Missiyamız"}
             </h1>
             <p className="text-elementSecondary font-manrope text-base leading-6">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorem,
-              qui. Vel rem praesentium, fugiat, voluptas blanditiis sequi
-              quaerat accusamus, voluptates eum ea perspiciatis nobis doloribus
-              ullam ex sapiente esse eligendi.
+              {missionItem?.description ??
+                "Lorem ipsum dolor sit amet consectetur adipisicing elit..."}
             </p>
           </div>
         </div>
-        {/* Image: hidden on mobile, shown from md up */}
         <div className="hidden md:block">
           <Image
-            src="/images/intro/img1.png"
+            src={aboutData.image_1}
             alt="mission"
             width={500}
             height={500}
@@ -62,9 +74,10 @@ function MissionAndVision() {
         </div>
       </div>
 
-      {/* Vision */}
+      {/* Vision Section */}
       <div className="flex flex-col md:flex-row justify-center items-center w-full pb-10">
         <div className="flex flex-row items-center gap-3 w-full md:w-[45%]">
+          {/* SVG Icon */}
           <div className="flex-shrink-0">
             <svg
               width="86"
@@ -72,7 +85,6 @@ function MissionAndVision() {
               viewBox="0 0 86 282"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="w-12 h-auto md:w-[86px]"
             >
               <g clip-path="url(#clip0_10670_2918)">
                 <path
@@ -95,24 +107,21 @@ function MissionAndVision() {
           </div>
           <div className="flex flex-col gap-3">
             <h1 className="text-textBase font-archivo text-3xl font-medium leading-8">
-              Vizyonumuz
+              {visionItem?.title ?? "Vizyonumuz"}
             </h1>
             <p className="text-elementSecondary font-manrope text-base leading-6">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde
-              harum ipsum obcaecati, cupiditate odit, reiciendis veniam
-              reprehenderit nihil quis et enim eligendi quidem? Odit maiores
-              commodi ducimus distinctio ullam officia.
+              {visionItem?.description ??
+                "Lorem ipsum dolor sit amet consectetur adipisicing elit..."}
             </p>
           </div>
         </div>
       </div>
 
-      {/* Values */}
+      {/* Values Section */}
       <div className="flex flex-col md:flex-row justify-between w-full">
-        {/* Image: hidden on mobile */}
         <div className="hidden md:block">
           <Image
-            src="/images/intro/img1.png"
+            src={aboutData.image_2}
             alt="values"
             width={500}
             height={500}
@@ -121,7 +130,6 @@ function MissionAndVision() {
             quality={100}
           />
         </div>
-        {/* SVG + Text */}
         <div className="flex flex-row items-center gap-5 w-full md:w-[45%]">
           <div className="flex-shrink-0">
             <svg
@@ -130,7 +138,6 @@ function MissionAndVision() {
               viewBox="0 0 103 282"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="w-12 h-auto md:w-[103px]"
             >
               <g clip-path="url(#clip0_10670_2934)">
                 <path
@@ -153,19 +160,17 @@ function MissionAndVision() {
           </div>
           <div className="flex flex-col gap-3">
             <h1 className="text-textBase font-archivo text-3xl font-medium leading-8">
-              Dəyərimiz
+              {valuesItem?.title ?? "Dəyərimiz"}
             </h1>
             <p className="text-elementSecondary font-manrope text-base leading-6">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint
-              voluptatem pariatur placeat nobis unde explicabo beatae
-              necessitatibus ducimus recusandae dicta voluptas, fuga hic ipsum
-              atque! Eaque quam quasi excepturi quisquam!
+              {valuesItem?.description ??
+                "Lorem ipsum dolor sit amet consectetur adipisicing elit..."}
             </p>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default MissionAndVision;

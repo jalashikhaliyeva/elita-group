@@ -1,7 +1,9 @@
 import Image from "next/image";
 import React from "react";
 
-function Hero() {
+function Hero({data}) {
+  console.log(data, "data");
+  
   return (
     <div className="relative w-full h-[300px] md:h-[620px] bg-gray-200">
       {/* Background image */}
@@ -9,7 +11,7 @@ function Hero() {
         width={500}
         height={500}
         priority
-        src="/images/intro/about.png"
+        src={data?.image_1}
         alt="Hero background"
         className="absolute inset-0 w-full h-full object-cover"
       />

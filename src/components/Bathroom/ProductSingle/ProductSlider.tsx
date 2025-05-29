@@ -9,7 +9,6 @@ function ProductSlider() {
   const [scrollLeft, setScrollLeft] = useState(0);
   const thumbnailsRef = useRef<HTMLDivElement>(null);
 
-  // Sample product images - replace with your actual images
   const productImages = [
     { id: 1, src: "/images/bath/item1.png" },
     { id: 2, src: "/images/bath/item2.png" },

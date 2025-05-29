@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
     defaultLocale: "az",
     localeDetection: false,
   },
+  images: {
+    domains: ["elita.markup.az"],
+  },
 };
 
 export default nextConfig;

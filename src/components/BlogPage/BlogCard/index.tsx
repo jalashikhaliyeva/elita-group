@@ -4,32 +4,28 @@ import Image from "next/image";
 import Link from "next/link";
 
 export interface BlogCardProps {
-  id?: number;
-  imageUrl: string;
-  date: string;
   title: string;
+  imageUrl: string;
   excerpt: string;
+  slug: string;
+  date?: string;
 }
 
 const BlogCard: React.FC<BlogCardProps> = ({
   imageUrl,
-  date,
   title,
   excerpt,
+  slug,
+  date = "",
 }) => {
   return (
-    <Link
-      href={`/blog/${encodeURIComponent(
-        title.toLowerCase().replace(/\s+/g, "-")
-      )}`}
-      passHref
-    >
+    <Link href={`/blog/${slug}`} passHref>
       <div className="overflow-hidden font-manrope group">
         <div className="relative w-full h-[360px] overflow-hidden">
-          <Image 
-            src={imageUrl} 
-            alt={title} 
-            layout="fill" 
+          <Image
+            src={imageUrl}
+            alt={title}
+            layout="fill"
             objectFit="cover"
             className="transition-transform duration-500 group-hover:scale-110"
           />
@@ -37,7 +33,9 @@ const BlogCard: React.FC<BlogCardProps> = ({
         </div>
 
         <div className="flex flex-col gap-1 pt-4">
-          <p className="text-gray-500 text-base md:text-lg mb-1">{date}</p>
+          {date && (
+            <p className="text-gray-500 text-base md:text-lg mb-1">{date}</p>
+          )}
           <h3 className="text-gray-800 font-semibold text-lg md:text-2xl mb-2 group-hover:text-primary transition-colors duration-300">
             {title}
           </h3>

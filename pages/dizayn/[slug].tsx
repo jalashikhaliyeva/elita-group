@@ -8,8 +8,13 @@ import ProjectDetails from "@/src/components/ProjectDetailed/ProjectDetails";
 import ProjectImages from "@/src/components/ProjectDetailed/ProjectImages";
 import ProjectVideo from "@/src/components/ProjectDetailed/ProjectVideo";
 import React from "react";
+import { getContactInfo } from "../api/services/contactService";
+import { ContactData } from "@/src/types";
 
-function ProjectDetailed() {
+interface AboutPageProps {
+  contactData: ContactData | null;
+}
+export default function ProjectDetailed({ contactData }: AboutPageProps) {
   return (
     <>
       <Container>
@@ -25,7 +30,7 @@ function ProjectDetailed() {
         <ProjectImages />
       </Container>
 
-      <ContactBanner />
+      <ContactBanner contactData={contactData} />
       <Container>
         <Footer />
       </Container>
@@ -33,4 +38,24 @@ function ProjectDetailed() {
   );
 }
 
-export default ProjectDetailed;
+export async function getServerSideProps() {
+  try {
+    const [contactData] = await Promise.all([getContactInfo()]);
+    if (!contactData) {
+      return { notFound: true };
+    }
+
+    return {
+      props: {
+        contactData: contactData || null,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching About page data:", error);
+    return {
+      props: {
+        contactData: null,
+      },
+    };
+  }
+}
