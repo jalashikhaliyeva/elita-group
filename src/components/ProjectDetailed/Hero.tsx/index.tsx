@@ -1,16 +1,14 @@
+
 import Image from "next/image";
 import React from "react";
-import { useRouter } from "next/router";
+
 interface HeroProps {
   title: string;
   image: string;
   short_description: string;
 }
-function Hero({ title, image, short_description }: HeroProps) {
-  const router = useRouter();
-  const currentPath = router.pathname;
-  const showButton = currentPath === "/hamam";
 
+function Hero({ title, image, short_description }: HeroProps) {
   return (
     <div className="w-full flex flex-col md:flex-row ">
       <div className="w-full md:w-[65%] h-[360px]">
@@ -25,42 +23,21 @@ function Hero({ title, image, short_description }: HeroProps) {
 
       <div
         className="
-      flex-none
-     w-full md:w-[35%]
-      h-[360px]
-      bg-elementSecondaryBg
-      p-8
-      flex
-      flex-col
-      justify-center
-    "
+        flex-none
+        w-full md:w-[35%]
+        h-[360px]
+        bg-elementSecondaryBg
+        p-8
+        flex
+        flex-col
+        justify-center
+      "
       >
         <div className="flex flex-col justify-center gap-7 my-auto">
           <h1 className="font-archivo font-medium text-5xl leading-11 text-textBase">
             {title}
           </h1>
           <p className="text-textBase text-base">{short_description}</p>
-
-          {showButton && (
-            <button className="bg-black py-2 px-4 text-white w-fit flex gap-2 items-center">
-              Brendlərlə tanış ol
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="17"
-                viewBox="0 0 16 17"
-                fill="none"
-              >
-                <path
-                  d="M11.9997 5.8335L14.6663 8.50016M14.6663 8.50016L11.9997 11.1668M14.6663 8.50016H1.33301"
-                  stroke="#FAFAFA"
-                  stroke-width="1.33"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </button>
-          )}
         </div>
       </div>
     </div>

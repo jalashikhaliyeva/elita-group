@@ -1,5 +1,4 @@
 import { postContactForm } from "@/pages/api/services/postContactForm";
-import { log } from "console";
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -18,12 +17,6 @@ interface ContactBannerProps {
 }
 
 function ContactBanner({ contactData }: ContactBannerProps) {
-  if (!contactData) {
-    return (
-      <p className="p-8 text-center text-white">No contact info available.</p>
-    );
-  }
-
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -51,7 +44,7 @@ function ContactBanner({ contactData }: ContactBannerProps) {
 
     try {
       const response = await postContactForm(formData);
-      if (response.status) {
+      if (response) {
         // Changed from response.success to response.status
         setSubmitMessage({
           text: "Müraciətiniz uğurla göndərildi!",
@@ -60,7 +53,7 @@ function ContactBanner({ contactData }: ContactBannerProps) {
         setFormData({ name: "", surname: "", phone: "" });
       } else {
         setSubmitMessage({
-          text: response.message || "Göndərilmə zamanı xəta baş verdi",
+          text: "Göndərilmə zamanı xəta baş verdi",
           isError: true,
         });
       }
@@ -76,6 +69,12 @@ function ContactBanner({ contactData }: ContactBannerProps) {
       setIsSubmitting(false);
     }
   };
+
+  if (!contactData) {
+    return (
+      <p className="p-8 text-center text-white">No contact info available.</p>
+    );
+  }
 
   return (
     <div className="bg-elements px-8 py-12 relative">

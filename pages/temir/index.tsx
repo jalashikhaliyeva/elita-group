@@ -4,17 +4,41 @@ import Header from "@/src/components/layout/Header";
 import React from "react";
 import AboutSection from "@/src/components/DesignPage/AboutSection";
 import Footer from "@/src/components/layout/Footer";
+import { getBanner } from "../api/services/fetchBanner";
+import { BannerItem } from "@/src/types";
 
-function Construction() {
+interface InformationItem {
+  title: string;
+  description: string;
+  image_1: string;
+  image_2: string;
+  image_3: string;
+  thumb_image_1: string;
+  thumb_image_2: string;
+  thumb_image_3: string;
+}
+
+interface ConstructionProps {
+  bannerData: BannerItem & {
+    information: InformationItem[];
+  };
+}
+
+function Construction({ bannerData }: ConstructionProps) {
   return (
     <>
       <Container>
         <Header activeItem="temir" />
       </Container>
-      <Hero />
+      <Hero
+        title={bannerData.title}
+        image={bannerData.image}
+        video={bannerData.video}
+        // description={bannerData.description}
+      />
 
       <Container>
-        <AboutSection />
+        <AboutSection information={bannerData.information} />
       </Container>
       <Container>
         <Footer />
@@ -24,3 +48,29 @@ function Construction() {
 }
 
 export default Construction;
+
+export async function getServerSideProps() {
+  try {
+    const slug = "temir-tikinti";
+    const bannerData = await getBanner(slug);
+
+    return {
+      props: {
+        bannerData,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching banner data:", error);
+    return {
+      props: {
+        bannerData: {
+          title: "",
+          image: "",
+          video: "",
+          description: "",
+          information: [],
+        }, // Default empty state
+      },
+    };
+  }
+}

@@ -1,16 +1,14 @@
+
 import React from "react";
 
 interface ProjectDetailsProps {
-  title: string;
   description: string;
-  shortDescription: string;
+  // Remove unused props or add them back to the component if needed
+  // title?: string;
+  // shortDescription?: string;
 }
 
-function ProjectDetails({
-  title,
-  description,
-  shortDescription,
-}: ProjectDetailsProps) {
+function ProjectDetails({ description }: ProjectDetailsProps) {
   return (
     <div className="w-full flex flex-col lg:flex-row justify-between py-8 lg:py-14">
       <div className="flex flex-col w-full lg:w-auto">
@@ -27,7 +25,7 @@ function ProjectDetails({
         </div>
       </div>
 
-      <div className="flex flex-col  lg:mt-0">
+      <div className="flex flex-col lg:mt-0">
         <div className="hidden lg:flex items-center h-[21px]">
           <span className="h-[1px] w-full bg-elements"></span>
         </div>

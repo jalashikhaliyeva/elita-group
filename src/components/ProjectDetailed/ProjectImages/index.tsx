@@ -13,7 +13,6 @@ function ProjectImages({ images }: ProjectImagesProps) {
 
   return (
     <div className="w-full flex flex-col lg:flex-row justify-between py-8 lg:py-14">
-      {/* Left Column - Show first two images if they exist */}
       <div className="flex flex-col w-full lg:w-1/3">
         <div className="hidden lg:flex flex-col gap-6 pt-8 lg:pt-14">
           {images.slice(0, 2).map((img, index) => (

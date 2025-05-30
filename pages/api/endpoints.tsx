@@ -1,6 +1,15 @@
 export const API_ENDPOINTS = {
+  INTRO: {
+    LIST: "/categories",
+  },
+  BANNER: {
+    DETAIL: (slug: string) => `/category/${slug}`,
+  },
   ABOUT: {
     LIST: "/about",
+  },
+  BRANDS: {
+    LIST: "/brands",
   },
   BLOG: {
     LIST: "/blogs",
@@ -15,7 +24,7 @@ export const API_ENDPOINTS = {
   },
   SERVICES: {
     LIST: "/services",
-      DETAIL: (slug: string) => `/service/${slug}`,
+    DETAIL: (slug: string) => `/service/${slug}`,
   },
   CONTACT: {
     LIST: "/contact",

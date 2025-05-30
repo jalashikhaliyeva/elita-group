@@ -11,6 +11,7 @@ import { getContactInfo } from "../api/services/contactService";
 import { ContactData, ServiceItem } from "@/src/types";
 import Hero from "@/src/components/ProjectDetailed/Hero.tsx";
 import { getSingleService } from "../api/services/fetchServices";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
 interface ProjectDetailedProps {
   contactData: ContactData | null;
@@ -40,9 +41,9 @@ export default function ProjectDetailed({
       />
       <Container>
         <ProjectDetails
-          title={serviceData.title}
+          // title={serviceData.title}
           description={serviceData.description}
-          shortDescription={serviceData.short_description}
+          // shortDescription={serviceData.short_description}
         />
         <ProjectVideo videoUrl={serviceData.video} />
         <ProjectImages images={serviceData.images} />
@@ -56,9 +57,9 @@ export default function ProjectDetailed({
   );
 }
 
-export async function getServerSideProps(context: any) {
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
   try {
-    const { slug } = context.params;
+    const { slug } = context.params as { slug: string };
     const [contactData, serviceData] = await Promise.all([
       getContactInfo(),
       getSingleService(slug),
@@ -80,4 +81,4 @@ export async function getServerSideProps(context: any) {
       notFound: true,
     };
   }
-}
+};

@@ -1,4 +1,3 @@
-// types/index.ts
 export interface IntroItem {
   title: string;
   description: string;
@@ -12,7 +11,6 @@ export interface ImageCardProps {
   className?: string;
 }
 
-// next
 export interface HeroItem {
   button_url: string;
   image: string;
@@ -111,7 +109,6 @@ export interface TopToolBarProps {
   isFixed?: boolean;
 }
 
-// types/about.ts
 export type AboutData = {
   title: string;
   description: string;
@@ -125,7 +122,6 @@ export type AboutApiResponse = {
   data: AboutData;
 };
 
-// In your types file
 export interface MissionData {
   title: string;
   description: string;
@@ -135,15 +131,12 @@ export interface MissionApiResponse {
   data: MissionData[];
 }
 
-// src/types.ts
 
-/** One FAQ item */
 export interface FaqData {
   question: string;
   answer: string;
 }
 
-/** API response wrapper for FAQ list */
 export interface FaqApiResponse {
   data: FaqData[];
 }
@@ -157,14 +150,12 @@ export interface ContactApiResponse {
   data: ContactData;
 }
 
-// src/types/index.ts (or create a new file for contact types)
 export interface ContactFormData {
   name: string;
   surname: string;
   phone: string;
 }
 
-// types.ts
 export interface BlogItem {
   title: string;
   description: string;
@@ -217,7 +208,6 @@ export type ServicesApiResponse = {
   data: ServiceData[];
 };
 
-// src/types.ts (or wherever your types are defined)
 
 export interface ServiceImage {
   image: string;
@@ -238,4 +228,70 @@ export interface ServiceItem {
 
 export interface SingleServiceApiResponse {
   data: ServiceItem;
+}
+
+export interface IntroServiceInformation {
+  title: string;
+  description: string;
+  image_1: string;
+  image_2: string;
+  image_3: string;
+  thumb_image_1: string;
+  thumb_image_2: string;
+  thumb_image_3: string;
+}
+
+export interface IntroServiceData {
+  title: string;
+  slug: string;
+  description: string;
+  video_intro: string;
+  video: string;
+  image: string;
+  thumb_image: string;
+  information: IntroServiceInformation[];
+}
+
+export interface IntroServicesApiResponse {
+  data: IntroServiceData[];
+}
+
+
+export interface InformationItem {
+  // Define the actual structure based on your data
+  id?: string | number;
+  title?: string;
+  description?: string;
+  // Add other properties as needed
+}
+
+// types.ts (add these types)
+export interface BannerItem {
+  title: string;
+  slug: string;
+  description: string;
+  video_intro: string;
+  video: string;
+  image: string;
+  thumb_image: string;
+  information: InformationItem[]; // Replace any[] with proper type
+}
+
+export interface BannerApiResponse {
+  timestamp: string;
+  status: boolean;
+  message: string;
+  lang: string;
+  data: BannerItem;
+}
+
+export interface Brand {
+  name: string;
+  image: string;
+  thumb_image: string;
+  slug: string;
+}
+
+export interface BrandsApiResponse {
+  data: Brand[];
 }

@@ -1,10 +1,10 @@
 import { FC, useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { IntroItem } from "@/src/types";
+import { IntroServiceData } from "@/src/types";
 
 interface IntroSectionProps {
-  introData: IntroItem[];
+  introData: IntroServiceData[];
 }
 
 const IntroSection: FC<IntroSectionProps> = ({ introData }) => {
@@ -13,19 +13,18 @@ const IntroSection: FC<IntroSectionProps> = ({ introData }) => {
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
-  // Initialize video refs array based on introData length
+  // Custom routes for each section
+  const customRoutes = ["/dizayn", "/temir", "/mebel", "/hamam"];
+
   useEffect(() => {
     videoRefs.current = videoRefs.current.slice(0, introData.length);
 
-    // Check if device is mobile or tablet
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1024);
     };
 
-    // Initial check
     checkMobile();
 
-    // Add event listener for resize
     window.addEventListener("resize", checkMobile);
 
     return () => {
@@ -33,9 +32,7 @@ const IntroSection: FC<IntroSectionProps> = ({ introData }) => {
     };
   }, [introData]);
 
-  // Handle mouse enter (desktop) or click (mobile)
   const handleInteraction = (idx: number) => {
-    // If same item is clicked again on mobile, toggle it off
     if (isMobile && hoveredIdx === idx) {
       setHoveredIdx(null);
       if (videoRefs.current[idx]) {
@@ -44,25 +41,20 @@ const IntroSection: FC<IntroSectionProps> = ({ introData }) => {
       return;
     }
 
-    // If different item is selected, pause all videos first
     videoRefs.current.forEach((video) => {
       if (video) video.pause();
     });
 
     setHoveredIdx(idx);
 
-    // Play the video
     if (videoRefs.current[idx]) {
       videoRefs.current[idx]?.play();
     }
   };
 
-  // Handle mouse leave (desktop only)
   const handleMouseLeave = () => {
-    // Don't reset on mobile
     if (isMobile) return;
 
-    // Pause all videos when mouse leaves any item
     videoRefs.current.forEach((video) => {
       if (video) video.pause();
     });
@@ -70,24 +62,9 @@ const IntroSection: FC<IntroSectionProps> = ({ introData }) => {
     setHoveredIdx(null);
   };
 
-  // Handle navigation when clicking on a section
   const handleNavigate = (idx: number) => {
-    switch (idx) {
-      case 0:
-        router.push("/dizayn");
-        break;
-      case 1:
-        router.push("/temir");
-        break;
-      case 2:
-        router.push("/mebel");
-        break;
-      case 3:
-        router.push("/hamam");
-        break;
-      default:
-        break;
-    }
+    const route = customRoutes[idx] || `/${introData[idx]?.slug}`;
+    router.push(route);
   };
 
   return (
@@ -149,14 +126,16 @@ const IntroSection: FC<IntroSectionProps> = ({ introData }) => {
               onMouseEnter={() => !isMobile && handleInteraction(idx)}
               onMouseLeave={handleMouseLeave}
             >
+              {/* Background Image Layer */}
               <div
-                className="absolute inset-0 transition-opacity duration-1000"
+                className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
                 style={{
-                  background: `linear-gradient(0deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.35) 100%), url(${item.image}) center / cover no-repeat`,
+                  backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.35) 100%), url('${item.image}')`,
                   opacity: isHovered ? 0 : 1,
                 }}
               />
 
+              {/* Video Layer */}
               <video
                 ref={(el: HTMLVideoElement | null) => {
                   videoRefs.current[idx] = el;
@@ -166,7 +145,7 @@ const IntroSection: FC<IntroSectionProps> = ({ introData }) => {
                 loop
                 muted
                 playsInline
-                src={item.video || undefined}
+                src={item.video_intro || undefined}
               />
 
               {/* Content layer */}
@@ -209,7 +188,7 @@ const IntroSection: FC<IntroSectionProps> = ({ introData }) => {
                     <p className="text-lightSageGreen font-manrope text-sm md:text-base leading-6 font-normal mb-4 md:mb-6">
                       {item.description}
                     </p>
-                    <div 
+                    <div
                       className="text-white leading-4 font-archivo font-normal text-sm md:text-base flex flex-row items-center gap-2"
                       onClick={(e) => {
                         e.stopPropagation();
