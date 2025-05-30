@@ -9,7 +9,6 @@ import ServicesSlider from "@/src/components/DesignPage/ServicesSlider";
 import Footer from "@/src/components/layout/Footer";
 import { ServiceData } from "@/src/types";
 import { fetchServices } from "../api/services/fetchServices";
-
 interface DesignPageProps {
   services: ServiceData[];
 }

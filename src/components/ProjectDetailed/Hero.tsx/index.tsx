@@ -1,19 +1,21 @@
 import Image from "next/image";
 import React from "react";
 import { useRouter } from "next/router";
-
-function Hero() {
+interface HeroProps {
+  title: string;
+  image: string;
+  short_description: string;
+}
+function Hero({ title, image, short_description }: HeroProps) {
   const router = useRouter();
   const currentPath = router.pathname;
-
-  // Show button only when path is '/hamam'
-  const showButton = currentPath === '/hamam';
+  const showButton = currentPath === "/hamam";
 
   return (
     <div className="w-full flex flex-col md:flex-row ">
       <div className="w-full md:w-[65%] h-[360px]">
         <Image
-          src="/images/intro/hero.png"
+          src={image}
           alt="Hero image elita"
           width={600}
           height={360}
@@ -35,13 +37,9 @@ function Hero() {
       >
         <div className="flex flex-col justify-center gap-7 my-auto">
           <h1 className="font-archivo font-medium text-5xl leading-11 text-textBase">
-            Layihə adı
+            {title}
           </h1>
-          <p className="text-textBase text-base">
-            Lorem ipsum dolor sit amet consectetur. Ultrices adipiscing erat dui
-            feugiat purus pellentesque egestas phasellus ac. Neque varius purus
-            fusce habitasse.
-          </p>
+          <p className="text-textBase text-base">{short_description}</p>
 
           {showButton && (
             <button className="bg-black py-2 px-4 text-white w-fit flex gap-2 items-center">

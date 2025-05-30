@@ -1,4 +1,3 @@
-// src/components/DesignPage/ServicesSlider.tsx
 import { ServiceData } from "@/src/types";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -11,10 +10,8 @@ interface ServicesSliderProps {
 function ServicesSlider({ services }: ServicesSliderProps) {
   const router = useRouter();
 
-  // Only take the first 2 services for the slider
   const displayedServices = services.slice(0, 2);
 
-  // Function to split title and highlight last word
   const renderTitle = (title: string) => {
     const words = title.split(' ');
     if (words.length === 0) return title;
@@ -32,10 +29,8 @@ function ServicesSlider({ services }: ServicesSliderProps) {
 
   return (
     <div className="w-full grid grid-cols-1 lg:grid-cols-3 gap-5 lg:gap-11 pb-7 md:pb-14">
-      {/* Empty first item */}
       <div className="hidden lg:block"></div>
 
-      {/* Services */}
       {displayedServices.map((service) => (
         <div
           key={service.slug}

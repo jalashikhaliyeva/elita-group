@@ -3,18 +3,28 @@ import Container from "@/src/components/layout/Container";
 import Footer from "@/src/components/layout/Footer";
 import Header from "@/src/components/layout/Header";
 import ContactBanner from "@/src/components/ProjectDetailed/ContactBanner";
-import Hero from "@/src/components/ProjectDetailed/Hero.tsx";
 import ProjectDetails from "@/src/components/ProjectDetailed/ProjectDetails";
 import ProjectImages from "@/src/components/ProjectDetailed/ProjectImages";
 import ProjectVideo from "@/src/components/ProjectDetailed/ProjectVideo";
 import React from "react";
 import { getContactInfo } from "../api/services/contactService";
-import { ContactData } from "@/src/types";
+import { ContactData, ServiceItem } from "@/src/types";
+import Hero from "@/src/components/ProjectDetailed/Hero.tsx";
+import { getSingleService } from "../api/services/fetchServices";
 
-interface AboutPageProps {
+interface ProjectDetailedProps {
   contactData: ContactData | null;
+  serviceData: ServiceItem | null;
 }
-export default function ProjectDetailed({ contactData }: AboutPageProps) {
+
+export default function ProjectDetailed({
+  contactData,
+  serviceData,
+}: ProjectDetailedProps) {
+  if (!serviceData) {
+    return <div>Loading...</div>; // Or handle the error state appropriately
+  }
+
   return (
     <>
       <Container>
@@ -23,11 +33,19 @@ export default function ProjectDetailed({ contactData }: AboutPageProps) {
       <Container>
         <Breadcrumb />
       </Container>
-      <Hero />
+      <Hero
+        title={serviceData.title}
+        image={serviceData.image}
+        short_description={serviceData.short_description}
+      />
       <Container>
-        <ProjectDetails />
-        <ProjectVideo />
-        <ProjectImages />
+        <ProjectDetails
+          title={serviceData.title}
+          description={serviceData.description}
+          shortDescription={serviceData.short_description}
+        />
+        <ProjectVideo videoUrl={serviceData.video} />
+        <ProjectImages images={serviceData.images} />
       </Container>
 
       <ContactBanner contactData={contactData} />
@@ -38,24 +56,28 @@ export default function ProjectDetailed({ contactData }: AboutPageProps) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: any) {
   try {
-    const [contactData] = await Promise.all([getContactInfo()]);
-    if (!contactData) {
+    const { slug } = context.params;
+    const [contactData, serviceData] = await Promise.all([
+      getContactInfo(),
+      getSingleService(slug),
+    ]);
+
+    if (!contactData || !serviceData) {
       return { notFound: true };
     }
 
     return {
       props: {
         contactData: contactData || null,
+        serviceData: serviceData || null,
       },
     };
   } catch (error) {
-    console.error("Error fetching About page data:", error);
+    console.error("Error fetching ProjectDetailed page data:", error);
     return {
-      props: {
-        contactData: null,
-      },
+      notFound: true,
     };
   }
 }

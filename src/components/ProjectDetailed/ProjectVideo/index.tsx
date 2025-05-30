@@ -1,10 +1,14 @@
 import React from "react";
 
-function ProjectVideo() {
+interface ProjectVideoProps {
+  videoUrl: string;
+}
+
+function ProjectVideo({ videoUrl }: ProjectVideoProps) {
   return (
     <div className="w-full h-[300px] md:h-[640px] overflow-hidden">
       <video
-        src="/images/intro/video/video1.mp4" // <-- update this to your video file
+        src={videoUrl}
         autoPlay
         muted
         loop

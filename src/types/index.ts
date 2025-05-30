@@ -164,8 +164,6 @@ export interface ContactFormData {
   phone: string;
 }
 
-
-
 // types.ts
 export interface BlogItem {
   title: string;
@@ -203,12 +201,6 @@ export interface BlogApiResponse {
   meta: PaginationMeta;
 }
 
-// src/types/services.ts
-export type ServiceImage = {
-  image: string;
-  thumb_image: string;
-};
-
 export type ServiceData = {
   title: string;
   image: string;
@@ -224,3 +216,26 @@ export type ServiceData = {
 export type ServicesApiResponse = {
   data: ServiceData[];
 };
+
+// src/types.ts (or wherever your types are defined)
+
+export interface ServiceImage {
+  image: string;
+  thumb_image: string;
+}
+
+export interface ServiceItem {
+  title: string;
+  image: string;
+  thumb_image: string;
+  tag: string | null;
+  short_description: string;
+  description: string;
+  slug: string;
+  video: string;
+  images: ServiceImage[];
+}
+
+export interface SingleServiceApiResponse {
+  data: ServiceItem;
+}
