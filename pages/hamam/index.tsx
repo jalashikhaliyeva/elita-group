@@ -6,35 +6,53 @@ import Footer from "@/src/components/layout/Footer";
 import Breadcrumb from "@/src/components/layout/Breadcrumb";
 import Filter from "@/src/components/Bathroom/Filter";
 import Products from "@/src/components/Bathroom/Products";
-import { BannerItem, Brand } from "@/src/types";
+import { BannerItem, Brand, Category, Color, Product } from "@/src/types";
 import { getBanner } from "../api/services/fetchBanner";
 import Partners from "@/src/components/Bathroom/Partners";
 import { fetchBrands } from "../api/services/fetchBrands";
+import { fetchCategories } from "../api/services/fetchCategories";
+import { fetchColors } from "../api/services/fetchColors";
+import { fetchProducts } from "../api/services/fetchProducts";
 
 interface BathroomProps {
-  bannerData: BannerItem;
+  bannerData: BannerItem | null;
   brands: Brand[];
+  categories: Category[];
+  colors: Color[];
+  products: Product[];
 }
 
-function Bathroom({ bannerData, brands }: BathroomProps) {
+function Bathroom({
+  bannerData,
+  brands,
+  categories,
+  colors,
+  products,
+}: BathroomProps) {
   return (
     <>
       <Container>
         <Header activeItem="hamam" />
       </Container>
+
       <Container>
         <Breadcrumb />
       </Container>
+
       <Hero
-        title={bannerData.title}
-        image={bannerData.image}
-        short_description={bannerData.description}
+        title={bannerData?.title || ""}
+        image={bannerData?.image || ""}
+        short_description={bannerData?.description || ""}
       />
+
       <Partners brands={brands} />
+
       <Container>
-        <Filter />
-        <Products />
+        <Filter categories={categories} brands={brands} colors={colors} />
+        {/* Pass the fetched products into your Products component */}
+        <Products products={products} />
       </Container>
+
       <Footer />
     </>
   );
@@ -43,15 +61,24 @@ function Bathroom({ bannerData, brands }: BathroomProps) {
 export async function getServerSideProps() {
   try {
     const slug = "hamam";
-    const [bannerData, brands] = await Promise.all([
-      getBanner(slug),
-      fetchBrands(),
-    ]);
+
+    // Fetch banner, brands, categories, colors, + products in parallel
+    const [bannerData, brands, categories, colors, products] =
+      await Promise.all([
+        getBanner(slug),
+        fetchBrands(),
+        fetchCategories(),
+        fetchColors(),
+        fetchProducts(),
+      ]);
 
     return {
       props: {
         bannerData,
         brands,
+        categories,
+        colors,
+        products,
       },
     };
   } catch (error) {
@@ -60,6 +87,9 @@ export async function getServerSideProps() {
       props: {
         bannerData: null,
         brands: [],
+        categories: [],
+        colors: [],
+        products: [],
       },
     };
   }

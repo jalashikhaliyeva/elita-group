@@ -10,6 +10,11 @@ export interface ImageCardProps {
   alt: string;
   className?: string;
 }
+export interface Attribute {
+  key: string;
+  value: string;
+}
+
 
 export interface HeroItem {
   button_url: string;
@@ -35,29 +40,7 @@ export interface ServicesProps {
   data: ServiceFeatureData;
 }
 
-export interface Product {
-  id: number;
-  product_code: number;
-  name: string;
-  slug: string;
-  price: number;
-  discount: string;
-  discounted_price: number;
-  perMonth: {
-    month: number;
-    price: number;
-  };
-  quantity: number;
-  reviewCount: number;
-  rate: number;
-  image: string;
-  campaign_widgets: unknown[];
-  gift_widgets: unknown[];
-  is_online: boolean;
-  is_basket: boolean;
-  is_favorite: boolean;
-  is_compare: boolean;
-}
+
 
 export interface ProductCategory {
   title: string;
@@ -130,7 +113,6 @@ export interface MissionData {
 export interface MissionApiResponse {
   data: MissionData[];
 }
-
 
 export interface FaqData {
   question: string;
@@ -208,7 +190,6 @@ export type ServicesApiResponse = {
   data: ServiceData[];
 };
 
-
 export interface ServiceImage {
   image: string;
   thumb_image: string;
@@ -256,7 +237,6 @@ export interface IntroServicesApiResponse {
   data: IntroServiceData[];
 }
 
-
 export interface InformationItem {
   // Define the actual structure based on your data
   id?: string | number;
@@ -294,4 +274,112 @@ export interface Brand {
 
 export interface BrandsApiResponse {
   data: Brand[];
+}
+
+export interface Category {
+  id: number;
+  name: string;
+  slug: string;
+  image?: string; // optional if your categories have images
+  description?: string; // optional
+  // Add any other category-specific properties you need
+}
+
+export interface CategoriesApiResponse {
+  success: boolean;
+  data: Category[];
+  message?: string;
+  // Add any other response metadata your API returns
+}
+
+// Color type definition
+export interface Color {
+  id: number;
+  name: string;
+  color: string;
+  slug: string;
+  created_at?: string;
+  updated_at?: string;
+}
+
+// API response structure for colors
+export interface ColorsApiResponse {
+  success: boolean;
+  message: string;
+  data: Color[];
+  // Optional fields that might come from your API
+  meta?: {
+    current_page: number;
+    total_pages: number;
+    per_page: number;
+    total_items: number;
+  };
+}
+
+// @/src/types.ts
+
+export interface Product {
+  title: string;
+  slug: string;
+  description: string;
+  category: string;
+  brand: string;
+  attribute: Array<{
+    key: string;
+    value: string;
+  }>;
+  image: {
+    color_name: string;
+    hex: string;
+    image: string;
+    thumb_image: string;
+  };
+  images: Array<{
+    color_name: string;
+    hex: string;
+    image: string;
+    thumb_image: string;
+  }>;
+}
+
+
+export interface ProductsApiResponse {
+  data: Product[];
+  links: {
+    first: string;
+    last: string;
+    prev: string | null;
+    next: string | null;
+  };
+  meta: {
+    current_page: number;
+    from: number | null;
+    last_page: number;
+    links: Array<{
+      url: string | null;
+      label: string;
+      active: boolean;
+    }>;
+    path: string;
+    per_page: number;
+    to: number | null;
+    total: number;
+  };
+}
+
+
+export interface ProductSingleApiResponse {
+  timestamp: string;
+  status: boolean;
+  message: string;
+  lang: string;
+  data: Product;
+}
+
+
+export interface ImageVariant {
+  color_name: string;
+  hex: string;
+  image: string;
+  thumb_image: string;
 }

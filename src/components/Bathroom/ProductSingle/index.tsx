@@ -1,15 +1,26 @@
+// src/components/Bathroom/ProductSingle.tsx
 import React from "react";
 import ProductSlider from "./ProductSlider";
 import DetailedInfo from "./DetailedInfo";
+import { ImageVariant, Product } from "@/src/types";
 
-function ProductSingle() {
+interface ProductSingleProps {
+  product: Product;
+}
+
+function ProductSingle({ product }: ProductSingleProps) {
+  const mainVariant: ImageVariant = product.images[0]; 
   return (
-    <div className="flex flex-col  md:flex-row gap-5 justify-between">
+    <div className="flex flex-col md:flex-row gap-5 justify-between">
+      {/* Slider column */}
       <div className="w-full md:w-1/2">
-        <ProductSlider />
+        {/* Pass down the entire images array. */}
+        <ProductSlider images={product.images}  mainImage={mainVariant}/>
       </div>
+
+      {/* Info column */}
       <div className="w-full md:w-1/2">
-        <DetailedInfo />
+        <DetailedInfo product={product} />
       </div>
     </div>
   );

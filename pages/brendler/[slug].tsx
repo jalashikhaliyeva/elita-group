@@ -3,8 +3,8 @@ import Header from "@/src/components/layout/Header";
 import React from "react";
 import Footer from "@/src/components/layout/Footer";
 import Breadcrumb from "@/src/components/layout/Breadcrumb";
-import Filter from "@/src/components/Bathroom/Filter";
-import Products from "@/src/components/Bathroom/Products";
+// import Filter from "@/src/components/Bathroom/Filter";
+// import Products from "@/src/components/Bathroom/Products";
 import { getBanner } from "../api/services/fetchBanner";
 import { fetchBrands } from "../api/services/fetchBrands";
 
@@ -20,10 +20,10 @@ function Bathroom() {
         <Breadcrumb />
       </Container>
 
-      <Container>
+      {/* <Container>
         <Filter />
         <Products />
-      </Container>
+      </Container> */}
       <Footer />
     </>
   );

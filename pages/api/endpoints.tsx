@@ -15,9 +15,18 @@ export const API_ENDPOINTS = {
     LIST: "/blogs",
     DETAIL: (slug: string) => `/blog/${slug}`,
   },
-
   FAQ: {
     LIST: "/faq",
+  },
+  PRODUCTS: {
+    LIST: "/products",
+    DETAIL: (slug: string) => `/product/${slug}`,
+  },
+  COLOR: {
+    LIST: "/color",
+  },
+  CATEGORIES: {
+    LIST: "/product-categories",
   },
   MISSION: {
     LIST: "/our-mission",

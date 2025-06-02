@@ -1,8 +1,16 @@
+// src/components/Bathroom/Filter.tsx
 import React, { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import FilterModal from "./FilterModal";
+import { Category, Brand, Color } from "@/src/types";
 
-function Filter() {
+interface FilterProps {
+  categories: Category[];
+  brands: Brand[];
+  colors: Color[];
+}
+
+function Filter({ categories, brands, colors }: FilterProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -13,43 +21,23 @@ function Filter() {
             onClick={() => setIsModalOpen(true)}
             className="p-2.5 flex gap-2 items-center text-sm text-neutral-800 border border-neutral-800 whitespace-nowrap transition-colors duration-300 hover:bg-neutral-800 hover:text-white"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              className="w-4 h-4 md:w-5 md:h-5"
-            >
-              <path
-                d="M3 6H21M7 12H17M10 18H14"
-                stroke="currentColor"
-                strokeWidth="1.33"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
             Filter
           </button>
 
-          {[
-            "Hamam mebeli",
-            "Vanna və duş kabinlər",
-            "Santexnika",
-            "Su quraşdırıcıları",
-            "Aksessuarlar",
-          ].map((item) => (
+          {categories.map((category) => (
             <div
-              key={item}
+              key={category.id}
               className="p-2 py-2.5 flex items-center text-sm text-neutral-800 border border-neutral-800 whitespace-nowrap transition-colors duration-300 hover:bg-neutral-800 hover:text-white cursor-pointer"
             >
-              {item.length > 12 ? (
+              {category.name.length > 12 ? (
                 <>
-                  <span className="hidden sm:inline">{item}</span>
-                  <span className="sm:hidden">{item.split(" ")[0]}</span>
+                  <span className="hidden sm:inline">{category.name}</span>
+                  <span className="sm:hidden">
+                    {category.name.split(" ")[0]}
+                  </span>
                 </>
               ) : (
-                item
+                category.name
               )}
             </div>
           ))}
@@ -65,7 +53,13 @@ function Filter() {
         </div>
       </div>
 
-      <FilterModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <FilterModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        categories={categories}
+        brands={brands}
+        colors={colors}
+      />
     </>
   );
 }
