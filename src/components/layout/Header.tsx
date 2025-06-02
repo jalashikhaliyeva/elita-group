@@ -6,7 +6,7 @@ import LanguageSwitcher from "./LanguageSwitcher";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
-function Header({ activeItem = "dizayn" }) {
+function Header({ activeItem = "" }) {
   const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
