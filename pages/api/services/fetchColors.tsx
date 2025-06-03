@@ -2,7 +2,7 @@
 import { Color, ColorsApiResponse } from "@/src/types";
 import { API_ENDPOINTS } from "../endpoints";
 
-export async function fetchColors(): Promise<Color[]> {
+export async function fetchColors(lang:string = "az"): Promise<Color[]> {
   const base = process.env.NEXT_PUBLIC_API_BASE_URL!;
   const url = `${base}${API_ENDPOINTS.COLOR.LIST}`;
 
@@ -11,7 +11,7 @@ export async function fetchColors(): Promise<Color[]> {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      "Accept-Language": "az",
+      "Accept-Language": lang,
     },
     cache: "no-store",
   });

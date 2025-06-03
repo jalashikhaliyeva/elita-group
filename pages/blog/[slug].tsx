@@ -1,10 +1,9 @@
-// pages/blog/[slug].tsx
 import Breadcrumb from "@/src/components/layout/Breadcrumb";
 import Container from "@/src/components/layout/Container";
 import Footer from "@/src/components/layout/Footer";
 import Header from "@/src/components/layout/Header";
 import BlogDetails from "@/src/components/BlogPage/BlogDetailed";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { BlogItem } from "@/src/types";
 import { getSingleBlogData } from "../api/services/blogsService";
 
@@ -25,11 +24,20 @@ function BlogDetailed({ blog }: BlogDetailedProps) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const lang = context.locale || "az";
   const slug = context.params?.slug as string;
-  
+
   try {
-    const blog = await getSingleBlogData(slug);
+    const blog = await getSingleBlogData(slug, lang);
+    if (!blog) {
+      return {
+        notFound: true,
+      };
+    }
+
     return {
       props: {
         blog,

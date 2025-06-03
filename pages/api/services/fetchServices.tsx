@@ -7,7 +7,7 @@ import {
 } from "@/src/types";
 import { API_ENDPOINTS } from "../endpoints";
 
-export async function fetchServices(): Promise<ServiceData[]> {
+export async function fetchServices(lang:string = "az"): Promise<ServiceData[]> {
   const base = process.env.NEXT_PUBLIC_API_BASE_URL!;
   const url = `${base}${API_ENDPOINTS.SERVICES.LIST}`;
 
@@ -16,7 +16,7 @@ export async function fetchServices(): Promise<ServiceData[]> {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      "Accept-Language": "az",
+      "Accept-Language": lang,
     },
     cache: "no-store",
   });
@@ -31,7 +31,7 @@ export async function fetchServices(): Promise<ServiceData[]> {
   return json.data;
 }
 
-export async function getSingleService(slug: string): Promise<ServiceItem> {
+export async function getSingleService(slug: string, lang:string = "az"): Promise<ServiceItem> {
   const base = process.env.NEXT_PUBLIC_API_BASE_URL!;
   const url = `${base}${API_ENDPOINTS.SERVICES.DETAIL(slug)}`;
 
@@ -40,7 +40,7 @@ export async function getSingleService(slug: string): Promise<ServiceItem> {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      "Accept-Language": "az",
+      "Accept-Language": lang,
     },
     cache: "no-store",
   });

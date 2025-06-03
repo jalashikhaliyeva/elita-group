@@ -1,6 +1,6 @@
 // pages/bathroom/[slug].tsx
 
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import ProductSingle from "@/src/components/Bathroom/ProductSingle";
 import Breadcrumb from "@/src/components/layout/Breadcrumb";
 import Container from "@/src/components/layout/Container";
@@ -17,7 +17,7 @@ const BathroomDetailed = ({ product }: BathroomDetailedProps) => {
   return (
     <>
       <Container>
-        <Header activeItem="dizayn" />
+        <Header activeItem="hamam" />
       </Container>
 
       <Container>
@@ -38,21 +38,17 @@ const BathroomDetailed = ({ product }: BathroomDetailedProps) => {
 
 export default BathroomDetailed;
 
-// ----------------------------------------------------------------
-// This getServerSideProps will run on every request to /bathroom/[slug]
-// It extracts `slug` from the URL, calls fetchProductBySlug, and
-// either returns the product data as props or a 404 if not found.
-// ----------------------------------------------------------------
 export const getServerSideProps: GetServerSideProps<
   BathroomDetailedProps
-> = async (context) => {
+> = async (context: GetServerSidePropsContext) => {
   const slugParam = context.params?.slug;
+  const lang = context.locale || "az"; 
   if (typeof slugParam !== "string") {
     return { notFound: true };
   }
 
   try {
-    const product = await fetchProductBySlug(slugParam);
+    const product = await fetchProductBySlug(slugParam, lang);
     return {
       props: {
         product,
@@ -60,7 +56,6 @@ export const getServerSideProps: GetServerSideProps<
     };
   } catch (err) {
     console.error(err);
-    // If the fetch fails (e.g. product not found), return 404
     return { notFound: true };
   }
 };

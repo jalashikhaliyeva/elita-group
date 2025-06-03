@@ -1,7 +1,7 @@
 import { BlogApiResponse, BlogItem } from "@/src/types";
 import { API_ENDPOINTS } from "../endpoints";
 
-export async function getBlogsData(): Promise<BlogApiResponse> {
+export async function getBlogsData(lang: string = "az"): Promise<BlogApiResponse> {
   const base = process.env.NEXT_PUBLIC_API_BASE_URL!;
   const url = `${base}${API_ENDPOINTS.BLOG.LIST}`;
 
@@ -10,7 +10,7 @@ export async function getBlogsData(): Promise<BlogApiResponse> {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      "Accept-Language": "az",
+      "Accept-Language": lang,
     },
     cache: "no-store",
   });
@@ -25,7 +25,7 @@ export async function getBlogsData(): Promise<BlogApiResponse> {
   return json;
 }
 
-export async function getSingleBlogData(slug: string): Promise<BlogItem> {
+export async function getSingleBlogData(slug: string , lang: string = "az"): Promise<BlogItem> {
   const base = process.env.NEXT_PUBLIC_API_BASE_URL!;
   const url = `${base}${API_ENDPOINTS.BLOG.DETAIL(slug)}`;
 
@@ -34,7 +34,7 @@ export async function getSingleBlogData(slug: string): Promise<BlogItem> {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      "Accept-Language": "az",
+      "Accept-Language": lang,
     },
     cache: "no-store",
   });

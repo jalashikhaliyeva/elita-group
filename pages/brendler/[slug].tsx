@@ -7,6 +7,7 @@ import Breadcrumb from "@/src/components/layout/Breadcrumb";
 // import Products from "@/src/components/Bathroom/Products";
 import { getBanner } from "../api/services/fetchBanner";
 import { fetchBrands } from "../api/services/fetchBrands";
+import { GetServerSidePropsContext } from "next";
 
 
 
@@ -29,12 +30,13 @@ function Bathroom() {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+    const lang = context.locale || "az";
   try {
     const slug = "hamam";
     const [bannerData, brands] = await Promise.all([
-      getBanner(slug),
-      fetchBrands(),
+      getBanner(slug ,lang),
+      fetchBrands(lang),
     ]);
 
     return {

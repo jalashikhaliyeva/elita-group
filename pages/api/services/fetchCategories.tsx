@@ -2,7 +2,7 @@
 import { Category, CategoriesApiResponse } from "@/src/types";
 import { API_ENDPOINTS } from "../endpoints";
 
-export async function fetchCategories(): Promise<Category[]> {
+export async function fetchCategories(lang:string = "az"): Promise<Category[]> {
   const base = process.env.NEXT_PUBLIC_API_BASE_URL!;
   const url = `${base}${API_ENDPOINTS.CATEGORIES.LIST}`;
 
@@ -11,7 +11,7 @@ export async function fetchCategories(): Promise<Category[]> {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      "Accept-Language": "az",
+      "Accept-Language": lang,
     },
     cache: "no-store",
   });

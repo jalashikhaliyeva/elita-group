@@ -1,7 +1,7 @@
 import { MissionApiResponse, MissionData } from "@/src/types";
 import { API_ENDPOINTS } from "../endpoints";
 
-export async function getMissionData(): Promise<MissionData[]> {
+export async function getMissionData(lang:string = "az"): Promise<MissionData[]> {
   const base = process.env.NEXT_PUBLIC_API_BASE_URL!;
   const url = `${base}${API_ENDPOINTS.MISSION.LIST}`;
 
@@ -10,7 +10,7 @@ export async function getMissionData(): Promise<MissionData[]> {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      "Accept-Language": "az",
+      "Accept-Language": lang,
     },
     cache: "no-store",
   });

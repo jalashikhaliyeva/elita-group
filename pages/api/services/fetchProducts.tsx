@@ -2,7 +2,7 @@
 import { Product, ProductsApiResponse, ProductSingleApiResponse } from "@/src/types";
 import { API_ENDPOINTS } from "../endpoints";
 
-export async function fetchProducts(): Promise<Product[]> {
+export async function fetchProducts(lang:string = "az"): Promise<Product[]> {
   const base = process.env.NEXT_PUBLIC_API_BASE_URL!;
   const url = `${base}${API_ENDPOINTS.PRODUCTS.LIST}`;
 
@@ -11,7 +11,7 @@ export async function fetchProducts(): Promise<Product[]> {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      "Accept-Language": "az",
+      "Accept-Language": lang,
     },
     cache: "no-store",
   });
@@ -28,7 +28,7 @@ export async function fetchProducts(): Promise<Product[]> {
 
 
 
-export async function fetchProductBySlug(slug: string): Promise<Product> {
+export async function fetchProductBySlug(slug: string ,lang:string = "az"): Promise<Product> {
   const base = process.env.NEXT_PUBLIC_API_BASE_URL!;
   const url = `${base}${API_ENDPOINTS.PRODUCTS.DETAIL(slug)}`;
 
@@ -37,7 +37,7 @@ export async function fetchProductBySlug(slug: string): Promise<Product> {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      "Accept-Language": "az",
+      "Accept-Language": lang,
     },
     cache: "no-store",
   });

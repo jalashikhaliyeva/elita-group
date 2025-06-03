@@ -2,7 +2,7 @@
 import { ContactFormData, ContactApiResponse } from "@/src/types";
 import { API_ENDPOINTS } from "../endpoints";
 
-export async function postContactForm(data: ContactFormData): Promise<ContactApiResponse> {
+export async function postContactForm(data: ContactFormData, lang:string = "az"): Promise<ContactApiResponse> {
   const base = process.env.NEXT_PUBLIC_API_BASE_URL!;
   const url = `${base}${API_ENDPOINTS.CONTACT.POST}`;
 
@@ -11,7 +11,7 @@ export async function postContactForm(data: ContactFormData): Promise<ContactApi
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      "Accept-Language": "az",
+      "Accept-Language": lang,
     },
     body: JSON.stringify(data),
     cache: "no-store",

@@ -10,6 +10,7 @@ import Footer from "@/src/components/layout/Footer";
 import { BannerItem, ServiceData } from "@/src/types";
 import { fetchServices } from "../api/services/fetchServices";
 import { getBanner } from "../api/services/fetchBanner";
+import { GetServerSidePropsContext } from "next";
 
 interface InformationItem {
   title: string;
@@ -54,11 +55,12 @@ function Design({ services, bannerData }: DesignPageProps) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const lang = context.locale || "az";
   try {
     const slug = "dizayn";
-    const services = await fetchServices();
-    const bannerData = await getBanner(slug);
+    const services = await fetchServices(lang);
+    const bannerData = await getBanner(slug, lang);
     return {
       props: {
         services,
@@ -76,7 +78,7 @@ export async function getServerSideProps() {
           video: "",
           description: "",
           information: [],
-        }, // Default empty state
+        },
       },
     };
   }

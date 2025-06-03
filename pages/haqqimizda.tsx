@@ -14,6 +14,7 @@ import { getMissionData } from "./api/services/servicesService";
 import { getFaqData } from "./api/services/faqService";
 import { AboutData, MissionData, FaqData, ContactData } from "@/src/types";
 import { getContactInfo } from "./api/services/contactService";
+import { GetServerSidePropsContext } from "next";
 
 interface AboutPageProps {
   aboutData: AboutData | null;
@@ -56,13 +57,14 @@ export default function About({
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const lang = context.locale || "az";
   try {
     const [aboutData, missionData, faqData, contactData] = await Promise.all([
-      getAboutData(),
-      getMissionData(),
-      getFaqData(),
-      getContactInfo(),
+      getAboutData(lang),
+      getMissionData(lang),
+      getFaqData(lang),
+      getContactInfo(lang),
     ]);
     if (!contactData) {
       return { notFound: true };

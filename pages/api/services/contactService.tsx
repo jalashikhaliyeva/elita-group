@@ -2,7 +2,7 @@
 import { ContactApiResponse, ContactData } from "@/src/types";
 import { API_ENDPOINTS } from "../endpoints";
 
-export async function getContactInfo(): Promise<ContactData> {
+export async function getContactInfo(lang:string = "az"): Promise<ContactData> {
   const base = process.env.NEXT_PUBLIC_API_BASE_URL!;
   const url = `${base}${API_ENDPOINTS.CONTACT.LIST}`;
 
@@ -11,7 +11,7 @@ export async function getContactInfo(): Promise<ContactData> {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      "Accept-Language": "az",
+      "Accept-Language": lang,
     },
     cache: "no-store",
   });

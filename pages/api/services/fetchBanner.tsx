@@ -2,7 +2,7 @@ import { BannerApiResponse, BannerItem } from "@/src/types";
 import { API_ENDPOINTS } from "../endpoints";
 
 // api/banner.ts
-export async function getBanner(slug: string): Promise<BannerItem> {
+export async function getBanner(slug: string, lang:string = "az"): Promise<BannerItem> {
   const base = process.env.NEXT_PUBLIC_API_BASE_URL!;
   const url = `${base}${API_ENDPOINTS.BANNER.DETAIL(slug)}`;
 
@@ -11,7 +11,7 @@ export async function getBanner(slug: string): Promise<BannerItem> {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      "Accept-Language": "az",
+      "Accept-Language": lang,
     },
     cache: "no-store",
   });

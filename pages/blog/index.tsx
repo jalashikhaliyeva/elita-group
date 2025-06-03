@@ -7,6 +7,7 @@ import Footer from "@/src/components/layout/Footer";
 import Header from "@/src/components/layout/Header";
 import { BlogApiResponse } from "@/src/types";
 import { getBlogsData } from "../api/services/blogsService";
+import { GetServerSidePropsContext } from "next";
 
 interface BlogPageProps {
   blogsData: BlogApiResponse;
@@ -30,8 +31,9 @@ function Blog({ blogsData }: BlogPageProps) {
   );
 }
 
-export async function getServerSideProps() {
-  const blogsData = await getBlogsData();
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+   const lang = context.locale || "az";
+  const blogsData = await getBlogsData(lang);
   return {
     props: {
       blogsData,

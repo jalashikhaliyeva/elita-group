@@ -6,6 +6,7 @@ import AboutSection from "@/src/components/DesignPage/AboutSection";
 import Footer from "@/src/components/layout/Footer";
 import { getBanner } from "../api/services/fetchBanner";
 import { BannerItem } from "@/src/types";
+import { GetServerSidePropsContext } from "next";
 
 interface InformationItem {
   title: string;
@@ -47,10 +48,11 @@ function Construction({ bannerData }: ConstructionProps) {
 
 export default Construction;
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const lang = context.locale || "az";
   try {
     const slug = "mebel";
-    const bannerData = await getBanner(slug);
+    const bannerData = await getBanner(slug, lang);
 
     return {
       props: {
@@ -66,7 +68,7 @@ export async function getServerSideProps() {
           image: "",
           video: "",
           description: "",
-          information: []
+          information: [],
         }, // Default empty state
       },
     };

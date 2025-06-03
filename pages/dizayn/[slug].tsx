@@ -32,7 +32,7 @@ export default function ProjectDetailed({
         <Header activeItem="dizayn" />
       </Container>
       <Container>
-        <Breadcrumb />
+      <Breadcrumb title={serviceData.title} />
       </Container>
       <Hero
         title={serviceData.title}
@@ -57,12 +57,16 @@ export default function ProjectDetailed({
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
   try {
     const { slug } = context.params as { slug: string };
+    const lang = context.locale || "az"; 
+    
     const [contactData, serviceData] = await Promise.all([
-      getContactInfo(),
-      getSingleService(slug),
+      getContactInfo(lang),
+      getSingleService(slug, lang), 
     ]);
 
     if (!contactData || !serviceData) {

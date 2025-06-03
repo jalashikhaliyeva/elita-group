@@ -1,7 +1,8 @@
+// api/services/aboutServices.ts
 import { AboutApiResponse, AboutData } from "@/src/types";
 import { API_ENDPOINTS } from "../endpoints";
 
-export async function getAboutData(): Promise<AboutData> {
+export async function getAboutData(lang: string = "az"): Promise<AboutData> {
   const base = process.env.NEXT_PUBLIC_API_BASE_URL!;
   const url = `${base}${API_ENDPOINTS.ABOUT.LIST}`;
 
@@ -10,7 +11,7 @@ export async function getAboutData(): Promise<AboutData> {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      "Accept-Language": "az",
+      "Accept-Language": lang, 
     },
     cache: "no-store",
   });

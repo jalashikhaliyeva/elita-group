@@ -1,7 +1,7 @@
 import { IntroServicesApiResponse, IntroServiceData } from "@/src/types";
 import { API_ENDPOINTS } from "../endpoints";
 
-export async function fetchIntroServices(): Promise<IntroServiceData[]> {
+export async function fetchIntroServices(lang:string = "az"): Promise<IntroServiceData[]> {
   const base = process.env.NEXT_PUBLIC_API_BASE_URL!;
   const url = `${base}${API_ENDPOINTS.INTRO.LIST}`;
 
@@ -10,7 +10,7 @@ export async function fetchIntroServices(): Promise<IntroServiceData[]> {
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      "Accept-Language": "az",
+      "Accept-Language": lang,
     },
     cache: "no-store",
   });

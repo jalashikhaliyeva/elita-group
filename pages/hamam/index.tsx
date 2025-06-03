@@ -13,6 +13,7 @@ import { fetchBrands } from "../api/services/fetchBrands";
 import { fetchCategories } from "../api/services/fetchCategories";
 import { fetchColors } from "../api/services/fetchColors";
 import { fetchProducts } from "../api/services/fetchProducts";
+import { GetServerSidePropsContext } from "next";
 
 interface BathroomProps {
   bannerData: BannerItem | null;
@@ -58,18 +59,19 @@ function Bathroom({
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const lang = context.locale || "az";
   try {
     const slug = "hamam";
 
     // Fetch banner, brands, categories, colors, + products in parallel
     const [bannerData, brands, categories, colors, products] =
       await Promise.all([
-        getBanner(slug),
-        fetchBrands(),
-        fetchCategories(),
-        fetchColors(),
-        fetchProducts(),
+        getBanner(slug, lang),
+        fetchBrands(lang),
+        fetchCategories(lang),
+        fetchColors(lang),
+        fetchProducts(lang),
       ]);
 
     return {
