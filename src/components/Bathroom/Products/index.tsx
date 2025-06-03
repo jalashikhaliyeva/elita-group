@@ -1,15 +1,16 @@
-
 // src/components/Bathroom/Products.tsx
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Product } from "@/src/types";
+import { useTranslation } from "react-i18next";
 
 interface ProductItemProps {
   product: Product;
 }
 
 function ProductItem({ product }: ProductItemProps) {
+  const { t } = useTranslation();
   const defaultImage = product.image?.image;
   const [currentImage, setCurrentImage] = useState<string>(defaultImage);
   const seen = new Set<string>();
@@ -65,7 +66,6 @@ interface ProductsProps {
   hasSearched?: boolean;
 }
 
-
 function LoadingSkeleton() {
   return (
     <div className="flex flex-col gap-4 animate-pulse">
@@ -76,7 +76,14 @@ function LoadingSkeleton() {
   );
 }
 
-export default function Products({ products, loading = false, searchTerm = "", hasSearched = false }: ProductsProps) {
+export default function Products({
+  products,
+  loading = false,
+  searchTerm = "",
+  hasSearched = false,
+}: ProductsProps) {
+  const { t } = useTranslation();
+
   if (loading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-4 gap-5 my-10">
@@ -93,20 +100,20 @@ export default function Products({ products, loading = false, searchTerm = "", h
       <div className="flex flex-col items-center justify-center py-16 my-10">
         <div className="text-6xl mb-4">🔍</div>
         <h3 className="text-xl font-archivo text-neutral-800 mb-2">
-          {hasSearched && searchTerm 
-            ? `"${searchTerm}" üçün nəticə tapılmadı`
-            : "Heç bir məhsul tapılmadı"
-          }
+          {hasSearched && searchTerm
+            ? t("no_results_for", { term: searchTerm })
+            : t("no_products_found")}
         </h3>
         <p className="text-neutral-600 text-center max-w-md">
           {hasSearched && searchTerm
-            ? "Başqa axtarış sözü cəhd edin və ya filtrləri dəyişin."
-            : "Axtarış kriteriyalarınızı dəyişdirməyi və ya filtrləri təmizləməyi cəhd edin."
-          }
+            ? t("try_another_search_term_or_change_filters")
+            : t("try_changing_search_criteria_or_clearing_filters")
+            }
         </p>
       </div>
     );
   }
+
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-5 my-10">

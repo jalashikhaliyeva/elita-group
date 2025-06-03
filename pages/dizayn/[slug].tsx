@@ -12,6 +12,7 @@ import { ContactData, ServiceItem } from "@/src/types";
 import Hero from "@/src/components/ProjectDetailed/Hero.tsx";
 import { getSingleService } from "../api/services/fetchServices";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import Head from "next/head";
 
 interface ProjectDetailedProps {
   contactData: ContactData | null;
@@ -28,6 +29,9 @@ export default function ProjectDetailed({
 
   return (
     <>
+       <Head>
+        <meta name="author" content="https://markup.az/" />
+      </Head>
       <Container>
         <Header activeItem="dizayn" />
       </Container>
@@ -41,9 +45,7 @@ export default function ProjectDetailed({
       />
       <Container>
         <ProjectDetails
-          // title={serviceData.title}
           description={serviceData.description}
-          // shortDescription={serviceData.short_description}
         />
         <ProjectVideo videoUrl={serviceData.video} />
         <ProjectImages images={serviceData.images} />

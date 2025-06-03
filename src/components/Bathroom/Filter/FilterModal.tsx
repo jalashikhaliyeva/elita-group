@@ -1,10 +1,10 @@
-
 // src/components/Bathroom/FilterModal.tsx
 import React, { useState, useEffect } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { Category, Brand, Color } from "@/src/types";
 import { FilterState } from "@/pages/hamam";
+import { useTranslation } from "react-i18next";
 
 interface FilterModalProps {
   isOpen: boolean;
@@ -25,6 +25,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
   filters,
   onApplyFilters,
 }) => {
+  const { t } = useTranslation();
   const [openSection, setOpenSection] = useState<string | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [localFilters, setLocalFilters] = useState<FilterState>(filters);
@@ -48,7 +49,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
   };
 
   const handleFilterChange = (
-    section: keyof Omit<FilterState, 'search'>,
+    section: keyof Omit<FilterState, "search">,
     value: string
   ) => {
     setLocalFilters((prev) => {
@@ -95,7 +96,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
           <div className="flex h-full flex-col bg-white shadow-xl">
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-5 border-b border-neutral-200">
-              <h2 className="text-lg text-neutral-800">Filterlər</h2>
+              <h2 className="text-lg text-neutral-800">{t("filters")}</h2>
               <button onClick={handleClose}>
                 <IoClose className="h-6 w-6" />
               </button>
@@ -110,10 +111,13 @@ const FilterModal: React.FC<FilterModalProps> = ({
                   onClick={() => toggleSection("type")}
                 >
                   <div>
-                    <h3 className="text-md text-neutral-800">Məhsul növü</h3>
+                    <h3 className="text-md text-neutral-800">
+                      {" "}
+                      {t("product_type")}
+                    </h3>
                     {localFilters.categories.length > 0 && (
                       <p className="mt-1 text-xs text-neutral-500">
-                        Seçildi: {localFilters.categories.length}
+                        {t("selected")}: {localFilters.categories.length}
                       </p>
                     )}
                   </div>
@@ -133,13 +137,17 @@ const FilterModal: React.FC<FilterModalProps> = ({
                     <label key={category.id} className="flex items-center">
                       <input
                         type="checkbox"
-                        checked={localFilters.categories.includes(category.name)}
+                        checked={localFilters.categories.includes(
+                          category.name
+                        )}
                         onChange={() =>
                           handleFilterChange("categories", category.name)
                         }
                         className="h-4 w-4 rounded border-neutral-300"
                       />
-                      <span className="ml-3 text-sm text-neutral-800">{category.name}</span>
+                      <span className="ml-3 text-sm text-neutral-800">
+                        {category.name}
+                      </span>
                     </label>
                   ))}
                 </div>
@@ -152,10 +160,10 @@ const FilterModal: React.FC<FilterModalProps> = ({
                   onClick={() => toggleSection("brand")}
                 >
                   <div>
-                    <h3 className="text-md text-neutral-800">Brend</h3>
+                    <h3 className="text-md text-neutral-800"> {t("brand")}</h3>
                     {localFilters.brands.length > 0 && (
                       <p className="mt-1 text-xs text-neutral-500">
-                        Seçildi: {localFilters.brands.length}
+                        {t("selected")} : {localFilters.brands.length}
                       </p>
                     )}
                   </div>
@@ -176,10 +184,14 @@ const FilterModal: React.FC<FilterModalProps> = ({
                       <input
                         type="checkbox"
                         checked={localFilters.brands.includes(brand.name)}
-                        onChange={() => handleFilterChange("brands", brand.name)}
+                        onChange={() =>
+                          handleFilterChange("brands", brand.name)
+                        }
                         className="h-4 w-4 rounded border-neutral-300"
                       />
-                      <span className="ml-3 text-sm text-neutral-800">{brand.name}</span>
+                      <span className="ml-3 text-sm text-neutral-800">
+                        {brand.name}
+                      </span>
                     </label>
                   ))}
                 </div>
@@ -192,10 +204,10 @@ const FilterModal: React.FC<FilterModalProps> = ({
                   onClick={() => toggleSection("color")}
                 >
                   <div>
-                    <h3 className="text-md text-neutral-800">Rəng</h3>
+                    <h3 className="text-md text-neutral-800"> {t("color")}</h3>
                     {localFilters.colors.length > 0 && (
                       <p className="mt-1 text-xs text-neutral-500">
-                        Seçildi: {localFilters.colors.length}
+                        {t("selected")}: {localFilters.colors.length}
                       </p>
                     )}
                   </div>
@@ -216,7 +228,9 @@ const FilterModal: React.FC<FilterModalProps> = ({
                       <input
                         type="checkbox"
                         checked={localFilters.colors.includes(color.name)}
-                        onChange={() => handleFilterChange("colors", color.name)}
+                        onChange={() =>
+                          handleFilterChange("colors", color.name)
+                        }
                         className="h-4 w-4 rounded border-neutral-300"
                       />
                       <div className="ml-3 flex items-center">
@@ -224,7 +238,9 @@ const FilterModal: React.FC<FilterModalProps> = ({
                           className="w-4 h-4 rounded-sm mr-2 border border-neutral-300"
                           style={{ backgroundColor: color.color }}
                         />
-                        <span className="text-sm text-neutral-800">{color.name}</span>
+                        <span className="text-sm text-neutral-800">
+                          {color.name}
+                        </span>
                       </div>
                     </label>
                   ))}
@@ -238,13 +254,13 @@ const FilterModal: React.FC<FilterModalProps> = ({
                 onClick={applyFilters}
                 className="bg-neutral-800 px-4 py-2 text-sm text-white hover:bg-neutral-700 transition-colors"
               >
-                Tətbiq et
+                {t("apply")}
               </button>
               <button
                 onClick={clearAllFilters}
                 className="border border-neutral-800 px-4 py-2 text-sm text-neutral-800 hover:bg-neutral-100 transition-colors"
               >
-                Hamısını təmizlə
+                {t("clear_all")}
               </button>
             </div>
           </div>

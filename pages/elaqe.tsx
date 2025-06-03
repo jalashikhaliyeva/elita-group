@@ -7,6 +7,7 @@ import ContactBanner from "@/src/components/ProjectDetailed/ContactBanner";
 import { ContactData } from "@/src/types";
 import { getContactInfo } from "./api/services/contactService";
 import { GetServerSidePropsContext } from "next";
+import Head from "next/head";
 
 interface AboutPageProps {
   contactData: ContactData | null;
@@ -15,6 +16,9 @@ interface AboutPageProps {
 export default function About({ contactData }: AboutPageProps) {
   return (
     <>
+       <Head>
+        <meta name="author" content="https://markup.az/" />
+      </Head>
       <Container>
         <Header />
       </Container>

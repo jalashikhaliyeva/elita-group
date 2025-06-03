@@ -7,6 +7,7 @@ import Footer from "@/src/components/layout/Footer";
 import { getBanner } from "../api/services/fetchBanner";
 import { BannerItem } from "@/src/types";
 import { GetServerSidePropsContext } from "next";
+import Head from "next/head";
 
 interface InformationItem {
   title: string;
@@ -28,6 +29,9 @@ interface ConstructionProps {
 function Construction({ bannerData }: ConstructionProps) {
   return (
     <>
+       <Head>
+        <meta name="author" content="https://markup.az/" />
+      </Head>
       <Container>
         <Header activeItem="mebel" />
       </Container>

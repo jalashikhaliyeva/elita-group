@@ -8,6 +8,7 @@ import Header from "@/src/components/layout/Header";
 import { BlogApiResponse } from "@/src/types";
 import { getBlogsData } from "../api/services/blogsService";
 import { GetServerSidePropsContext } from "next";
+import Head from "next/head";
 
 interface BlogPageProps {
   blogsData: BlogApiResponse;
@@ -16,6 +17,9 @@ interface BlogPageProps {
 function Blog({ blogsData }: BlogPageProps) {
   return (
     <>
+       <Head>
+        <meta name="author" content="https://markup.az/" />
+      </Head>
       <Container>
         <Header />
         <Breadcrumb />

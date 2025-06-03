@@ -8,6 +8,7 @@ import Footer from "@/src/components/layout/Footer";
 import Header from "@/src/components/layout/Header";
 import { Product } from "@/src/types";
 import { fetchProductBySlug } from "../api/services/fetchProducts";
+import Head from "next/head";
 
 interface BathroomDetailedProps {
   product: Product;
@@ -16,6 +17,9 @@ interface BathroomDetailedProps {
 const BathroomDetailed = ({ product }: BathroomDetailedProps) => {
   return (
     <>
+       <Head>
+        <meta name="author" content="https://markup.az/" />
+      </Head>
       <Container>
         <Header activeItem="hamam" />
       </Container>
@@ -25,7 +29,6 @@ const BathroomDetailed = ({ product }: BathroomDetailedProps) => {
       </Container>
 
       <Container>
-        {/* Now pass the fetched `product` object into ProductSingle */}
         <ProductSingle product={product} />
       </Container>
 

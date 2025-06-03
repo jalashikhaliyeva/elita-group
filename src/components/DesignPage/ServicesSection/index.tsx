@@ -1,7 +1,8 @@
-
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 function ServicesSection() {
+  const { t } = useTranslation();
   return (
     <div className="w-full flex flex-col lg:flex-row justify-between py-8 lg:py-14">
       {/* Left Column */}
@@ -14,7 +15,7 @@ function ServicesSection() {
             <span className="h-[1px] w-[340px] bg-elements"></span>
           </div>
           <h2 className="text-textBase text-right pt-6 lg:pt-8 font-archivo text-2xl md:text-3xl lg:text-4xl font-medium leading-9">
-            Xidmətlər
+            {t("services")}
           </h2>
         </div>
       </div>

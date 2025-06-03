@@ -11,6 +11,7 @@ import { BannerItem, ServiceData } from "@/src/types";
 import { fetchServices } from "../api/services/fetchServices";
 import { getBanner } from "../api/services/fetchBanner";
 import { GetServerSidePropsContext } from "next";
+import Head from "next/head";
 
 interface InformationItem {
   title: string;
@@ -33,6 +34,9 @@ interface DesignPageProps {
 function Design({ services, bannerData }: DesignPageProps) {
   return (
     <>
+       <Head>
+        <meta name="author" content="https://markup.az/" />
+      </Head>
       <Container>
         <Header activeItem="dizayn" />
       </Container>

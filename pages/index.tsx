@@ -2,6 +2,7 @@ import IntroSection from "@/src/components/IntroSection";
 import { IntroServiceData } from "@/src/types";
 import { fetchIntroServices } from "./api/services/fetchIntroCategories";
 import { GetServerSidePropsContext } from "next";
+import Head from "next/head";
 
 interface HomeProps {
   introData: IntroServiceData[];
@@ -9,11 +10,14 @@ interface HomeProps {
 
 export default function Home({ introData }: HomeProps) {
   return (
-    <div>
+    <>
+       <Head>
+        <meta name="author" content="https://markup.az/" />
+      </Head>
       <main>
         <IntroSection introData={introData} />
       </main>
-    </div>
+    </>
   );
 }
 

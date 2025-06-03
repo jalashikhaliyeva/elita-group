@@ -15,6 +15,7 @@ import { getBanner } from "../api/services/fetchBanner";
 import { fetchBrands } from "../api/services/fetchBrands";
 import { fetchCategories } from "../api/services/fetchCategories";
 import { fetchColors } from "../api/services/fetchColors";
+import Head from "next/head";
 
 interface BrandPageProps {
   bannerData: BannerItem | null;
@@ -44,7 +45,6 @@ function BrandPage({
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
 
-  // Initialize filters with the selected brand
   const [filters, setFilters] = useState<FilterState>({
     categories: [],
     brands: selectedBrand ? [selectedBrand.slug] : [],
@@ -56,15 +56,13 @@ function BrandPage({
     setLoading(true);
 
     try {
-      // Check if it's a search-only query (no other filters except brand)
       const isSearchOnly =
         newFilters.search.trim() &&
         newFilters.categories.length === 0 &&
-        newFilters.brands.length === 1 && // Only the selected brand
+        newFilters.brands.length === 1 && 
         newFilters.colors.length === 0;
 
       if (isSearchOnly) {
-        // Use fetchSearchProducts for search-only queries, but we still need to filter by brand
         setHasSearched(true);
         const filterParams: FilterParams = {
           brands: newFilters.brands,
@@ -99,7 +97,6 @@ function BrandPage({
   };
 
   const handleFilterChange = (newFilters: FilterState) => {
-    // Always ensure the selected brand remains in the filters
     const filtersWithBrand = {
       ...newFilters,
       brands: selectedBrand
@@ -149,14 +146,15 @@ function BrandPage({
   }, [selectedBrand?.slug]);
 
   const brandTitle = selectedBrand
-    ? `${selectedBrand.name} Məhsulları`
+    ? `${selectedBrand.name}`
     : "Brend Məhsulları";
-  const brandDescription = selectedBrand
-    ? `${selectedBrand.name} brendinin bütün məhsullarını kəşf edin`
-    : "Seçilmiş brendin məhsullarını görün";
+  
 
   return (
     <>
+       <Head>
+        <meta name="author" content="https://markup.az/" />
+      </Head>
       <Container>
         <Header />
       </Container>

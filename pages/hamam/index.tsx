@@ -20,6 +20,7 @@ import {
   FilterParams,
 } from "../api/services/fetchProducts";
 import { GetServerSidePropsContext } from "next";
+import Head from "next/head";
 
 interface BathroomProps {
   bannerData: BannerItem | null;
@@ -143,6 +144,9 @@ function Bathroom({
 
   return (
     <>
+       <Head>
+        <meta name="author" content="https://markup.az/" />
+      </Head>
       <Container>
         <Header activeItem="hamam" />
       </Container>

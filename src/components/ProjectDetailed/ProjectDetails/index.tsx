@@ -1,14 +1,13 @@
-
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 interface ProjectDetailsProps {
   description: string;
-  // Remove unused props or add them back to the component if needed
-  // title?: string;
-  // shortDescription?: string;
+
 }
 
 function ProjectDetails({ description }: ProjectDetailsProps) {
+  const { t } = useTranslation();
   return (
     <div className="w-full flex flex-col lg:flex-row justify-between py-8 lg:py-14">
       <div className="flex flex-col w-full lg:w-auto">
@@ -20,7 +19,7 @@ function ProjectDetails({ description }: ProjectDetailsProps) {
             <span className="h-[1px] w-full bg-elements"></span>
           </div>
           <h2 className="text-textBase text-right pt-6 lg:pt-8 font-archivo text-2xl md:text-3xl lg:text-4xl font-medium leading-9">
-            Xidmət haqqında
+            {t("service_about")}
           </h2>
         </div>
       </div>

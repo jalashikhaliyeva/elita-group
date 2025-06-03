@@ -1,14 +1,13 @@
 import { postContactForm } from "@/pages/api/services/postContactForm";
 import Image from "next/image";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 
-// Updated interface to match the API response
 export interface ContactFormResponse {
   success: boolean;
   message?: string;
 }
 
-// Updated interface to match ContactData type
 interface ContactBannerProps {
   contactData?: {
     phone: string;
@@ -17,6 +16,7 @@ interface ContactBannerProps {
 }
 
 function ContactBanner({ contactData }: ContactBannerProps) {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -47,13 +47,13 @@ function ContactBanner({ contactData }: ContactBannerProps) {
       if (response) {
         // Changed from response.success to response.status
         setSubmitMessage({
-          text: "Müraciətiniz uğurla göndərildi!",
+          text: t("contact_success"),
           isError: false,
         });
         setFormData({ name: "", surname: "", phone: "" });
       } else {
         setSubmitMessage({
-          text: "Göndərilmə zamanı xəta baş verdi",
+          text: t("contact_error_send"),
           isError: true,
         });
       }
@@ -62,7 +62,7 @@ function ContactBanner({ contactData }: ContactBannerProps) {
     } catch (error) {
       console.error("Form submission error:", error);
       setSubmitMessage({
-        text: "Xəta baş verdi, zəhmət olmasa yenidən cəhd edin",
+        text: t("error_try_again"),
         isError: true,
       });
     } finally {
@@ -71,9 +71,7 @@ function ContactBanner({ contactData }: ContactBannerProps) {
   };
 
   if (!contactData) {
-    return (
-      <p className="p-8 text-center text-white">No contact info available.</p>
-    );
+    return <p className="p-8 text-center text-white">{t("no_contact_info")}</p>;
   }
 
   return (
@@ -90,7 +88,7 @@ function ContactBanner({ contactData }: ContactBannerProps) {
 
       <div className="flex flex-col md:flex-row items-center justify-between pt-8">
         <div className="text-white md:ml-10 pb-5 font-archivo">
-          <h2 className="text-4xl font-light mb-6">Bizimlə əlaqə</h2>
+          <h2 className="text-4xl font-light mb-6">{t("nav.contact")}</h2>
           <div className="space-y-2">
             {contactData.phone && (
               <p className="text-xl">{contactData.phone}</p>
@@ -105,26 +103,15 @@ function ContactBanner({ contactData }: ContactBannerProps) {
         <div className="flex-shrink-0 w-80 md:mr-[100px]">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-white text-sm mb-2">Adınız</label>
+              <label className="block text-white text-sm mb-2">
+                {t("first_name")}
+              </label>
               <input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                placeholder="Adınızı daxil edin"
-                className="w-full px-4 py-3 bg-transparent border border-gray-400 text-white placeholder-gray-400 focus:outline-none focus:border-white"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-white text-sm mb-2">Soyadınız</label>
-              <input
-                type="text"
-                name="surname"
-                value={formData.surname}
-                onChange={handleChange}
-                placeholder="Soyadınızı daxil edin"
+                placeholder={t("enter_first_name")}
                 className="w-full px-4 py-3 bg-transparent border border-gray-400 text-white placeholder-gray-400 focus:outline-none focus:border-white"
                 required
               />
@@ -132,7 +119,22 @@ function ContactBanner({ contactData }: ContactBannerProps) {
 
             <div>
               <label className="block text-white text-sm mb-2">
-                Telefon nömrəniz
+                {t("last_name")}
+              </label>
+              <input
+                type="text"
+                name="surname"
+                value={formData.surname}
+                onChange={handleChange}
+                placeholder={t("enter_last_name")}
+                className="w-full px-4 py-3 bg-transparent border border-gray-400 text-white placeholder-gray-400 focus:outline-none focus:border-white"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-white text-sm mb-2">
+                {t("phone_number")}
               </label>
               <input
                 type="tel"
@@ -160,7 +162,7 @@ function ContactBanner({ contactData }: ContactBannerProps) {
               disabled={isSubmitting}
               className="w-full cursor-pointer bg-black text-white py-3 px-6 mt-6 hover:bg-gray-900 transition-colors duration-200 flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <span>{isSubmitting ? "Göndərilir..." : "Göndər"}</span>
+              <span>{isSubmitting ? t("sending") : t("send")}</span>
               {!isSubmitting && (
                 <svg
                   width="17"

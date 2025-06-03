@@ -15,6 +15,7 @@ import { getFaqData } from "./api/services/faqService";
 import { AboutData, MissionData, FaqData, ContactData } from "@/src/types";
 import { getContactInfo } from "./api/services/contactService";
 import { GetServerSidePropsContext } from "next";
+import Head from "next/head";
 
 interface AboutPageProps {
   aboutData: AboutData | null;
@@ -31,6 +32,9 @@ export default function About({
 }: AboutPageProps) {
   return (
     <>
+       <Head>
+        <meta name="author" content="https://markup.az/" />
+      </Head>
       <Container>
         <Header />
         <Breadcrumb />

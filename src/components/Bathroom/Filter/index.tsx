@@ -3,6 +3,7 @@ import { FiSearch } from "react-icons/fi";
 import FilterModal from "./FilterModal";
 import { Category, Brand, Color } from "@/src/types";
 import { FilterState } from "@/pages/hamam";
+import { useTranslation } from "react-i18next";
 
 interface FilterProps {
   categories: Category[];
@@ -25,7 +26,7 @@ function Filter({
 }: FilterProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [localSearch, setLocalSearch] = useState(filters.search);
-
+  const { t } = useTranslation();
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       onSearchChange(localSearch);
@@ -59,7 +60,7 @@ function Filter({
             onClick={() => setIsModalOpen(true)}
             className="p-2.5 flex gap-2 items-center text-sm text-neutral-800 border border-neutral-800 whitespace-nowrap transition-colors duration-300 hover:bg-neutral-800 hover:text-white relative"
           >
-            Filter
+            {t("filter")}
             {activeFiltersCount > 0 && (
               <span className="ml-1 bg-amber-700 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                 {activeFiltersCount}
@@ -98,7 +99,7 @@ function Filter({
               onClick={onClearFilters}
               className="p-2.5 text-sm text-amber-900 whitespace-nowrap transition-colors duration-300  hover:text-amber-700"
             >
-              Təmizlə
+              {t("clear")}
             </button>
           )}
         </div>
@@ -109,7 +110,7 @@ function Filter({
             value={localSearch}
             onChange={(e) => setLocalSearch(e.target.value)}
             className="border-b border-neutral-800 text-neutral-800 outline-none py-1 pr-8 focus:border-b-2 w-full"
-            placeholder="Axtar..."
+            placeholder={t("search_placeholder")}
           />
           <FiSearch className="absolute text-xl right-2 top-2 text-neutral-500" />
         </div>
