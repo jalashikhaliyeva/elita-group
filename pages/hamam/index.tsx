@@ -7,14 +7,7 @@ import Footer from "@/src/components/layout/Footer";
 import Breadcrumb from "@/src/components/layout/Breadcrumb";
 import Filter from "@/src/components/Bathroom/Filter";
 import Products from "@/src/components/Bathroom/Products";
-import {
-  BannerItem,
-  Brand,
-  Category,
-  Color,
-  Product,
-
-} from "@/src/types";
+import { BannerItem, Brand, Category, Color, Product } from "@/src/types";
 import { getBanner } from "../api/services/fetchBanner";
 import Partners from "@/src/components/Bathroom/Partners";
 import { fetchBrands } from "../api/services/fetchBrands";

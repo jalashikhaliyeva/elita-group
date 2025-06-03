@@ -3,77 +3,113 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 interface BreadcrumbProps {
-  title?: string; // Optional title for the current page
-  parentTitle?: string; // Optional parent title (for cases where you want to customize)
+  title?: string; // Optional override for the current page’s title
+  parentTitle?: string; // Optional override for the parent crumb’s title
 }
 
 function Breadcrumb({ title, parentTitle }: BreadcrumbProps) {
   const router = useRouter();
-  const pathSegments = router.asPath.split('/').filter(segment => segment !== '');
+  const pathSegments = router.asPath
+    .split("/")
+    .filter((segment) => segment !== "");
 
-  // Mapping of path segments to display names
-  const pathDisplayNames: Record<string, string> = {
-    'dizayn': 'Dizayn',
-    'hamam': 'Hamam Aksesuarları',
-    'brendler': 'Brendlər',
-    // Add more mappings as needed
-  };
-
-  // Generate breadcrumb items
-  const breadcrumbItems = pathSegments.map((segment, index) => {
-    // Build the path up to the current segment
-    const path = '/' + pathSegments.slice(0, index + 1).join('/');
-    const isLast = index === pathSegments.length - 1;
-
-    // For the last segment, use the title prop if available
-    if (isLast && title) {
-      return {
-        displayName: title,
-        path,
-        isLast: true
-      };
-    }
-
-    // Use custom display name if available, otherwise use the segment
-    const displayName = pathDisplayNames[segment] || segment;
-
-    return {
-      displayName,
-      path,
-      isLast
-    };
-  });
-
-  // Special case for home page or when no segments exist
-  if (breadcrumbItems.length === 0) {
+  // If there are no segments at all, don’t render anything
+  if (pathSegments.length === 0) {
     return null;
   }
 
-  // Special handling for parent title override
-  if (parentTitle && breadcrumbItems.length > 1) {
-    breadcrumbItems[breadcrumbItems.length - 2].displayName = parentTitle;
+  // Mapping of “normal” top-level segments → display names
+  const pathDisplayNames: Record<string, string> = {
+    dizayn: "Dizayn",
+    hamam: "Hamam Aksesuarları",
+    brendler: "Brendlər",
+    // …add more mappings if needed
+  };
+
+  // If the first segment is “brendler”, we want to force the parent crumb
+  // to be “Hamam Aksesuarları” (and link to “/hamam”), even though the URL is /brendler/slug
+  const isBrendlerPage = pathSegments[0] === "brendler";
+
+  // Build an explicit array of breadcrumb items:
+  // – each item is { displayName, path, isLast }
+  //
+  // For `/brendler/alcadrain`:
+  //   breadcrumbItems === [
+  //     { displayName: "Hamam Aksesuarları", path: "/hamam", isLast: false },
+  //     { displayName: "alcadrain",       path: "/brendler/alcadrain", isLast: true }
+  //   ]
+  //
+  // Otherwise, fall back to “split-and-map” logic.
+  type Crumb = { displayName: string; path: string; isLast: boolean };
+
+  let breadcrumbItems: Crumb[] = [];
+
+  if (isBrendlerPage && pathSegments.length >= 2) {
+    // Parent crumb: “Hamam Aksesuarları” → /hamam
+    breadcrumbItems.push({
+      displayName: parentTitle ?? "Hamam Aksesuarları",
+      path: "/hamam",
+      isLast: false,
+    });
+
+    // Last crumb: show the slug (or use `title` prop if provided)
+    const lastSlug = pathSegments[1];
+    breadcrumbItems.push({
+      displayName: title ?? lastSlug,
+      path: "/" + pathSegments.join("/"),
+      isLast: true,
+    });
+  } else {
+    // Generic case: split on “/” and map each segment one by one.
+    breadcrumbItems = pathSegments.map((segment, index) => {
+      const accumulatedPath = "/" + pathSegments.slice(0, index + 1).join("/");
+      const isLast = index === pathSegments.length - 1;
+
+      // If this is the very last, and `title` was passed in, use that
+      if (isLast && title) {
+        return {
+          displayName: title,
+          path: accumulatedPath,
+          isLast: true,
+        };
+      }
+
+      // Otherwise, look up a friendly name or fall back to the raw segment
+      const displayName = pathDisplayNames[segment] || segment;
+      return {
+        displayName,
+        path: accumulatedPath,
+        isLast,
+      };
+    });
+
+    // If someone passed in a `parentTitle` and there is at least two crumbs,
+    // override the second-to-last crumb’s name
+    if (parentTitle && breadcrumbItems.length > 1) {
+      breadcrumbItems[breadcrumbItems.length - 2].displayName = parentTitle;
+    }
   }
 
   return (
     <div className="flex items-center gap-2 py-4 flex-wrap">
-      <Link 
-        href="/" 
+      <Link
+        href="/"
         className="font-manrope text-base font-normal leading-6 text-textBase hover:text-amber-700 transition-colors"
       >
         Ana səhifə
       </Link>
       <ChevronIcon />
-      
-      {breadcrumbItems.map((item, index) => (
-        <React.Fragment key={index}>
+
+      {breadcrumbItems.map((item, idx) => (
+        <React.Fragment key={idx}>
           {item.isLast ? (
             <span className="font-manrope text-base font-normal leading-6 text-amber-700">
               {item.displayName}
             </span>
           ) : (
             <>
-              <Link 
-                href={item.path} 
+              <Link
+                href={item.path}
                 className="font-manrope text-base font-normal leading-6 text-textBase hover:text-amber-700 transition-colors"
               >
                 {item.displayName}

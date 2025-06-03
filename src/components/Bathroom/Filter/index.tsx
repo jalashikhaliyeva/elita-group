@@ -1,5 +1,3 @@
-
-// src/components/Bathroom/Filter.tsx
 import React, { useState, useEffect } from "react";
 import { FiSearch } from "react-icons/fi";
 import FilterModal from "./FilterModal";
@@ -23,12 +21,12 @@ function Filter({
   filters,
   onFilterChange,
   onSearchChange,
-  onClearFilters
+  onClearFilters,
 }: FilterProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [localSearch, setLocalSearch] = useState(filters.search);
 
- useEffect(() => {
+  useEffect(() => {
     const timeoutId = setTimeout(() => {
       onSearchChange(localSearch);
     }, 500);
@@ -36,22 +34,21 @@ function Filter({
     return () => clearTimeout(timeoutId);
   }, [localSearch]);
 
-
   const handleCategoryClick = (categoryName: string) => {
     const newCategories = filters.categories.includes(categoryName)
-      ? filters.categories.filter(c => c !== categoryName)
+      ? filters.categories.filter((c) => c !== categoryName)
       : [...filters.categories, categoryName];
 
     onFilterChange({
       ...filters,
-      categories: newCategories
+      categories: newCategories,
     });
   };
 
-  const activeFiltersCount = 
-    filters.categories.length + 
-    filters.brands.length + 
-    filters.colors.length + 
+  const activeFiltersCount =
+    filters.categories.length +
+    filters.brands.length +
+    filters.colors.length +
     (filters.search ? 1 : 0);
 
   return (

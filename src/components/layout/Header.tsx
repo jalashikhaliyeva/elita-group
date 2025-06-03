@@ -23,7 +23,7 @@ function Header({ activeItem = "" }) {
 
   const dropdownItems = [
     { id: "about", label: t("about"), href: "/haqqimizda" },
-    { id: "contact", label: t("contact"), href: "/haqqimizda" },
+    { id: "contact", label: t("contact"), href: "/elaqe" },
     { id: "blog", label: "Bloq", href: "/blog" },
   ];
 

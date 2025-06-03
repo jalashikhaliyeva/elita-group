@@ -1,5 +1,7 @@
+// src/components/Bathroom/Partners.tsx
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Partner {
   name: string;
@@ -19,10 +21,12 @@ export default function Partners({ brands }: PartnersProps) {
 
   const getEnoughBrands = () => {
     if (brands.length === 0) return [];
-    
+
     const minItems = 12;
     const repeatCount = Math.ceil(minItems / brands.length);
-    return Array(repeatCount).fill(null).flatMap(() => [...brands]);
+    return Array(repeatCount)
+      .fill(null)
+      .flatMap(() => [...brands]);
   };
 
   const enoughBrands = getEnoughBrands();
@@ -59,12 +63,10 @@ export default function Partners({ brands }: PartnersProps) {
         className="flex items-center whitespace-nowrap space-x-8 overflow-x-auto no-scrollbar"
       >
         {doubledBrands.map((brand, i) => (
-          <a
+          <Link
             key={`${brand.slug}-${i}`}
             href={`/brendler/${brand.slug}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="focus:outline-none "
+            className="focus:outline-none"
           >
             <div
               className="
@@ -72,6 +74,7 @@ export default function Partners({ brands }: PartnersProps) {
                 bg-white 
                 transition-shadow duration-300
                 dark:bg-brandGray dark:border-brandGraySecondary
+                cursor-pointer
               "
             >
               <Image
@@ -87,7 +90,7 @@ export default function Partners({ brands }: PartnersProps) {
                 "
               />
             </div>
-          </a>
+          </Link>
         ))}
       </div>
     </div>
