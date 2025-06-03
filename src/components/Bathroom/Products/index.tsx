@@ -1,3 +1,4 @@
+
 // src/components/Bathroom/Products.tsx
 import Image from "next/image";
 import Link from "next/link";
@@ -11,8 +12,6 @@ interface ProductItemProps {
 function ProductItem({ product }: ProductItemProps) {
   const defaultImage = product.image?.image;
   const [currentImage, setCurrentImage] = useState<string>(defaultImage);
-
-  // Build a deduped list of color‐variants: one entry per unique hex
   const seen = new Set<string>();
   const colorVariants = product.images.reduce<
     { id: number; color: string; image: string }[]
@@ -25,9 +24,8 @@ function ProductItem({ product }: ProductItemProps) {
   }, []);
 
   return (
-    // Wrap the entire card in a Link to /hamam/{slug}
     <Link href={`/hamam/${product.slug}`} passHref>
-      <p className="flex flex-col gap-4 group hover:opacity-90 transition-opacity">
+      <div className="flex flex-col gap-4 group hover:opacity-90 transition-opacity cursor-pointer">
         <div className="relative aspect-square w-full bg-[#E9EDEA] overflow-hidden">
           <Image
             src={currentImage}
@@ -50,23 +48,66 @@ function ProductItem({ product }: ProductItemProps) {
           </div>
         </div>
 
-        {/* Category and Title */}
-        <p className="text-[#5A635C] font-manrope text-base">
+        <div className="text-[#5A635C] font-manrope text-base">
           {product.category}
-        </p>
+        </div>
         <h2 className="text-[#18181B] font-archivo font-medium text-xl">
           {product.title}
         </h2>
-      </p>
+      </div>
     </Link>
   );
 }
-
 interface ProductsProps {
-  products: Product[];
+  products?: Product[];
+  loading?: boolean;
+  searchTerm?: string;
+  hasSearched?: boolean;
 }
 
-export default function Products({ products }: ProductsProps) {
+
+function LoadingSkeleton() {
+  return (
+    <div className="flex flex-col gap-4 animate-pulse">
+      <div className="aspect-square w-full bg-gray-200 rounded"></div>
+      <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+      <div className="h-6 bg-gray-200 rounded w-full"></div>
+    </div>
+  );
+}
+
+export default function Products({ products, loading = false, searchTerm = "", hasSearched = false }: ProductsProps) {
+  if (loading) {
+    return (
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-5 my-10">
+        {Array.from({ length: 8 }).map((_, index) => (
+          <LoadingSkeleton key={index} />
+        ))}
+      </div>
+    );
+  }
+
+  // Handle no results differently for search vs filter
+  if (!products || products.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-16 my-10">
+        <div className="text-6xl mb-4">🔍</div>
+        <h3 className="text-xl font-archivo text-neutral-800 mb-2">
+          {hasSearched && searchTerm 
+            ? `"${searchTerm}" üçün nəticə tapılmadı`
+            : "Heç bir məhsul tapılmadı"
+          }
+        </h3>
+        <p className="text-neutral-600 text-center max-w-md">
+          {hasSearched && searchTerm
+            ? "Başqa axtarış sözü cəhd edin və ya filtrləri dəyişin."
+            : "Axtarış kriteriyalarınızı dəyişdirməyi və ya filtrləri təmizləməyi cəhd edin."
+          }
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-5 my-10">
       {products.map((product) => (

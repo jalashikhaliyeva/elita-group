@@ -20,7 +20,9 @@ export const API_ENDPOINTS = {
   },
   PRODUCTS: {
     LIST: "/products",
+    FILTER: "/products/filter",
     DETAIL: (slug: string) => `/product/${slug}`,
+    QUERY: "/products/query",
   },
   COLOR: {
     LIST: "/color",
