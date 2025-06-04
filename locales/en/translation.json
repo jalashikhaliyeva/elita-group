@@ -42,5 +42,14 @@
   "phone_number": "Your phone number",
   "sending": "Sending...",
   "send": "Send",
-  "services": "Services"
+  "services": "Services",
+  "contactDetails": {
+    "whatsapp": "Contact via WhatsApp",
+    "contact_us": "Contact Us",
+    "general_info": "General Information",
+    "details": "Details",
+    "category": "Category:",
+    "brand": "Brand:",
+    "color_availability": "Color Availability:"
+  }
 }

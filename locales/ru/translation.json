@@ -31,7 +31,7 @@
   "color": "Цвет",
   "apply": "Применить",
   "clear_all": "Очистить все",
-    "service_about": "О услуге",
+  "service_about": "О услуге",
   "contact_success": "Ваш запрос успешно отправлен!",
   "contact_error_send": "Произошла ошибка при отправке",
   "error_try_again": "Произошла ошибка, пожалуйста, попробуйте снова",
@@ -43,5 +43,14 @@
   "phone_number": "Ваш номер телефона",
   "sending": "Отправка...",
   "send": "Отправить",
-  "services": "Услуги"
+  "services": "Услуги",
+  "contactDetails": {
+    "whatsapp": "Связь через WhatsApp",
+    "contact_us": "Связаться с нами",
+    "general_info": "Общая информация",
+    "details": "Подробности",
+    "category": "Категория:",
+    "brand": "Бренд:",
+    "color_availability": "Наличие цветов:"
+  }
 }
