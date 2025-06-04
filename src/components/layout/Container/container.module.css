@@ -58,14 +58,14 @@
 /* For screens larger than 1536px (2xl) */
 @media (min-width: 1536px) {
   .container {
-    max-width: calc(1450px - 40);
-    padding: 0 40px;
+    max-width: calc(1450px - 200);
+    padding: 0 200px;
   }
 }
 
 @media (min-width: 2000px) {
   .container {
-    width: 1800px;
+    width: 1500px;
     padding: 0 40px;
   }
 }
