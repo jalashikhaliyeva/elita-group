@@ -27,13 +27,18 @@ function Filter({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [localSearch, setLocalSearch] = useState(filters.search);
   const { t } = useTranslation();
+
+
+ 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       onSearchChange(localSearch);
     }, 500);
 
     return () => clearTimeout(timeoutId);
-  }, [localSearch]);
+  }, [localSearch, onSearchChange]); // <-- include onSearchChange here
+
+  
 
   const handleCategoryClick = (categoryName: string) => {
     const newCategories = filters.categories.includes(categoryName)

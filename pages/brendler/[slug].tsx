@@ -1,6 +1,8 @@
+// ./pages/brendler/[slug].tsx
+
 import Container from "@/src/components/layout/Container";
 import Header from "@/src/components/layout/Header";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Footer from "@/src/components/layout/Footer";
 import Breadcrumb from "@/src/components/layout/Breadcrumb";
 import Filter from "@/src/components/Bathroom/Filter";
@@ -45,6 +47,7 @@ function BrandPage({
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
 
+  // We no longer keep a separate `searchTerm` state; instead, we store search directly in `filters`.
   const [filters, setFilters] = useState<FilterState>({
     categories: [],
     brands: selectedBrand ? [selectedBrand.slug] : [],
@@ -52,43 +55,37 @@ function BrandPage({
     search: "",
   });
 
+  // Whenever the user types into the search field, update filters.search and re‐apply filters.
+  const onSearchChange = useCallback(
+    (term: string) => {
+      const newFilters: FilterState = {
+        ...filters,
+        search: term,
+      };
+      setFilters(newFilters);
+      applyFilters(newFilters);
+    },
+    [filters]
+  );
+
   const applyFilters = async (newFilters: FilterState) => {
     setLoading(true);
 
     try {
-      const isSearchOnly =
-        newFilters.search.trim() &&
-        newFilters.categories.length === 0 &&
-        newFilters.brands.length === 1 && 
-        newFilters.colors.length === 0;
+      const filterParams: FilterParams = {
+        categories:
+          newFilters.categories.length > 0 ? newFilters.categories : undefined,
+        brands: newFilters.brands.length > 0 ? newFilters.brands : undefined,
+        colors: newFilters.colors.length > 0 ? newFilters.colors : undefined,
+        search: newFilters.search.trim() || undefined,
+      };
 
-      if (isSearchOnly) {
+      if (newFilters.search.trim()) {
         setHasSearched(true);
-        const filterParams: FilterParams = {
-          brands: newFilters.brands,
-          search: newFilters.search.trim(),
-        };
-        const response = await fetchFilteredProducts(filterParams);
-        setProducts(response.data);
-      } else {
-        // Use fetchFilteredProducts for complex filtering
-        if (newFilters.search.trim()) {
-          setHasSearched(true);
-        }
-
-        const filterParams: FilterParams = {
-          categories:
-            newFilters.categories.length > 0
-              ? newFilters.categories
-              : undefined,
-          brands: newFilters.brands.length > 0 ? newFilters.brands : undefined,
-          colors: newFilters.colors.length > 0 ? newFilters.colors : undefined,
-          search: newFilters.search.trim() || undefined,
-        };
-
-        const response = await fetchFilteredProducts(filterParams);
-        setProducts(response.data);
       }
+
+      const response = await fetchFilteredProducts(filterParams);
+      setProducts(response.data);
     } catch (error) {
       console.error("Error applying filters:", error);
     } finally {
@@ -97,34 +94,22 @@ function BrandPage({
   };
 
   const handleFilterChange = (newFilters: FilterState) => {
-    const filtersWithBrand = {
-      ...newFilters,
-      brands: selectedBrand
-        ? [...new Set([selectedBrand.slug, ...newFilters.brands])]
-        : newFilters.brands,
-    };
+    // Always keep `selectedBrand` in the brand list if provided
+    const filtersWithBrand: FilterState = selectedBrand
+      ? {
+          ...newFilters,
+          brands: Array.from(new Set([selectedBrand.slug, ...newFilters.brands])),
+        }
+      : newFilters;
 
     setFilters(filtersWithBrand);
     applyFilters(filtersWithBrand);
   };
 
-  const handleSearchChange = (searchTerm: string) => {
-    if (searchTerm.trim()) {
-      setHasSearched(true);
-    }
-    const newFilters = {
-      ...filters,
-      search: searchTerm,
-      brands: selectedBrand ? [selectedBrand.slug] : [],
-    };
-    setFilters(newFilters);
-    applyFilters(newFilters);
-  };
-
   const clearAllFilters = () => {
     const emptyFilters: FilterState = {
       categories: [],
-      brands: selectedBrand ? [selectedBrand.slug] : [], // Keep the selected brand
+      brands: selectedBrand ? [selectedBrand.slug] : [],
       colors: [],
       search: "",
     };
@@ -133,28 +118,28 @@ function BrandPage({
     applyFilters(emptyFilters);
   };
 
-  // Update filters when brand changes (if navigating between brand pages)
+  // When the route’s brand slug changes, reset filters to “brand only”
   useEffect(() => {
     if (selectedBrand) {
-      const newFilters = {
-        ...filters,
+      const brandOnlyFilters: FilterState = {
+        categories: [],
         brands: [selectedBrand.slug],
+        colors: [],
+        search: "",
       };
-      setFilters(newFilters);
-      applyFilters(newFilters);
+      setFilters(brandOnlyFilters);
+      applyFilters(brandOnlyFilters);
     }
-  }, [selectedBrand?.slug]);
+  }, [selectedBrand]);
 
-  const brandTitle = selectedBrand
-    ? `${selectedBrand.name}`
-    : "Brend Məhsulları";
-  
+  const brandTitle = selectedBrand ? `${selectedBrand.name}` : "Brend Məhsulları";
 
   return (
     <>
-       <Head>
+      <Head>
         <meta name="author" content="https://markup.az/" />
       </Head>
+
       <Container>
         <Header />
       </Container>
@@ -173,9 +158,8 @@ function BrandPage({
           colors={colors}
           filters={filters}
           onFilterChange={handleFilterChange}
-          onSearchChange={handleSearchChange}
+          onSearchChange={onSearchChange}
           onClearFilters={clearAllFilters}
-          // selectedBrand={selectedBrand}
         />
         <Products
           products={products}
@@ -203,16 +187,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       fetchColors(lang),
     ]);
 
-    // Find the selected brand
     const selectedBrand =
       brands.find((brand) => brand.slug === brandSlug) || null;
 
-    // Fetch products filtered by the selected brand
     let initialProducts: Product[] = [];
     if (selectedBrand) {
-      const filterParams: FilterParams = {
-        brands: [selectedBrand.slug],
-      };
+      const filterParams: FilterParams = { brands: [selectedBrand.slug] };
       const response = await fetchFilteredProducts(filterParams, lang);
       initialProducts = response.data;
     }

@@ -1,8 +1,8 @@
-// src/pages/bathroom.tsx
+// src/pages/hamam/index.tsx
 import Hero from "@/src/components/ProjectDetailed/Hero.tsx";
 import Container from "@/src/components/layout/Container";
 import Header from "@/src/components/layout/Header";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Footer from "@/src/components/layout/Footer";
 import Breadcrumb from "@/src/components/layout/Breadcrumb";
 import Filter from "@/src/components/Bathroom/Filter";
@@ -47,6 +47,7 @@ function Bathroom({
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+
   const [filters, setFilters] = useState<FilterState>({
     categories: [],
     brands: [],
@@ -120,16 +121,6 @@ function Bathroom({
     applyFilters(newFilters);
   };
 
-  const handleSearchChange = (searchTerm: string) => {
-    // Mark that a search has been performed once user types
-    if (searchTerm.trim()) {
-      setHasSearched(true);
-    }
-    const newFilters = { ...filters, search: searchTerm };
-    setFilters(newFilters);
-    applyFilters(newFilters);
-  };
-
   const clearAllFilters = () => {
     const emptyFilters: FilterState = {
       categories: [],
@@ -138,13 +129,26 @@ function Bathroom({
       search: "",
     };
     setFilters(emptyFilters);
-    setHasSearched(false); // reset search state
+    setHasSearched(false);
     applyFilters(emptyFilters);
   };
 
+  // Whenever the search input changes, merge it into filters.search + re­apply
+  const onSearchChange = useCallback(
+    (term: string) => {
+      const updatedFilters: FilterState = {
+        ...filters,
+        search: term,
+      };
+      setFilters(updatedFilters);
+      applyFilters(updatedFilters);
+    },
+    [filters]
+  );
+
   return (
     <>
-       <Head>
+      <Head>
         <meta name="author" content="https://markup.az/" />
       </Head>
       <Container>
@@ -170,7 +174,7 @@ function Bathroom({
           colors={colors}
           filters={filters}
           onFilterChange={handleFilterChange}
-          onSearchChange={handleSearchChange}
+          onSearchChange={onSearchChange}
           onClearFilters={clearAllFilters}
         />
         <Products

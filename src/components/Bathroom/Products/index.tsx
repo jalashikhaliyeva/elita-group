@@ -10,7 +10,7 @@ interface ProductItemProps {
 }
 
 function ProductItem({ product }: ProductItemProps) {
-  const { t } = useTranslation();
+
   const defaultImage = product.image?.image;
   const [currentImage, setCurrentImage] = useState<string>(defaultImage);
   const seen = new Set<string>();
