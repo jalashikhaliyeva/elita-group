@@ -36,9 +36,9 @@ function Filter({
     }, 500);
 
     return () => clearTimeout(timeoutId);
-  }, [localSearch, onSearchChange]); // <-- include onSearchChange here
+// eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [localSearch]); // ← only localSearch here
 
-  
 
   const handleCategoryClick = (categoryName: string) => {
     const newCategories = filters.categories.includes(categoryName)
