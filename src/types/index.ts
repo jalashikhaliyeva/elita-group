@@ -383,3 +383,16 @@ export interface ImageVariant {
   image: string;
   thumb_image: string;
 }
+
+
+// src/types/index.ts (add this to your existing types)
+export interface MetaTag {
+  title: string;
+  meta_title: string;
+  meta_description: string;
+  meta_keyword: string;
+}
+
+export interface MetaTagsApiResponse {
+  data: MetaTag[];
+}

@@ -12,16 +12,24 @@ import ContactBanner from "@/src/components/ProjectDetailed/ContactBanner";
 import { getAboutData } from "./api/services/aboutServices";
 import { getMissionData } from "./api/services/servicesService";
 import { getFaqData } from "./api/services/faqService";
-import { AboutData, MissionData, FaqData, ContactData } from "@/src/types";
 import { getContactInfo } from "./api/services/contactService";
+import {
+  AboutData,
+  MissionData,
+  FaqData,
+  ContactData,
+  MetaTag,
+} from "@/src/types";
 import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
+import { getMetaByTitle } from "./api/services/fetchMeta";
 
 interface AboutPageProps {
   aboutData: AboutData | null;
   missionData: MissionData[] | null;
   faqData: FaqData[] | null;
   contactData: ContactData | null;
+  metaData: MetaTag | null;
 }
 
 export default function About({
@@ -29,10 +37,17 @@ export default function About({
   missionData,
   faqData,
   contactData,
+  metaData,
 }: AboutPageProps) {
   return (
     <>
-       <Head>
+      <Head>
+        <title>{metaData?.meta_title || "About"}</title>
+        <meta
+          name="description"
+          content={metaData?.meta_description || "About page"}
+        />
+        <meta name="keywords" content={metaData?.meta_keyword || "about"} />
         <meta name="author" content="https://markup.az/" />
       </Head>
       <Container>
@@ -63,13 +78,17 @@ export default function About({
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const lang = context.locale || "az";
+
   try {
-    const [aboutData, missionData, faqData, contactData] = await Promise.all([
-      getAboutData(lang),
-      getMissionData(lang),
-      getFaqData(lang),
-      getContactInfo(lang),
-    ]);
+    const [aboutData, missionData, faqData, contactData, metaData] =
+      await Promise.all([
+        getAboutData(lang),
+        getMissionData(lang),
+        getFaqData(lang),
+        getContactInfo(lang),
+        getMetaByTitle("About", lang),
+      ]);
+
     if (!contactData) {
       return { notFound: true };
     }
@@ -80,6 +99,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         missionData: missionData || null,
         faqData: faqData || null,
         contactData: contactData || null,
+        metaData: metaData || null,
       },
     };
   } catch (error) {
@@ -90,6 +110,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         missionData: null,
         faqData: null,
         contactData: null,
+        metaData: null,
       },
     };
   }

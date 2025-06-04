@@ -1,30 +1,38 @@
 // pages/about.tsx
+
 import React from "react";
+import Breadcrumb from "@/src/components/layout/Breadcrumb";
 import Container from "@/src/components/layout/Container";
 import Footer from "@/src/components/layout/Footer";
 import Header from "@/src/components/layout/Header";
 import ContactBanner from "@/src/components/ProjectDetailed/ContactBanner";
-import { ContactData } from "@/src/types";
 import { getContactInfo } from "./api/services/contactService";
+import { getMetaByTitle } from "./api/services/fetchMeta";
+import { ContactData, MetaTag } from "@/src/types";
 import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
-
 interface AboutPageProps {
   contactData: ContactData | null;
+  metaData: MetaTag | null;
 }
 
-export default function About({ contactData }: AboutPageProps) {
+export default function About({ contactData, metaData }: AboutPageProps) {
   return (
     <>
-       <Head>
+      <Head>
+        <title>{metaData?.meta_title || "Contact"}</title>
+        <meta
+          name="description"
+          content={metaData?.meta_description || "Contact page"}
+        />
+        <meta name="keywords" content={metaData?.meta_keyword || "about"} />
         <meta name="author" content="https://markup.az/" />
       </Head>
       <Container>
         <Header />
+        <Breadcrumb />
       </Container>
-
       <ContactBanner contactData={contactData} />
-
       <Container>
         <Footer />
       </Container>
@@ -35,14 +43,17 @@ export default function About({ contactData }: AboutPageProps) {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const lang = context.locale || "az";
   try {
-    const [contactData] = await Promise.all([getContactInfo(lang)]);
+    const [contactData, metaData] = await Promise.all([
+      getContactInfo(lang),
+      getMetaByTitle("Contact", lang),
+    ]);
     if (!contactData) {
       return { notFound: true };
     }
-
     return {
       props: {
-        contactData: contactData || null,
+        contactData,
+        metaData,
       },
     };
   } catch (error) {
@@ -50,6 +61,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return {
       props: {
         contactData: null,
+        metaData: null,
       },
     };
   }

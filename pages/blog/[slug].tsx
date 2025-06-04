@@ -7,7 +7,6 @@ import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import { BlogItem } from "@/src/types";
 import { getSingleBlogData } from "../api/services/blogsService";
 import Head from "next/head";
-
 interface BlogDetailedProps {
   blog: BlogItem;
 }
@@ -15,8 +14,12 @@ interface BlogDetailedProps {
 function BlogDetailed({ blog }: BlogDetailedProps) {
   return (
     <>
-       <Head>
+      <Head>
         <meta name="author" content="https://markup.az/" />
+        <meta
+          name="description"
+          content={blog?.title || "Our latest articles"}
+        />
       </Head>
       <Container>
         <Header />
