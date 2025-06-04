@@ -9,12 +9,14 @@ import Header from "@/src/components/layout/Header";
 import { Product } from "@/src/types";
 import { fetchProductBySlug } from "../api/services/fetchProducts";
 import Head from "next/head";
+import { getContactInfo } from "../api/services/contactService";
 
 interface BathroomDetailedProps {
   product: Product;
+  phone: string;
 }
 
-const BathroomDetailed = ({ product }: BathroomDetailedProps) => {
+const BathroomDetailed = ({ product  ,phone}: BathroomDetailedProps) => {
   return (
     <>
        <Head>
@@ -29,7 +31,7 @@ const BathroomDetailed = ({ product }: BathroomDetailedProps) => {
       </Container>
 
       <Container>
-        <ProductSingle product={product} />
+        <ProductSingle product={product} phone={phone} />
       </Container>
 
       <Container>
@@ -52,9 +54,12 @@ export const getServerSideProps: GetServerSideProps<
 
   try {
     const product = await fetchProductBySlug(slugParam, lang);
+    const contact = await getContactInfo(lang);
+     const phone = contact.phone || "";
     return {
       props: {
         product,
+         phone,
       },
     };
   } catch (err) {

@@ -1,12 +1,18 @@
 // src/components/Bathroom/DetailedInfo.tsx
 import React from "react";
 import { Product, ImageVariant, Attribute } from "@/src/types";
+import Link from "next/link";
+import { SiWhatsapp } from "react-icons/si";
 
 interface DetailedInfoProps {
   product: Product;
+  phone: string; // e.g. "+994 (70)-370-10-60"
 }
 
-function DetailedInfo({ product }: DetailedInfoProps) {
+function DetailedInfo({ product, phone }: DetailedInfoProps) {
+  // Remove all non-digit characters (including "+"), e.g. "+994 (70)-370-10-60" → "994703701060"
+  const sanitizedPhone = phone.replace(/\D/g, "");
+
   return (
     <div className="flex flex-col justify-between">
       <div className="flex flex-col gap-6">
@@ -56,10 +62,7 @@ function DetailedInfo({ product }: DetailedInfoProps) {
             {product.attribute.length > 0 && (
               <div className="flex flex-col gap-1">
                 {product.attribute.map((attr: Attribute, idx: number) => (
-                  <div
-                    key={idx}
-                    className="flex justify-between items-center"
-                  >
+                  <div key={idx} className="flex justify-between items-center">
                     <p className="text-elementSecondary text-base font-medium font-manrope leading-6">
                       {attr.key}:
                     </p>
@@ -76,16 +79,11 @@ function DetailedInfo({ product }: DetailedInfoProps) {
               <p className="text-elementSecondary text-base font-medium font-manrope leading-6">
                 Rəng mövcudluğu:
               </p>
-
-              {/* If there are any variants with unique hex codes, list them here */}
               <div className="flex gap-2">
                 {[
-                  // Dedupe by `hex` so we only show one swatch per color
+                  // Deduplicate by `hex` to only show one swatch per color
                   ...new Map(
-                    product.images.map((img: ImageVariant) => [
-                      img.hex,
-                      img.hex,
-                    ])
+                    product.images.map((img: ImageVariant) => [img.hex, img.hex])
                   ).values(),
                 ].map((hexValue) => (
                   <span
@@ -100,11 +98,38 @@ function DetailedInfo({ product }: DetailedInfoProps) {
         </div>
       </div>
 
-      {/* “Contact Us” button at the bottom */}
-      <div className="mt-20">
-        <button className="text-textBase border border-textBase py-2 font-archivo font-base w-full flex items-center justify-center leading-5">
-          Bizimlə əlaqə
-        </button>
+      {/* "Contact Us" buttons */}
+      <div className="flex flex-col gap-4 pt-20">
+        {/* Internal "Bizimlə əlaqə" */}
+        <div>
+          <Link
+            href="/elaqe"
+            className="text-textBase border border-textBase py-2 font-archivo font-base w-full flex items-center justify-center leading-5
+                      transition-all duration-300 ease-in-out
+                      hover:bg-textBase hover:text-white
+                      focus:outline-none focus:ring-2 focus:ring-textBase focus:ring-opacity-50
+                      active:bg-textBase/90 active:scale-95"
+          >
+            Bizimlə əlaqə
+          </Link>
+        </div>
+
+        {/* WhatsApp button opens wa.me link in a new tab */}
+        <div>
+          <a
+            href={`https://wa.me/${sanitizedPhone}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-textBase border border-textBase py-2 font-archivo font-base w-full flex items-center gap-5 justify-center leading-5
+                      transition-all duration-300 ease-in-out
+                      hover:bg-emerald-50 hover:border-emerald-800
+                      focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-opacity-50
+                      active:bg-emerald-100 active:scale-95"
+          >
+            <SiWhatsapp className="text-emerald-400 text-2xl" />
+            Whatsappla əlaqə
+          </a>
+        </div>
       </div>
     </div>
   );
