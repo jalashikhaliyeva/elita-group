@@ -42,24 +42,24 @@
 
 @media (min-width: 1200px) {
   .container {
-    max-width: calc(1200px - 60);
-    padding: 0 60px;
+    max-width: calc(1200px - 40);
+    padding: 0 40px;
   }
 }
 
 /* For screens larger than 1240 (xl) */
 @media (min-width: 1380) {
   .container {
-    max-width: calc(1380 - 60);
-    padding: 0 60px;
+    max-width: calc(1380 - 50);
+    padding: 0 50px;
   }
 }
 
 /* For screens larger than 1536px (2xl) */
 @media (min-width: 1536px) {
   .container {
-    max-width: calc(1450px - 200);
-    padding: 0 200px;
+    max-width: calc(1450px - 160);
+    padding: 0 160px;
   }
 }
 

@@ -7,7 +7,7 @@ interface AboutDetailsProps {
 
 function AboutDetails({ data }: AboutDetailsProps) {
   return (
-    <div className="w-full flex flex-col lg:flex-row justify-between py-8 lg:my-14 pb-14 md:pb-20 border-b border-elements">
+    <div className="w-full flex flex-col xl:flex-row justify-between py-8 lg:my-14 pb-14 md:pb-20 border-b border-elements">
       {/* Left Column */}
       <div className="flex flex-col w-full lg:w-auto">
         <div className="mb-[60px] lg:mb-[100px]">

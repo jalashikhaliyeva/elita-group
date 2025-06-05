@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 function ServicesSection() {
   const { t } = useTranslation();
   return (
-    <div className="w-full flex flex-col lg:flex-row justify-between py-8 lg:py-14">
+    <div className="w-full flex flex-col xl:flex-row justify-between py-8 lg:py-14">
       {/* Left Column */}
       <div className="flex flex-col w-full lg:w-auto">
         <div className="mb-[60px] lg:mb-[100px]">
