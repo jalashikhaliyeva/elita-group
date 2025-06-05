@@ -22,7 +22,7 @@ function AboutSection({ information }: AboutSectionProps) {
       {information.map((item, index) => (
         <div
           key={index}
-          className="w-full flex flex-col xl:flex-row justify-between py-8 xl:py-14"
+          className="w-full flex flex-col xl:flex-row gap-[100px] justify-between py-8 xl:py-14"
         >
           {/* Left Column */}
           <div className="flex flex-col w-full xl:w-auto">
