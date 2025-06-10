@@ -12,6 +12,7 @@ import { fetchServices } from "../api/services/fetchServices";
 import { getBanner } from "../api/services/fetchBanner";
 import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
+import { log } from "console";
 
 interface InformationItem {
   title: string;
@@ -32,6 +33,9 @@ interface DesignPageProps {
 }
 
 function Design({ services, bannerData }: DesignPageProps) {
+  console.log(bannerData , "bannerData");
+  console.log(services , "services");
+
   return (
     <>
        <Head>
@@ -51,7 +55,7 @@ function Design({ services, bannerData }: DesignPageProps) {
         <AboutSection information={bannerData.information} />
       </Container>
       <Container>
-        <ServicesSection />
+      <ServicesSection description={services[0]?.description || ""} />
         <ServicesSlider services={services} />
         <Footer />
       </Container>

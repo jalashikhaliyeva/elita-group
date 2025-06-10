@@ -1,7 +1,11 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+interface ServicesSectionProps {
+  /** the long description of the first service */
+  description: string;
+}
 
-function ServicesSection() {
+function ServicesSection({ description }: ServicesSectionProps) {
   const { t } = useTranslation();
   return (
     <div className="w-full flex flex-col xl:flex-row justify-between gap-16 py-8 lg:py-14">
@@ -26,17 +30,10 @@ function ServicesSection() {
           <span className="h-[1px] w-full bg-elements"></span>
         </div>
         <div className="flex flex-col gap-6 lg:gap-8">
-          <p className="text-secondary pt-6 lg:pt-8 text-left flex items-start text-sm lg:text-base font-manrope max-w-full lg:max-w-[805px]">
-            Lorem ipsum dolor sit amet consectetur. Eu risus pretium sapien nisl
-            etiam aliquet. Egestas neque nullam id nisi cras lorem id ac quis.
-            Tortor placerat vel sed augue in blandit cursus vel. Turpis aliquet
-            magna pulvinar dignissim urna ut. Amet ut turpis sit risus sed eu a
-            curabitur consectetur. Amet risus duis ultrices felis aliquam vel
-            feugiat eu cursus. A convallis eu platea urna arcu integer.Egestas
-            neque nullam id nisi cras lorem id ac quis. Tortor placerat vel sed
-            augue in blandit cursus vel. Turpis aliquet magna pulvinar dignissim
-            urna ut.
-          </p>
+          <p
+            className="text-secondary pt-6 lg:pt-8 text-left flex items-start text-sm lg:text-base font-manrope max-w-full lg:max-w-[805px]"
+            dangerouslySetInnerHTML={{ __html: description }}
+          ></p>
         </div>
       </div>
     </div>

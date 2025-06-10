@@ -50,6 +50,20 @@
     "details": "Detallı",
     "category": "Kateqoriya:",
     "brand": "Brend:",
-    "color_availability": "Rəng mövcudluğu:"
+    "color_availability": "Rəng mövcudluğu:",
+    "site_map": "Sayt xəritəsi",
+    "home": "Ana səhifə",
+    "about": "Haqqımızda",
+    "blog": "Blog",
+    "contact": "Əlaqə",
+    "services": "Xidmətlər",
+    "repair_construction": "Təmir və Tikinti",
+    "furniture": "Mebel",
+    "bath_accessories": "Hamam Aksesuarları",
+    "elita_group": "Elita group",
+    "address": "Ünvan",
+    "phone": "Telefon",
+    "mail": "Mail",
+    "design": "Dizayn"
   }
 }

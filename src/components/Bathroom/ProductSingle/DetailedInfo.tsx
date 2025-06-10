@@ -26,27 +26,25 @@ function DetailedInfo({ product, phone }: DetailedInfoProps) {
         {/* Description */}
         <div className="flex flex-col gap-4">
           <p className="text-xl text-textBase font-medium font-archivo leading-5">
-     
-
             {t("contactDetails.general_info")}
           </p>
-          <p className="text-base text-elementSecondary font-manrope">
-            {product.description}
-          </p>
+          <p
+            className="text-base text-elementSecondary font-manrope"
+            dangerouslySetInnerHTML={{ __html: product.description }}
+          />
         </div>
 
         {/* Detailed attributes */}
         <div className="flex flex-col gap-4">
           <p className="text-textBase font-archivo text-xl leading-5 font-medium">
-
-                {t("contactDetails.details")}
+            {t("contactDetails.details")}
           </p>
 
           <div className="flex flex-col gap-3">
             {/* Category */}
             <div className="flex justify-between items-center">
               <p className="text-elementSecondary text-base font-medium font-manrope leading-6">
-               {t("contactDetails.category")}
+                {t("contactDetails.category")}
               </p>
               <p className="text-textBase font-manrope font-semibold leading-6 text-base">
                 {product.category}
@@ -56,7 +54,7 @@ function DetailedInfo({ product, phone }: DetailedInfoProps) {
             {/* Brand */}
             <div className="flex justify-between items-center">
               <p className="text-elementSecondary text-base font-medium font-manrope leading-6">
-               {t("contactDetails.brand")}
+                {t("contactDetails.brand")}
               </p>
               <p className="text-textBase font-manrope font-semibold leading-6 text-base">
                 {product.brand}
@@ -82,7 +80,7 @@ function DetailedInfo({ product, phone }: DetailedInfoProps) {
             {/* Color Availability */}
             <div className="flex justify-between items-center">
               <p className="text-elementSecondary text-base font-medium font-manrope leading-6">
-                      {t("contactDetails.color_availability")}
+                {t("contactDetails.color_availability")}
               </p>
               <div className="flex gap-2">
                 {[
@@ -118,7 +116,7 @@ function DetailedInfo({ product, phone }: DetailedInfoProps) {
                       focus:outline-none focus:ring-2 focus:ring-textBase focus:ring-opacity-50
                       active:bg-textBase/90 active:scale-95"
           >
-           {t("contactDetails.contact_us")}
+            {t("contactDetails.contact_us")}
           </Link>
         </div>
 
@@ -134,8 +132,8 @@ function DetailedInfo({ product, phone }: DetailedInfoProps) {
                       focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-opacity-50
                       active:bg-emerald-100 active:scale-95"
           >
-            <SiWhatsapp className="text-emerald-400 text-2xl" />
-           {t("contactDetails.whatsapp")}
+            <SiWhatsapp className="text-emerald-400 text-base" />
+            {t("contactDetails.whatsapp")}
           </a>
         </div>
       </div>

@@ -22,22 +22,40 @@ function AboutSection({ information }: AboutSectionProps) {
       {information.map((item, index) => (
         <div
           key={index}
-          className="w-full flex flex-col xl:flex-row gap-[100px] justify-between py-8 xl:py-14"
+          className="w-full flex flex-col gap-[100px] py-8 xl:py-14"
         >
-          {/* Left Column */}
-          <div className="flex flex-col w-full xl:w-auto">
-            <div className="mb-[60px] xl:mb-[100px]">
-              <div className="flex gap-3 xl:gap-5 items-center">
-                <span className="text-elements text-lg xl:text-xl font-medium font-Moneta">
-                  ({String(index + 1).padStart(2, "0")})
-                </span>
+          {/* First Row - Title and Description */}
+          <div className="flex flex-col xl:flex-row gap-[100px] justify-between">
+            {/* Left Column - Title */}
+            <div className="w-full xl:w-auto">
+              <div className="mb-[60px] xl:mb-[100px]">
+                <div className="flex gap-3 xl:gap-5 items-center">
+                  <span className="text-elements text-lg xl:text-xl font-medium font-Moneta">
+                    ({String(index + 1).padStart(2, "0")})
+                  </span>
+                  <span className="h-[1px] w-full bg-elements"></span>
+                </div>
+                <h2 className="text-textBase text-right pt-6 xl:pt-8 font-archivo text-2xl md:text-3xl xl:text-4xl font-medium leading-9">
+                  {item.title}
+                </h2>
+              </div>
+            </div>
+
+            {/* Right Column - Description */}
+            <div className="w-full xl:w-auto mt-1">
+              <div className="hidden xl:flex items-center h-[21px]">
                 <span className="h-[1px] w-full bg-elements"></span>
               </div>
-              <h2 className="text-textBase text-right pt-6 xl:pt-8 font-archivo text-2xl md:text-3xl xl:text-4xl font-medium leading-9">
-                {item.title}
-              </h2>
+              <p className="text-secondary pt-6 xl:pt-8 text-left flex items-start text-sm xl:text-base font-manrope max-w-full xl:max-w-[805px]">
+                {item.description}
+              </p>
             </div>
-            <div className="hidden xl:flex flex-col gap-6 pt-8 xl:pt-14">
+          </div>
+
+          {/* Second Row - Images */}
+          <div className="flex flex-col xl:flex-row gap-[100px] justify-between">
+            {/* Left Column - Images */}
+            <div className="hidden xl:flex flex-col gap-6">
               <div className="flex justify-center xl:block">
                 <Image
                   width={400}
@@ -57,26 +75,16 @@ function AboutSection({ information }: AboutSectionProps) {
                 />
               </div>
             </div>
-          </div>
 
-          {/* Right Column */}
-          <div className="flex flex-col xl:mt-0">
-            <div className="hidden xl:flex items-center h-[21px]">
-              <span className="h-[1px] w-full bg-elements"></span>
-            </div>
-            <div className="flex flex-col gap-6 xl:gap-8">
-              <p className="text-secondary pt-6 xl:pt-8 text-left flex items-start text-sm xl:text-base font-manrope max-w-full xl:max-w-[805px]">
-                {item.description}
-              </p>
-              <div className="pt-8 xl:pt-12">
-                <Image
-                  width={800}
-                  height={500}
-                  src={item.image_3}
-                  alt={`${item.title} - Main Image`}
-                  className="object-cover w-full h-[300px] sm:h-[400px] md:h-[500px] xl:h-[628px]"
-                />
-              </div>
+            {/* Right Column - Main Image */}
+            <div className="w-full xl:w-auto">
+              <Image
+                width={800}
+                height={500}
+                src={item.image_3}
+                alt={`${item.title} - Main Image`}
+                className="object-cover w-full h-[300px] sm:h-[400px] md:h-[500px] xl:h-[628px]"
+              />
             </div>
           </div>
         </div>

@@ -51,6 +51,20 @@
     "details": "Подробности",
     "category": "Категория:",
     "brand": "Бренд:",
-    "color_availability": "Наличие цветов:"
+    "color_availability": "Наличие цветов:",
+    "site_map": "Карта сайта",
+    "home": "Главная",
+    "about": "О нас",
+    "blog": "Блог",
+    "contact": "Контакты",
+    "services": "Услуги",
+    "repair_construction": "Ремонт и Строительство",
+    "furniture": "Мебель",
+    "bath_accessories": "Аксессуары для ванной",
+    "elita_group": "Elita group",
+    "address": "Адрес",
+    "phone": "Телефон",
+    "mail": "Почта",
+    "design": "Дизайн"
   }
 }

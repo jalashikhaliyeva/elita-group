@@ -91,7 +91,7 @@ function Breadcrumb({ title, parentTitle }: BreadcrumbProps) {
   }
 
   return (
-    <div className="flex items-center gap-2 py-4 flex-wrap">
+    <div className="flex items-center gap-2 py-4 flex-wrap mt-10">
       <Link
         href="/"
         className="font-manrope text-base font-normal leading-6 text-textBase hover:text-amber-700 transition-colors"

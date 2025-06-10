@@ -29,9 +29,10 @@ function AboutDetails({ data }: AboutDetailsProps) {
           <span className="h-[1px] w-full bg-elements"></span>
         </div>
         <div className="flex flex-col gap-6 lg:gap-8">
-          <p className="text-secondary  lg:pt-8 text-left flex items-start text-sm lg:text-base font-manrope max-w-full lg:max-w-[805px]">
-            {data.description}
-          </p>
+        <p
+  className="text-secondary lg:pt-8 text-left flex items-start text-sm lg:text-base font-manrope max-w-full lg:max-w-[805px]"
+  dangerouslySetInnerHTML={{ __html: data.description }}
+/>
         </div>
       </div>
     </div>

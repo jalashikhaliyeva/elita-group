@@ -5,6 +5,7 @@ import { RxDotFilled } from "react-icons/rx";
 import LanguageSwitcher from "./LanguageSwitcher";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
+import Container from "./Container";
 
 function Header({ activeItem = "" }) {
   const { t } = useTranslation();
@@ -52,8 +53,9 @@ function Header({ activeItem = "" }) {
   }, []);
 
   return (
-    <div className="flex flex-col w-full font-archivo">
-      <div className="hidden md:flex justify-between w-full py-3 px-4">
+<div className="fixed top-0 left-0 w-full z-50 bg-white font-archivo ">
+  <Container>
+  <div className="hidden md:flex justify-between w-full py-3">
         <div>
           <Link href="/" passHref>
             <Image
@@ -218,6 +220,8 @@ function Header({ activeItem = "" }) {
           </div>
         </div>
       </div>
+  </Container>
+
     </div>
   );
 }

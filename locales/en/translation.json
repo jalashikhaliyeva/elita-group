@@ -50,6 +50,20 @@
     "details": "Details",
     "category": "Category:",
     "brand": "Brand:",
-    "color_availability": "Color Availability:"
+    "color_availability": "Color Availability:",
+    "site_map": "Site Map",
+    "home": "Home",
+    "about": "About",
+    "blog": "Blog",
+    "contact": "Contact",
+    "services": "Services",
+    "repair_construction": "Repair & Construction",
+    "furniture": "Furniture",
+    "bath_accessories": "Bath Accessories",
+    "elita_group": "Elita group",
+    "address": "Address",
+    "phone": "Phone",
+    "mail": "Mail",
+    "design": "Design"
   }
 }
