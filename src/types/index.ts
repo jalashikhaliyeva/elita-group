@@ -125,6 +125,7 @@ export interface FaqApiResponse {
 
 export interface ContactData {
   phone: string;
+  map: string; 
   email: string;
 }
 
@@ -395,4 +396,16 @@ export interface MetaTag {
 
 export interface MetaTagsApiResponse {
   data: MetaTag[];
+}
+
+
+export interface BreadcrumbItem {
+  title: string;
+  image: string;
+  thumb_image: string;
+  name: string;
+}
+
+export interface BreadcrumbsApiResponse {
+  data: BreadcrumbItem[];
 }

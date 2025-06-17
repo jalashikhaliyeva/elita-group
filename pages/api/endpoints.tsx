@@ -5,11 +5,14 @@ export const API_ENDPOINTS = {
   BANNER: {
     DETAIL: (slug: string) => `/category/${slug}`,
   },
-  META_TAGS:{
- LIST: "/metata",
+  META_TAGS: {
+    LIST: "/metata",
   },
   ABOUT: {
     LIST: "/about",
+  },
+  BREADCRUMBS: {
+    LIST: "/breadcrumbs",
   },
   BRANDS: {
     LIST: "/brands",

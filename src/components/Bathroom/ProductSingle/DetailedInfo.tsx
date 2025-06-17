@@ -1,4 +1,4 @@
-// src/components/Bathroom/DetailedInfo.tsx
+
 import React from "react";
 import { Product, ImageVariant, Attribute } from "@/src/types";
 import Link from "next/link";
@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 
 interface DetailedInfoProps {
   product: Product;
-  phone: string; // e.g. "+994 (70)-370-10-60"
+  phone: string; 
 }
 
 function DetailedInfo({ product, phone }: DetailedInfoProps) {
@@ -16,14 +16,12 @@ function DetailedInfo({ product, phone }: DetailedInfoProps) {
   const sanitizedPhone = phone.replace(/\D/g, "");
 
   return (
-    <div className="flex flex-col justify-between">
-      <div className="flex flex-col gap-6">
-        {/* Title */}
+    <div className="flex flex-col h-full">
+      <div className="flex-grow">
         <h1 className="text-textBase text-3xl font-semibold font-archivo pb-5 md:pb-10">
           {product.title}
         </h1>
 
-        {/* Description */}
         <div className="flex flex-col gap-4">
           <p className="text-xl text-textBase font-medium font-archivo leading-5">
             {t("contactDetails.general_info")}
@@ -34,14 +32,12 @@ function DetailedInfo({ product, phone }: DetailedInfoProps) {
           />
         </div>
 
-        {/* Detailed attributes */}
         <div className="flex flex-col gap-4">
           <p className="text-textBase font-archivo text-xl leading-5 font-medium">
             {t("contactDetails.details")}
           </p>
 
           <div className="flex flex-col gap-3">
-            {/* Category */}
             <div className="flex justify-between items-center">
               <p className="text-elementSecondary text-base font-medium font-manrope leading-6">
                 {t("contactDetails.category")}
@@ -51,7 +47,6 @@ function DetailedInfo({ product, phone }: DetailedInfoProps) {
               </p>
             </div>
 
-            {/* Brand */}
             <div className="flex justify-between items-center">
               <p className="text-elementSecondary text-base font-medium font-manrope leading-6">
                 {t("contactDetails.brand")}
@@ -61,7 +56,6 @@ function DetailedInfo({ product, phone }: DetailedInfoProps) {
               </p>
             </div>
 
-            {/* Attributes (array of key/value) */}
             {product.attribute.length > 0 && (
               <div className="flex flex-col gap-1">
                 {product.attribute.map((attr: Attribute, idx: number) => (
@@ -84,7 +78,6 @@ function DetailedInfo({ product, phone }: DetailedInfoProps) {
               </p>
               <div className="flex gap-2">
                 {[
-                  // Deduplicate by `hex` to only show one swatch per color
                   ...new Map(
                     product.images.map((img: ImageVariant) => [
                       img.hex,
@@ -104,9 +97,7 @@ function DetailedInfo({ product, phone }: DetailedInfoProps) {
         </div>
       </div>
 
-      {/* "Contact Us" buttons */}
-      <div className="flex flex-col gap-4 pt-20">
-        {/* Internal "Bizimlə əlaqə" */}
+        <div className="flex flex-col gap-4 pt-10">
         <div>
           <Link
             href="/elaqe"
@@ -120,7 +111,6 @@ function DetailedInfo({ product, phone }: DetailedInfoProps) {
           </Link>
         </div>
 
-        {/* WhatsApp button opens wa.me link in a new tab */}
         <div>
           <a
             href={`https://wa.me/${sanitizedPhone}`}
@@ -141,4 +131,4 @@ function DetailedInfo({ product, phone }: DetailedInfoProps) {
   );
 }
 
-export default DetailedInfo;
+  export default DetailedInfo;

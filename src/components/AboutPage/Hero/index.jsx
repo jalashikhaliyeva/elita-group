@@ -1,19 +1,19 @@
 import Image from "next/image";
 import React from "react";
 
-function Hero({data}) {
-  console.log(data, "data");
+function Hero({data , aboutBreadcrumb}) {
+  console.log(aboutBreadcrumb, "aboutBreadcrumb about");
   
   return (
     <div className="relative w-full h-[300px] md:h-[620px] bg-gray-200">
       {/* Background image */}
       <Image
-        width={500}
-        height={500}
+        width={1000}
+        height={1000}
         priority
-        src={data?.image_1}
+        src={aboutBreadcrumb?.image}
         alt="Hero background"
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover bg-no-repeat bg-center"
       />
 
       {/* Overlay */}
@@ -22,7 +22,7 @@ function Hero({data}) {
       {/* Centered text */}
       <div className="relative z-10 flex items-center justify-center h-full">
         <h1 className="text-white font-archivo text-5xl md:text-8xl font-normal">
-          Haqqımızda
+ {aboutBreadcrumb?.name}
         </h1>
       </div>
     </div>

@@ -19,10 +19,12 @@ import {
   FaqData,
   ContactData,
   MetaTag,
+  BreadcrumbsApiResponse,
 } from "@/src/types";
 import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { getMetaByTitle } from "./api/services/fetchMeta";
+import { fetchBreadcrumbs } from "./api/services/fetchBreadcrumbs";
 
 interface AboutPageProps {
   aboutData: AboutData | null;
@@ -30,6 +32,7 @@ interface AboutPageProps {
   faqData: FaqData[] | null;
   contactData: ContactData | null;
   metaData: MetaTag | null;
+  breadcrumbs: BreadcrumbsApiResponse | null;
 }
 
 export default function About({
@@ -38,7 +41,10 @@ export default function About({
   faqData,
   contactData,
   metaData,
+  breadcrumbs,
 }: AboutPageProps) {
+
+  const aboutBreadcrumb = breadcrumbs?.data?.find(item => item.title === "About");
   return (
     <>
       <Head>
@@ -55,7 +61,7 @@ export default function About({
         <Breadcrumb />
       </Container>
 
-      <Hero data={aboutData} />
+      <Hero aboutBreadcrumb={aboutBreadcrumb} data={aboutData} />
 
       <Container>
         {aboutData && <AboutDetails data={aboutData} />}
@@ -67,7 +73,7 @@ export default function About({
         {faqData && <Faq data={faqData} />}
       </Container>
 
-      <ContactBanner contactData={contactData} />
+      <ContactBanner  contactData={contactData} />
 
       <Container>
         <Footer />
@@ -80,13 +86,14 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const lang = context.locale || "az";
 
   try {
-    const [aboutData, missionData, faqData, contactData, metaData] =
+    const [aboutData, missionData, faqData, contactData, metaData, breadcrumbs] =
       await Promise.all([
         getAboutData(lang),
         getMissionData(lang),
         getFaqData(lang),
         getContactInfo(lang),
         getMetaByTitle("About", lang),
+        fetchBreadcrumbs(lang),
       ]);
 
     if (!contactData) {
@@ -100,6 +107,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         faqData: faqData || null,
         contactData: contactData || null,
         metaData: metaData || null,
+        breadcrumbs: breadcrumbs || null,
       },
     };
   } catch (error) {
@@ -111,6 +119,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
         faqData: null,
         contactData: null,
         metaData: null,
+        breadcrumbs: null,
       },
     };
   }

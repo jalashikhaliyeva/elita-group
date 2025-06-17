@@ -17,6 +17,8 @@ interface AboutPageProps {
 }
 
 export default function About({ contactData, metaData }: AboutPageProps) {
+  console.log(contactData, "contactData");
+  
   return (
     <>
       <Head>
@@ -34,7 +36,7 @@ export default function About({ contactData, metaData }: AboutPageProps) {
       </Container>
       <ContactBanner contactData={contactData} />
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.8431324185617!2d49.858116411590224!3d40.41232577132124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40307d19b69f1c19%3A0x463ae90eb750b8ac!2smarkup%20agency!5e0!3m2!1str!2saz!4v1718193436272!5m2!1str!2saz"
+  src={contactData?.map || ""}
         width="100%"
         height="100%"
         allowFullScreen

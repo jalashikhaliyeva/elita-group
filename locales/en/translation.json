@@ -64,6 +64,8 @@
     "address": "Address",
     "phone": "Phone",
     "mail": "Mail",
-    "design": "Design"
+    "design": "Design",
+    "note": "Note",
+    "enter_note": "Enter note"
   }
 }

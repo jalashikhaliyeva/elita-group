@@ -12,6 +12,7 @@ interface ContactBannerProps {
   contactData?: {
     phone: string;
     email: string;
+    map: string;
   } | null;
 }
 
@@ -21,6 +22,7 @@ function ContactBanner({ contactData }: ContactBannerProps) {
     name: "",
     surname: "",
     phone: "",
+    note: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<{
@@ -28,7 +30,9 @@ function ContactBanner({ contactData }: ContactBannerProps) {
     isError: boolean;
   } | null>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -36,7 +40,6 @@ function ContactBanner({ contactData }: ContactBannerProps) {
     }));
   };
 
-  // In the handleSubmit function, change this line:
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -45,12 +48,11 @@ function ContactBanner({ contactData }: ContactBannerProps) {
     try {
       const response = await postContactForm(formData);
       if (response) {
-        // Changed from response.success to response.status
         setSubmitMessage({
           text: t("contact_success"),
           isError: false,
         });
-        setFormData({ name: "", surname: "", phone: "" });
+        setFormData({ name: "", surname: "", phone: "", note: "" });
       } else {
         setSubmitMessage({
           text: t("contact_error_send"),
@@ -144,6 +146,20 @@ function ContactBanner({ contactData }: ContactBannerProps) {
                 placeholder="Nömrənizi daxil edin"
                 className="w-full px-4 py-3 bg-transparent border border-gray-400 text-white placeholder-gray-400 focus:outline-none focus:border-white"
                 required
+              />
+            </div>
+
+            <div>
+              <label className="block text-white text-sm mb-2">
+                {t("contactDetails.note")}
+              </label>
+              <textarea
+                name="note"
+                value={formData.note}
+                onChange={handleChange}
+                placeholder={t("contactDetails.enter_note")}
+                className="w-full px-4 py-3 bg-transparent border border-gray-400 text-white placeholder-gray-400 focus:outline-none focus:border-white min-h-[100px]"
+                rows={4}
               />
             </div>
 

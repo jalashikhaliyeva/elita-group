@@ -64,6 +64,8 @@
     "address": "Ünvan",
     "phone": "Telefon",
     "mail": "Mail",
-    "design": "Dizayn"
+    "design": "Dizayn",
+    "note": "Qeyd",
+    "enter_note": "Qeyd daxil edin"
   }
 }
