@@ -30,23 +30,28 @@ function AboutSection({ information }: AboutSectionProps) {
       const newHasOverflow = [...hasOverflow];
       textRefs.current.forEach((ref, index) => {
         if (ref) {
-          // Temporarily remove line clamp to measure full height
-          const originalStyle = ref.style.cssText;
-          ref.style.display = 'block';
-          ref.style.webkitLineClamp = 'unset';
-          ref.style.webkitBoxOrient = 'unset';
-          ref.style.overflow = 'visible';
+          // Create a temporary element to measure the full text height
+          const tempElement = document.createElement('div');
+          tempElement.style.cssText = `
+            position: absolute;
+            visibility: hidden;
+            height: auto;
+            width: ${ref.offsetWidth}px;
+            font-family: ${window.getComputedStyle(ref).fontFamily};
+            font-size: ${window.getComputedStyle(ref).fontSize};
+            line-height: ${window.getComputedStyle(ref).lineHeight};
+            padding: ${window.getComputedStyle(ref).padding};
+            margin: ${window.getComputedStyle(ref).margin};
+          `;
+          tempElement.textContent = ref.textContent;
+          document.body.appendChild(tempElement);
           
-          const fullHeight = ref.scrollHeight;
+          const fullHeight = tempElement.offsetHeight;
+          document.body.removeChild(tempElement);
           
-          // Restore line clamp and measure clamped height
-          ref.style.cssText = originalStyle;
-          ref.style.display = '-webkit-box';
-          ref.style.webkitLineClamp = '4';
-          ref.style.webkitBoxOrient = 'vertical';
-          ref.style.overflow = 'hidden';
-          
-          const clampedHeight = ref.clientHeight;
+          // Get the height when clamped to 4 lines
+          const lineHeight = parseInt(window.getComputedStyle(ref).lineHeight);
+          const clampedHeight = lineHeight * 4;
           
           newHasOverflow[index] = fullHeight > clampedHeight;
         }
@@ -54,14 +59,16 @@ function AboutSection({ information }: AboutSectionProps) {
       setHasOverflow(newHasOverflow);
     };
 
-    // Check overflow after component mounts and on window resize
-    checkOverflow();
+    // Small delay to ensure DOM is ready
+    const timer = setTimeout(checkOverflow, 100);
+    
     window.addEventListener('resize', checkOverflow);
     
     return () => {
+      clearTimeout(timer);
       window.removeEventListener('resize', checkOverflow);
     };
-  }, [information]);
+  }, [information, hasOverflow.length]);
 
   const toggleExpanded = (index: number) => {
     setExpandedItems(prev => {
@@ -76,12 +83,12 @@ function AboutSection({ information }: AboutSectionProps) {
       {information.map((item, index) => (
         <div
           key={index}
-          className="w-full grid grid-cols-1 xl:grid-cols-3 gap-[160px] py-8 xl:py-14"
+          className="w-full grid grid-cols-1 xl:grid-cols-3 md:gap-[160px] py-8 xl:py-14"
         >
           {/* First Column - Title and Left Images */}
           <div className="col-span-1 flex flex-col">
             {/* Title Section */}
-            <div className="mb-[60px] xl:mb-[100px]">
+            <div className="mb-10 xl:mb-[100px]">
               <div className="flex gap-3 xl:gap-5 items-center">
                 <span className="text-elements text-[1.125rem] xl:text-[1.25rem] font-medium font-Moneta">
                   ({String(index + 1).padStart(2, "0")})
@@ -128,17 +135,11 @@ function AboutSection({ information }: AboutSectionProps) {
                   ref={(el) => {
                     textRefs.current[index] = el;
                   }}
-                  className={`text-secondary text-left flex items-start text-sm xl:text-base font-manrope max-w-full xl:max-w-[805px] transition-all duration-300 ${
+                  className={`text-secondary text-left text-sm xl:text-base font-manrope max-w-full xl:max-w-[805px] transition-all duration-300 ${
                     expandedItems[index] 
                       ? '' 
-                      : 'line-clamp-4 overflow-hidden'
+                      : 'line-clamp-4'
                   }`}
-                  style={!expandedItems[index] ? {
-                    display: '-webkit-box',
-                    WebkitLineClamp: 4,
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden'
-                  } : {}}
                 >
                   {item.description}
                 </p>
