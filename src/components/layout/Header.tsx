@@ -57,7 +57,7 @@ function Header({ activeItem = "" }) {
   <Container>
   <div className="hidden md:flex justify-between w-full py-3">
         <div>
-          <Link href="/" passHref>
+          <Link href="/">
             <Image
               src="/images/logo/logo-elita2.png"
               width={90}
@@ -71,7 +71,7 @@ function Header({ activeItem = "" }) {
         <div className="flex gap-4 lg:gap-8 font-archivo">
           {menuItems.map((item) => (
             <div key={item.id} className="flex items-center">
-              <Link href={item.href} passHref>
+              <Link href={item.href}>
                 {activeItem === item.id ? (
                   <div className="flex items-center gap-1 underline decoration-[1px] underline-offset-8 decoration-amber-700 cursor-pointer">
                     <RxDotFilled className="text-amber-700 text-2xl" />
@@ -119,7 +119,7 @@ function Header({ activeItem = "" }) {
               onMouseLeave={() => setIsMenuOpen(false)}
             >
               {dropdownItems.map((item) => (
-                <Link key={item.id} href={item.href} passHref>
+                <Link key={item.id} href={item.href}>
                   <p
                     className="block px-4 py-2 text-textBase text-lg hover:bg-amber-50 hover:text-amber-700 transition-colors duration-200"
                     onClick={() => setIsMenuOpen(false)} // close menu on click
@@ -189,7 +189,7 @@ function Header({ activeItem = "" }) {
         <div className="flex flex-col items-center gap-6 mt-10">
           {menuItems.map((item) => (
             <div key={item.id} className="flex items-center">
-              <Link href={item.href} passHref>
+              <Link href={item.href}>
                 {activeItem === item.id ? (
                   <div className="flex items-center gap-1 underline decoration-[1px] underline-offset-8 decoration-amber-700 cursor-pointer">
                     <RxDotFilled className="text-amber-700 text-2xl" />
@@ -207,7 +207,7 @@ function Header({ activeItem = "" }) {
           <div className="border-t border-gray-200 w-4/5 pt-6 mt-6">
             <div className="flex flex-col items-center gap-6">
               {dropdownItems.map((item) => (
-                <Link key={item.id} href={item.href} passHref>
+                <Link key={item.id} href={item.href}>
                   <p
                     className="text-textBase text-xl hover:text-amber-700 transition-colors duration-200"
                     onClick={() => setIsMobileMenuOpen(false)}

@@ -61,7 +61,7 @@ function AboutSection({ information }: AboutSectionProps) {
     return () => {
       window.removeEventListener('resize', checkOverflow);
     };
-  }, [information, hasOverflow]);
+  }, [information]);
 
   const toggleExpanded = (index: number) => {
     setExpandedItems(prev => {
