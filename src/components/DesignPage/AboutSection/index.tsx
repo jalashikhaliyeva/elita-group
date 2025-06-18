@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 interface InformationItem {
   title: string;
@@ -17,45 +17,84 @@ interface AboutSectionProps {
 }
 
 function AboutSection({ information }: AboutSectionProps) {
+  const [expandedItems, setExpandedItems] = useState<boolean[]>(
+    new Array(information.length).fill(false)
+  );
+  const [hasOverflow, setHasOverflow] = useState<boolean[]>(
+    new Array(information.length).fill(false)
+  );
+  const textRefs = useRef<(HTMLParagraphElement | null)[]>([]);
+
+  useEffect(() => {
+    const checkOverflow = () => {
+      const newHasOverflow = [...hasOverflow];
+      textRefs.current.forEach((ref, index) => {
+        if (ref) {
+          // Temporarily remove line clamp to measure full height
+          const originalStyle = ref.style.cssText;
+          ref.style.display = 'block';
+          ref.style.webkitLineClamp = 'unset';
+          ref.style.webkitBoxOrient = 'unset';
+          ref.style.overflow = 'visible';
+          
+          const fullHeight = ref.scrollHeight;
+          
+          // Restore line clamp and measure clamped height
+          ref.style.cssText = originalStyle;
+          ref.style.display = '-webkit-box';
+          ref.style.webkitLineClamp = '4';
+          ref.style.webkitBoxOrient = 'vertical';
+          ref.style.overflow = 'hidden';
+          
+          const clampedHeight = ref.clientHeight;
+          
+          newHasOverflow[index] = fullHeight > clampedHeight;
+        }
+      });
+      setHasOverflow(newHasOverflow);
+    };
+
+    // Check overflow after component mounts and on window resize
+    checkOverflow();
+    window.addEventListener('resize', checkOverflow);
+    
+    return () => {
+      window.removeEventListener('resize', checkOverflow);
+    };
+  }, [information, hasOverflow]);
+
+  const toggleExpanded = (index: number) => {
+    setExpandedItems(prev => {
+      const newExpanded = [...prev];
+      newExpanded[index] = !newExpanded[index];
+      return newExpanded;
+    });
+  };
+
   return (
     <div>
       {information.map((item, index) => (
         <div
           key={index}
-          className="w-full flex flex-col gap-[100px] py-8 xl:py-14"
+          className="w-full grid grid-cols-1 xl:grid-cols-3 gap-[160px] py-8 xl:py-14"
         >
-          {/* First Row - Title and Description */}
-          <div className="flex flex-col xl:flex-row gap-[100px] justify-between">
-            {/* Left Column - Title */}
-            <div className="w-full xl:w-auto">
-              <div className="mb-[60px] xl:mb-[100px]">
-                <div className="flex gap-3 xl:gap-5 items-center">
-                  <span className="text-elements text-lg xl:text-xl font-medium font-Moneta">
-                    ({String(index + 1).padStart(2, "0")})
-                  </span>
-                  <span className="h-[1px] w-full bg-elements"></span>
-                </div>
-                <h2 className="text-textBase text-right pt-6 xl:pt-8 font-archivo text-2xl md:text-3xl xl:text-4xl font-medium leading-9">
-                  {item.title}
-                </h2>
-              </div>
-            </div>
-
-            {/* Right Column - Description */}
-            <div className="w-full xl:w-auto mt-1">
-              <div className="hidden xl:flex items-center h-[21px]">
+          {/* First Column - Title and Left Images */}
+          <div className="col-span-1 flex flex-col">
+            {/* Title Section */}
+            <div className="mb-[60px] xl:mb-[100px]">
+              <div className="flex gap-3 xl:gap-5 items-center">
+                <span className="text-elements text-[1.125rem] xl:text-[1.25rem] font-medium font-Moneta">
+                  ({String(index + 1).padStart(2, "0")})
+                </span>
                 <span className="h-[1px] w-full bg-elements"></span>
               </div>
-              <p className="text-secondary pt-6 xl:pt-8 text-left flex items-start text-sm xl:text-base font-manrope max-w-full xl:max-w-[805px]">
-                {item.description}
-              </p>
-            </div> 
-          </div>
+              <h2 className="text-textBase text-right pt-6 xl:pt-8 font-archivo text-2xl md:text-3xl xl:text-4xl font-medium leading-9">
+                {item.title}
+              </h2>
+            </div>
 
-          {/* Second Row - Images */}
-          <div className="flex flex-col xl:flex-row gap-[100px] justify-between">
-            {/* Left Column - Images */}
-            <div className="hidden xl:flex flex-col gap-6">
+            {/* Left Images with equal spacing */}
+            <div className="hidden xl:flex flex-col justify-between gap-10">
               <div className="flex justify-center xl:block">
                 <Image
                   width={400}
@@ -65,19 +104,57 @@ function AboutSection({ information }: AboutSectionProps) {
                   className="h-[200px] xl:h-[300px] w-[150px] xl:w-[200px] object-cover"
                 />
               </div>
-              <div className="flex justify-center xl:block">
+              <div className="flex self-end xl:block">
                 <Image
                   width={400}
                   height={400}
                   src={item.image_2}
                   alt={`${item.title} - Image 2`}
-                  className="h-[200px] xl:h-[300px] w-[150px] xl:w-[200px] xl:ml-[160px] object-cover"
+                  className="h-[200px] xl:h-[300px] w-[150px] xl:w-[200px] object-cover"
                 />
               </div>
             </div>
+          </div>
 
-            {/* Right Column - Main Image */}
-            <div className="w-full xl:w-auto">
+          {/* Second Column - Description and Right Image */}
+          <div className="col-span-2 flex flex-col">
+            {/* Description */}
+            <div className="w-full xl:w-auto mt-1 mb-[100px]">
+              <div className="hidden xl:flex items-center h-[21px]">
+                <span className="h-[1px] w-full bg-elements"></span>
+              </div>
+              <div className="pt-6 xl:pt-8">
+                <p 
+                  ref={(el) => {
+                    textRefs.current[index] = el;
+                  }}
+                  className={`text-secondary text-left flex items-start text-sm xl:text-base font-manrope max-w-full xl:max-w-[805px] transition-all duration-300 ${
+                    expandedItems[index] 
+                      ? '' 
+                      : 'line-clamp-4 overflow-hidden'
+                  }`}
+                  style={!expandedItems[index] ? {
+                    display: '-webkit-box',
+                    WebkitLineClamp: 4,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden'
+                  } : {}}
+                >
+                  {item.description}
+                </p>
+                {hasOverflow[index] && (
+                  <button
+                    onClick={() => toggleExpanded(index)}
+                    className="text-elements hover:text-textBase transition-colors duration-200 text-sm xl:text-base font-medium mt-3 underline underline-offset-2"
+                  >
+                    {expandedItems[index] ? 'Show less' : 'Show more'}
+                  </button>
+                )}
+              </div>
+            </div>
+            
+            {/* Right Image with same height as left images container */}
+            <div className="w-full xl:w-auto flex items-center">
               <Image
                 width={800}
                 height={500}

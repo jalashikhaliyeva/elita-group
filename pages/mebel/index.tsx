@@ -29,7 +29,7 @@ interface ConstructionProps {
 function Construction({ bannerData }: ConstructionProps) {
   return (
     <>
-       <Head>
+      <Head>
         <meta name="author" content="https://markup.az/" />
       </Head>
       <Container>
@@ -73,7 +73,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
           video: "",
           description: "",
           information: [],
-        }, // Default empty state
+        },
       },
     };
   }
