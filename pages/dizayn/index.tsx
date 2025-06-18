@@ -32,11 +32,9 @@ interface DesignPageProps {
 }
 
 function Design({ services, bannerData }: DesignPageProps) {
-
-
   return (
     <>
-       <Head>
+      <Head>
         <meta name="author" content="https://markup.az/" />
       </Head>
       <Container>
@@ -53,7 +51,7 @@ function Design({ services, bannerData }: DesignPageProps) {
         <AboutSection information={bannerData.information} />
       </Container>
       <Container>
-      <ServicesSection description={services[0]?.description || ""} />
+        <ServicesSection description={services[0]?.description || ""} />
         <ServicesSlider services={services} />
         <Footer />
       </Container>

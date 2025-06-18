@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Product, ImageVariant, Attribute } from "@/src/types";
 import Link from "next/link";
@@ -7,12 +6,11 @@ import { useTranslation } from "react-i18next";
 
 interface DetailedInfoProps {
   product: Product;
-  phone: string; 
+  phone: string;
 }
 
 function DetailedInfo({ product, phone }: DetailedInfoProps) {
   const { t } = useTranslation();
-  // Remove all non-digit characters (including "+"), e.g. "+994 (70)-370-10-60" → "994703701060"
   const sanitizedPhone = phone.replace(/\D/g, "");
 
   return (
@@ -97,7 +95,7 @@ function DetailedInfo({ product, phone }: DetailedInfoProps) {
         </div>
       </div>
 
-        <div className="flex flex-col gap-4 pt-10">
+      <div className="flex flex-col gap-4 pt-10">
         <div>
           <Link
             href="/elaqe"
@@ -131,4 +129,4 @@ function DetailedInfo({ product, phone }: DetailedInfoProps) {
   );
 }
 
-  export default DetailedInfo;
+export default DetailedInfo;

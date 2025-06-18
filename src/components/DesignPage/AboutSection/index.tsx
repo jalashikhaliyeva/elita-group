@@ -49,7 +49,7 @@ function AboutSection({ information }: AboutSectionProps) {
               <p className="text-secondary pt-6 xl:pt-8 text-left flex items-start text-sm xl:text-base font-manrope max-w-full xl:max-w-[805px]">
                 {item.description}
               </p>
-            </div>
+            </div> 
           </div>
 
           {/* Second Row - Images */}
