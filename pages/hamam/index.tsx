@@ -56,6 +56,7 @@ function Bathroom({
   });
 
   const applyFilters = async (newFilters: FilterState) => {
+    console.log("🚀 applyFilters called with:", newFilters);
     setLoading(true);
 
     // If no filters and no search term, show all products and reset hasSearched

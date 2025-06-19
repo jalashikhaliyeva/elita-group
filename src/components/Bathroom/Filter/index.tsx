@@ -1,3 +1,5 @@
+// Updated Filter.tsx - Change to use category.slug instead of category.name
+
 import React, { useState, useEffect } from "react";
 import { FiSearch } from "react-icons/fi";
 import FilterModal from "./FilterModal";
@@ -28,27 +30,33 @@ function Filter({
   const [localSearch, setLocalSearch] = useState(filters.search);
   const { t } = useTranslation();
 
-
- 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       onSearchChange(localSearch);
     }, 500);
 
     return () => clearTimeout(timeoutId);
-// eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localSearch]); // ← only localSearch here
+  }, [localSearch]);
 
+  // Updated to use category slug instead of name
+  const handleCategoryClick = (categorySlug: string) => {
+    console.log("🏷️ Category slug clicked:", categorySlug);
+    
+    const newCategories = filters.categories.includes(categorySlug)
+      ? filters.categories.filter((c) => c !== categorySlug)
+      : [...filters.categories, categorySlug];
 
-  const handleCategoryClick = (categoryName: string) => {
-    const newCategories = filters.categories.includes(categoryName)
-      ? filters.categories.filter((c) => c !== categoryName)
-      : [...filters.categories, categoryName];
+    console.log("📋 Previous category slugs:", filters.categories);
+    console.log("📋 New category slugs:", newCategories);
 
-    onFilterChange({
+    const updatedFilters = {
       ...filters,
       categories: newCategories,
-    });
+    };
+
+    console.log("🔄 Updated filters being sent (with slugs):", updatedFilters);
+    
+    onFilterChange(updatedFilters);
   };
 
   const activeFiltersCount =
@@ -74,17 +82,21 @@ function Filter({
           </button>
 
           {categories.map((category) => {
-            const isActive = filters.categories.includes(category.name);
+            // Check if category slug is in the active filters (not name)
+            const isActive = filters.categories.includes(category.slug || category.name);
+            
             return (
               <button
                 key={category.id}
-                onClick={() => handleCategoryClick(category.name)}
+                // Send category slug (or fallback to name if slug doesn't exist)
+                onClick={() => handleCategoryClick(category.slug || category.name)}
                 className={`p-2 py-2.5 flex items-center text-sm border whitespace-nowrap transition-colors duration-300 ${
                   isActive
                     ? "bg-neutral-800 text-white border-neutral-800"
                     : "text-neutral-800 border-neutral-800 hover:bg-neutral-800 hover:text-white"
                 }`}
               >
+                {/* Still display the category name to user */}
                 {category.name.length > 12 ? (
                   <>
                     <span className="hidden sm:inline">{category.name}</span>
@@ -102,7 +114,7 @@ function Filter({
           {activeFiltersCount > 0 && (
             <button
               onClick={onClearFilters}
-              className="p-2.5 text-sm text-amber-900 whitespace-nowrap transition-colors duration-300  hover:text-amber-700"
+              className="p-2.5 text-sm text-amber-900 whitespace-nowrap transition-colors duration-300 hover:text-amber-700"
             >
               {t("clear")}
             </button>

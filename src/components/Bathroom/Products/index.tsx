@@ -83,7 +83,13 @@ export default function Products({
   hasSearched = false,
 }: ProductsProps) {
   const { t } = useTranslation();
-
+  console.log("🎨 Products component received:", {
+    productsCount: products?.length || 0,
+    loading,
+    searchTerm,
+    hasSearched,
+    firstProduct: products?.[0] // Log first product to see structure
+  });
   console.log(products, "products");
 
   if (loading) {
@@ -109,13 +115,11 @@ export default function Products({
         <p className="text-neutral-600 text-center max-w-md">
           {hasSearched && searchTerm
             ? t("try_another_search_term_or_change_filters")
-            : t("try_changing_search_criteria_or_clearing_filters")
-            }
+            : t("try_changing_search_criteria_or_clearing_filters")}
         </p>
       </div>
     );
   }
-
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-5 my-10">

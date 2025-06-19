@@ -52,15 +52,27 @@ const FilterModal: React.FC<FilterModalProps> = ({
     section: keyof Omit<FilterState, "search">,
     value: string
   ) => {
+    console.log(`🔄 FilterModal: Changing ${section} with value:`, value);
+    
     setLocalFilters((prev) => {
       const list = prev[section].includes(value)
         ? prev[section].filter((v) => v !== value)
         : [...prev[section], value];
+      
+      console.log(`📋 FilterModal: Updated ${section}:`, list);
+      
       return { ...prev, [section]: list };
     });
   };
 
+  // Updated to handle category slugs
+  const handleCategoryChange = (categorySlug: string) => {
+    console.log("🏷️ FilterModal: Category slug selected:", categorySlug);
+    handleFilterChange("categories", categorySlug);
+  };
+
   const clearAllFilters = () => {
+    console.log("🧹 FilterModal: Clearing all filters");
     setLocalFilters({
       categories: [],
       brands: [],
@@ -70,6 +82,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
   };
 
   const applyFilters = () => {
+    console.log("✅ FilterModal: Applying filters:", localFilters);
     onApplyFilters(localFilters);
     handleClose();
   };
@@ -104,7 +117,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
 
             {/* Filter sections */}
             <div className="flex-1 overflow-y-auto py-6 px-4">
-              {/* Product Type Section */}
+              {/* Product Type Section - UPDATED TO USE SLUGS */}
               <div className="border-b border-neutral-200 py-4">
                 <button
                   className="flex w-full items-center justify-between text-left"
@@ -112,7 +125,6 @@ const FilterModal: React.FC<FilterModalProps> = ({
                 >
                   <div>
                     <h3 className="text-md text-neutral-800">
-                      {" "}
                       {t("product_type")}
                     </h3>
                     {localFilters.categories.length > 0 && (
@@ -133,37 +145,39 @@ const FilterModal: React.FC<FilterModalProps> = ({
                     openSection === "type" ? "block" : "hidden"
                   }`}
                 >
-                  {categories.map((category) => (
-                    <label key={category.id} className="flex items-center">
-                      <input
-                        type="checkbox"
-                        checked={localFilters.categories.includes(
-                          category.name
-                        )}
-                        onChange={() =>
-                          handleFilterChange("categories", category.name)
-                        }
-                        className="h-4 w-4 rounded border-neutral-300"
-                      />
-                      <span className="ml-3 text-sm text-neutral-800">
-                        {category.name}
-                      </span>
-                    </label>
-                  ))}
+                  {categories.map((category) => {
+                    const categorySlug = category.slug || category.name;
+                    return (
+                      <label key={category.id} className="flex items-center">
+                        <input
+                          type="checkbox"
+                          // Check against slug instead of name
+                          checked={localFilters.categories.includes(categorySlug)}
+                          // Send slug instead of name
+                          onChange={() => handleCategoryChange(categorySlug)}
+                          className="h-4 w-4 rounded border-neutral-300"
+                        />
+                        <span className="ml-3 text-sm text-neutral-800">
+                          {/* Still display the name to user */}
+                          {category.name}
+                        </span>
+                      </label>
+                    );
+                  })}
                 </div>
               </div>
 
-              {/* Brand Section */}
+              {/* Brand Section - UPDATED TO USE SLUGS */}
               <div className="border-b border-neutral-200 py-4">
                 <button
                   className="flex w-full items-center justify-between text-left"
                   onClick={() => toggleSection("brand")}
                 >
                   <div>
-                    <h3 className="text-md text-neutral-800"> {t("brand")}</h3>
+                    <h3 className="text-md text-neutral-800">{t("brand")}</h3>
                     {localFilters.brands.length > 0 && (
                       <p className="mt-1 text-xs text-neutral-500">
-                        {t("selected")} : {localFilters.brands.length}
+                        {t("selected")}: {localFilters.brands.length}
                       </p>
                     )}
                   </div>
@@ -179,32 +193,36 @@ const FilterModal: React.FC<FilterModalProps> = ({
                     openSection === "brand" ? "block" : "hidden"
                   }`}
                 >
-                  {brands.map((brand) => (
-                    <label key={brand.slug} className="flex items-center">
-                      <input
-                        type="checkbox"
-                        checked={localFilters.brands.includes(brand.name)}
-                        onChange={() =>
-                          handleFilterChange("brands", brand.name)
-                        }
-                        className="h-4 w-4 rounded border-neutral-300"
-                      />
-                      <span className="ml-3 text-sm text-neutral-800">
-                        {brand.name}
-                      </span>
-                    </label>
-                  ))}
+                  {brands.map((brand) => {
+                    const brandSlug = brand.slug || brand.name;
+                    return (
+                      <label key={brand.slug} className="flex items-center">
+                        <input
+                          type="checkbox"
+                          // Check against slug instead of name
+                          checked={localFilters.brands.includes(brandSlug)}
+                          // Send slug instead of name
+                          onChange={() => handleFilterChange("brands", brandSlug)}
+                          className="h-4 w-4 rounded border-neutral-300"
+                        />
+                        <span className="ml-3 text-sm text-neutral-800">
+                          {/* Still display the name to user */}
+                          {brand.name}
+                        </span>
+                      </label>
+                    );
+                  })}
                 </div>
               </div>
 
-              {/* Color Section */}
+              {/* Color Section - UPDATED TO USE SLUGS */}
               <div className="border-b border-neutral-200 py-4">
                 <button
                   className="flex w-full items-center justify-between text-left"
                   onClick={() => toggleSection("color")}
                 >
                   <div>
-                    <h3 className="text-md text-neutral-800"> {t("color")}</h3>
+                    <h3 className="text-md text-neutral-800">{t("color")}</h3>
                     {localFilters.colors.length > 0 && (
                       <p className="mt-1 text-xs text-neutral-500">
                         {t("selected")}: {localFilters.colors.length}
@@ -223,27 +241,31 @@ const FilterModal: React.FC<FilterModalProps> = ({
                     openSection === "color" ? "block" : "hidden"
                   }`}
                 >
-                  {(colors || []).map((color) => (
-                    <label key={color.id} className="flex items-center">
-                      <input
-                        type="checkbox"
-                        checked={localFilters.colors.includes(color.name)}
-                        onChange={() =>
-                          handleFilterChange("colors", color.name)
-                        }
-                        className="h-4 w-4 rounded border-neutral-300"
-                      />
-                      <div className="ml-3 flex items-center">
-                        <div
-                          className="w-4 h-4 rounded-sm mr-2 border border-neutral-300"
-                          style={{ backgroundColor: color.color }}
+                  {(colors || []).map((color) => {
+                    const colorSlug = color.slug || color.name;
+                    return (
+                      <label key={color.id} className="flex items-center">
+                        <input
+                          type="checkbox"
+                          // Check against slug instead of name
+                          checked={localFilters.colors.includes(colorSlug)}
+                          // Send slug instead of name
+                          onChange={() => handleFilterChange("colors", colorSlug)}
+                          className="h-4 w-4 rounded border-neutral-300"
                         />
-                        <span className="text-sm text-neutral-800">
-                          {color.name}
-                        </span>
-                      </div>
-                    </label>
-                  ))}
+                        <div className="ml-3 flex items-center">
+                          <div
+                            className="w-4 h-4 rounded-sm mr-2 border border-neutral-300"
+                            style={{ backgroundColor: color.color }}
+                          />
+                          <span className="text-sm text-neutral-800">
+                            {/* Still display the name to user */}
+                            {color.name}
+                          </span>
+                        </div>
+                      </label>
+                    );
+                  })}
                 </div>
               </div>
             </div>
