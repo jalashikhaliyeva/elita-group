@@ -11,7 +11,7 @@ interface HomeProps {
 export default function Home({ introData }: HomeProps) {
   return (
     <>
-       <Head>
+      <Head>
         <meta name="author" content="https://markup.az/" />
       </Head>
       <main>
