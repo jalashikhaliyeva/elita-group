@@ -59,7 +59,6 @@ function Bathroom({
     console.log("🚀 applyFilters called with:", newFilters);
     setLoading(true);
 
-    // If no filters and no search term, show all products and reset hasSearched
     if (
       newFilters.categories.length === 0 &&
       newFilters.brands.length === 0 &&
@@ -79,7 +78,6 @@ function Bathroom({
     }
 
     try {
-      // Check if it's a search-only query (no other filters)
       const isSearchOnly =
         newFilters.search.trim() &&
         newFilters.categories.length === 0 &&
@@ -87,12 +85,10 @@ function Bathroom({
         newFilters.colors.length === 0;
 
       if (isSearchOnly) {
-        // Use fetchSearchProducts for search-only queries
         setHasSearched(true);
         const response = await fetchSearchProducts(newFilters.search.trim());
         setProducts(response.data);
       } else {
-        // Use fetchFilteredProducts for complex filtering or combined search+filter
         if (newFilters.search.trim()) {
           setHasSearched(true);
         }
@@ -134,7 +130,6 @@ function Bathroom({
     applyFilters(emptyFilters);
   };
 
-  // Whenever the search input changes, merge it into filters.search + re­apply
   const onSearchChange = useCallback(
     (term: string) => {
       const updatedFilters: FilterState = {
