@@ -21,6 +21,7 @@ const BathroomDetailed = ({ product  ,phone}: BathroomDetailedProps) => {
     <>
        <Head>
         <meta name="author" content="https://markup.az/" />
+        <title>{"Elita Group | " + product.title}</title>
       </Head>
       <Container>
         <Header activeItem="hamam" />

@@ -11,6 +11,7 @@ import { getMetaByTitle } from "./api/services/fetchMeta";
 import { ContactData, MetaTag } from "@/src/types";
 import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
+import { useTranslation } from "react-i18next";
 interface AboutPageProps {
   contactData: ContactData | null;
   metaData: MetaTag | null;
@@ -18,11 +19,11 @@ interface AboutPageProps {
 
 export default function About({ contactData, metaData }: AboutPageProps) {
   console.log(contactData, "contactData");
-  
+  const { t } = useTranslation();
   return (
     <>
       <Head>
-        <title>{metaData?.meta_title || "Contact"}</title>
+        <title>{"Elita Group | " + t("contactDetails.contact")}</title>
         <meta
           name="description"
           content={metaData?.meta_description || "Contact page"}

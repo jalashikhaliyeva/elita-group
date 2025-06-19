@@ -12,6 +12,7 @@ import { getMetaByTitle } from "../api/services/fetchMeta";
 import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { fetchBreadcrumbs } from "../api/services/fetchBreadcrumbs";
+import { useTranslation } from "react-i18next";
 
 interface BlogPageProps {
   blogsData: BlogApiResponse;
@@ -21,10 +22,11 @@ interface BlogPageProps {
 
 export default function Blog({ blogsData, metaData, breadcrumbs }: BlogPageProps) {
   const blogBreadcrumb = breadcrumbs?.data?.find(item => item.title === "Blog");
+  const { t } = useTranslation();
   return (
     <>
       <Head>
-        <title>{metaData?.meta_title || "Blog"}</title>
+        <title>{"Elita Group | " + t("contactDetails.blog")}</title>
         <meta
           name="description"
           content={metaData?.meta_description || "Our latest articles"}

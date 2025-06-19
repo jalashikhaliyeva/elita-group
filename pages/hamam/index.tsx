@@ -22,6 +22,7 @@ import {
 import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 
 interface BathroomProps {
   bannerData: BannerItem | null;
@@ -45,6 +46,7 @@ function Bathroom({
   colors,
   initialProducts,
 }: BathroomProps) {
+  const { t } = useTranslation();
   const router = useRouter();
   const currentLang = router.locale || "az";
   
@@ -155,6 +157,7 @@ function Bathroom({
     <>
       <Head>
         <meta name="author" content="https://markup.az/" />
+        <title>{"Elita Group | " + t("contactDetails.bath_accessories")}</title>
       </Head>
       <Container>
         <Header activeItem="hamam" />

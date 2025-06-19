@@ -12,7 +12,8 @@ import { fetchServices } from "../api/services/fetchServices";
 import { getBanner } from "../api/services/fetchBanner";
 import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
-
+import { useTranslation } from "react-i18next";
+  
 interface InformationItem {
   title: string;
   description: string;
@@ -32,10 +33,12 @@ interface DesignPageProps {
 }
 
 function Design({ services, bannerData }: DesignPageProps) {
+  const { t } = useTranslation();
   return (
     <>
       <Head>
         <meta name="author" content="https://markup.az/" />
+        <title>{"Elita Group | " + t("contactDetails.design")}</title>
       </Head>
       <Container>
         <Header activeItem="dizayn" />

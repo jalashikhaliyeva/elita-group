@@ -20,6 +20,7 @@ function BlogDetailed({ blog }: BlogDetailedProps) {
           name="description"
           content={blog?.title || "Our latest articles"}
         />
+        <title>{"Elita Group | " + blog.title}</title>
       </Head>
       <Container>
         <Header />

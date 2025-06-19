@@ -142,7 +142,8 @@ function BrandPage({
     <>
       <Head>
         <meta name="author" content="https://markup.az/" />
-      </Head>
+        <title>{"Elita Group | " + brandTitle}</title>
+        </Head>
 
       <Container>
         <Header />

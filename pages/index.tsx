@@ -13,6 +13,7 @@ export default function Home({ introData }: HomeProps) {
     <>
       <Head>
         <meta name="author" content="https://markup.az/" />
+        <title>{ "Elita Group"}</title>
       </Head>
       <main>
         <IntroSection introData={introData} />

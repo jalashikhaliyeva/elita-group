@@ -8,6 +8,7 @@ import { getBanner } from "../api/services/fetchBanner";
 import { BannerItem } from "@/src/types";
 import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
+import { useTranslation } from "react-i18next";
 
 interface InformationItem {
   title: string;
@@ -27,10 +28,12 @@ interface ConstructionProps {
 }
 
 function Construction({ bannerData }: ConstructionProps) {
+  const { t } = useTranslation();
   return (
     <>
        <Head>
         <meta name="author" content="https://markup.az/" />
+        <title>{"Elita Group | " + t("contactDetails.repair_construction")}</title>
       </Head>
       <Container>
         <Header activeItem="temir" />

@@ -25,6 +25,7 @@ import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { getMetaByTitle } from "./api/services/fetchMeta";
 import { fetchBreadcrumbs } from "./api/services/fetchBreadcrumbs";
+import { useTranslation } from "react-i18next";
 
 interface AboutPageProps {
   aboutData: AboutData | null;
@@ -46,10 +47,11 @@ export default function About({
   const aboutBreadcrumb = breadcrumbs?.data?.find(
     (item) => item.title === "About"
   );
+  const { t } = useTranslation();
   return (
     <>
       <Head>
-        <title>{metaData?.meta_title || "About"}</title>
+        <title>{"Elita Group | " + t("contactDetails.about")}</title>
         <meta
           name="description"
           content={metaData?.meta_description || "About page"}

@@ -31,7 +31,8 @@ export default function ProjectDetailed({
     <>
        <Head>
         <meta name="author" content="https://markup.az/" />
-      </Head>
+        <title>{"Elita Group | " + serviceData.title}</title>
+          </Head>
       <Container>
         <Header activeItem="dizayn" />
       </Container>
