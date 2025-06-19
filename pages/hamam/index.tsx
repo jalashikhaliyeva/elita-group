@@ -2,7 +2,7 @@
 import Hero from "@/src/components/ProjectDetailed/Hero.tsx";
 import Container from "@/src/components/layout/Container";
 import Header from "@/src/components/layout/Header";
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import Footer from "@/src/components/layout/Footer";
 import Breadcrumb from "@/src/components/layout/Breadcrumb";
 import Filter from "@/src/components/Bathroom/Filter";
@@ -21,6 +21,7 @@ import {
 } from "../api/services/fetchProducts";
 import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 interface BathroomProps {
   bannerData: BannerItem | null;
@@ -44,6 +45,9 @@ function Bathroom({
   colors,
   initialProducts,
 }: BathroomProps) {
+  const router = useRouter();
+  const currentLang = router.locale || "az";
+  
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
@@ -55,7 +59,7 @@ function Bathroom({
     search: "",
   });
 
-  const applyFilters = async (newFilters: FilterState) => {
+  const applyFilters = useCallback(async (newFilters: FilterState) => {
     console.log("🚀 applyFilters called with:", newFilters);
     setLoading(true);
 
@@ -67,7 +71,7 @@ function Bathroom({
     ) {
       setHasSearched(false);
       try {
-        const allProducts = await fetchProducts();
+        const allProducts = await fetchProducts(currentLang);
         setProducts(allProducts);
       } catch (error) {
         console.error("Error applying filters:", error);
@@ -86,7 +90,7 @@ function Bathroom({
 
       if (isSearchOnly) {
         setHasSearched(true);
-        const response = await fetchSearchProducts(newFilters.search.trim());
+        const response = await fetchSearchProducts(newFilters.search.trim(), undefined, currentLang);
         setProducts(response.data);
       } else {
         if (newFilters.search.trim()) {
@@ -103,7 +107,7 @@ function Bathroom({
           search: newFilters.search.trim() || undefined,
         };
 
-        const response = await fetchFilteredProducts(filterParams);
+        const response = await fetchFilteredProducts(filterParams, currentLang);
         setProducts(response.data);
       }
     } catch (error) {
@@ -111,14 +115,14 @@ function Bathroom({
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentLang]);
 
   const handleFilterChange = (newFilters: FilterState) => {
     setFilters(newFilters);
     applyFilters(newFilters);
   };
 
-  const clearAllFilters = () => {
+  const clearAllFilters = useCallback(() => {
     const emptyFilters: FilterState = {
       categories: [],
       brands: [],
@@ -128,7 +132,7 @@ function Bathroom({
     setFilters(emptyFilters);
     setHasSearched(false);
     applyFilters(emptyFilters);
-  };
+  }, [applyFilters]);
 
   const onSearchChange = useCallback(
     (term: string) => {
@@ -139,8 +143,13 @@ function Bathroom({
       setFilters(updatedFilters);
       applyFilters(updatedFilters);
     },
-    [filters]
+    [filters, currentLang, applyFilters]
   );
+
+  // Effect to refetch products when language changes
+  useEffect(() => {
+    applyFilters(filters);
+  }, [currentLang, applyFilters]);
 
   return (
     <>
