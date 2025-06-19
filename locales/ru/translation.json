@@ -1,13 +1,13 @@
 {
   "nav": {
-    "services": "Xidmətlərimiz",
-    "projects": "Layihələr",
-    "search": "Axtarış",
-    "contact": "Bizimlə əlaqə",
-    "featured": "Seçilmişlər",
-    "new": "Yeni",
-    "special_prices": "Xüsusi Qiymətlər",
-    "view_all": "Hamısına Bax"
+    "services": "Наши услуги",
+    "projects": "Проекты",
+    "search": "Поиск",
+    "contact": "Связаться с нами",
+    "featured": "Избранные",
+    "new": "Новые",
+    "special_prices": "Специальные цены",
+    "view_all": "Смотреть все"
   },
 
   "about": "О нас",

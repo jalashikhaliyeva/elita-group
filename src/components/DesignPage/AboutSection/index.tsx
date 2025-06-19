@@ -131,7 +131,7 @@ function AboutSection({ information }: AboutSectionProps) {
                 <span className="h-[1px] w-full bg-elements"></span>
               </div>
               <div className="pt-6 xl:pt-8">
-                <p 
+                <p  dangerouslySetInnerHTML={{ __html: item.description }}
                   ref={(el) => {
                     textRefs.current[index] = el;
                   }}
@@ -140,9 +140,9 @@ function AboutSection({ information }: AboutSectionProps) {
                       ? '' 
                       : 'line-clamp-4'
                   }`}
-                >
-                  {item.description}
-                </p>
+                />
+                  {/* {item.description} */}
+                
                 {hasOverflow[index] && (
                   <button
                     onClick={() => toggleExpanded(index)}

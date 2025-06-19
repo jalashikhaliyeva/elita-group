@@ -185,9 +185,10 @@ const IntroSection: FC<IntroSectionProps> = ({ introData }) => {
                     }
                   `}
                   >
-                    <p className="text-lightSageGreen font-manrope text-sm md:text-base leading-6 font-normal mb-4 md:mb-6">
-                      {item.description}
-                    </p>
+                    <p
+                      className="text-lightSageGreen font-manrope text-sm md:text-base leading-6 font-normal mb-4 md:mb-6"
+                      dangerouslySetInnerHTML={{ __html: item.description }}
+                    />
                     <div
                       className="text-white leading-4 font-archivo font-normal text-sm md:text-base flex flex-row items-center gap-2"
                       onClick={(e) => {

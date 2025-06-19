@@ -43,8 +43,9 @@ export default function About({
   metaData,
   breadcrumbs,
 }: AboutPageProps) {
-
-  const aboutBreadcrumb = breadcrumbs?.data?.find(item => item.title === "About");
+  const aboutBreadcrumb = breadcrumbs?.data?.find(
+    (item) => item.title === "About"
+  );
   return (
     <>
       <Head>
@@ -73,7 +74,7 @@ export default function About({
         {faqData && <Faq data={faqData} />}
       </Container>
 
-      <ContactBanner  contactData={contactData} />
+      <ContactBanner contactData={contactData} />
 
       <Container>
         <Footer />
@@ -86,15 +87,21 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const lang = context.locale || "az";
 
   try {
-    const [aboutData, missionData, faqData, contactData, metaData, breadcrumbs] =
-      await Promise.all([
-        getAboutData(lang),
-        getMissionData(lang),
-        getFaqData(lang),
-        getContactInfo(lang),
-        getMetaByTitle("About", lang),
-        fetchBreadcrumbs(lang),
-      ]);
+    const [
+      aboutData,
+      missionData,
+      faqData,
+      contactData,
+      metaData,
+      breadcrumbs,
+    ] = await Promise.all([
+      getAboutData(lang),
+      getMissionData(lang),
+      getFaqData(lang),
+      getContactInfo(lang),
+      getMetaByTitle("About", lang),
+      fetchBreadcrumbs(lang),
+    ]);
 
     if (!contactData) {
       return { notFound: true };

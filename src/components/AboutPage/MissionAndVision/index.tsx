@@ -55,10 +55,14 @@ const MissionAndVision: React.FC<MissionAndVisionProps> = ({
             <h1 className="text-textBase font-archivo text-3xl font-medium leading-8">
               {missionItem?.title ?? "Missiyamız"}
             </h1>
-            <p className="text-elementSecondary font-manrope text-base leading-6">
-              {missionItem?.description ??
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit..."}
-            </p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html:
+                  missionItem?.description ??
+                  "Lorem ipsum dolor sit amet consectetur adipisicing elit...",
+              }}
+              className="text-elementSecondary font-manrope text-base leading-6"
+            />
           </div>
         </div>
         <div className="hidden md:block">
@@ -109,10 +113,14 @@ const MissionAndVision: React.FC<MissionAndVisionProps> = ({
             <h1 className="text-textBase font-archivo text-3xl font-medium leading-8">
               {visionItem?.title ?? "Vizyonumuz"}
             </h1>
-            <p className="text-elementSecondary font-manrope text-base leading-6">
-              {visionItem?.description ??
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit..."}
-            </p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html:
+                  visionItem?.description ??
+                  "Lorem ipsum dolor sit amet consectetur adipisicing elit...",
+              }}
+              className="text-elementSecondary font-manrope text-base leading-6"
+            />
           </div>
         </div>
       </div>
@@ -162,10 +170,14 @@ const MissionAndVision: React.FC<MissionAndVisionProps> = ({
             <h1 className="text-textBase font-archivo text-3xl font-medium leading-8">
               {valuesItem?.title ?? "Dəyərimiz"}
             </h1>
-            <p className="text-elementSecondary font-manrope text-base leading-6">
-              {valuesItem?.description ??
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit..."}
-            </p>
+            <p
+              dangerouslySetInnerHTML={{
+                __html:
+                  valuesItem?.description ??
+                  "Lorem ipsum dolor sit amet consectetur adipisicing elit...",
+              }}
+              className="text-elementSecondary font-manrope text-base leading-6"
+            />
           </div>
         </div>
       </div>

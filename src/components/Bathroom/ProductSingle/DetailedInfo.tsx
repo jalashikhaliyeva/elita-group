@@ -31,39 +31,56 @@ function DetailedInfo({ product, phone }: DetailedInfoProps) {
         </div>
 
         <div className="flex flex-col gap-4">
-          <p className="text-textBase font-archivo text-xl leading-5 font-medium">
-            {t("contactDetails.details")}
-          </p>
+          <p
+            className="text-textBase font-archivo text-xl leading-5 font-medium"
+            dangerouslySetInnerHTML={{ __html: t("contactDetails.details") }}
+          />
 
           <div className="flex flex-col gap-3">
             <div className="flex justify-between items-center">
-              <p className="text-elementSecondary text-base font-medium font-manrope leading-6">
-                {t("contactDetails.category")}
-              </p>
-              <p className="text-textBase font-manrope font-semibold leading-6 text-base">
-                {product.category}
-              </p>
+              <p
+                className="text-elementSecondary text-base font-medium font-manrope leading-6"
+                dangerouslySetInnerHTML={{
+                  __html: t("contactDetails.category"),
+                }}
+              />
+              <p
+                className="text-textBase font-manrope font-semibold leading-6 text-base"
+                dangerouslySetInnerHTML={{
+                  __html: product.category,
+                }}
+              />
             </div>
 
             <div className="flex justify-between items-center">
-              <p className="text-elementSecondary text-base font-medium font-manrope leading-6">
-                {t("contactDetails.brand")}
-              </p>
-              <p className="text-textBase font-manrope font-semibold leading-6 text-base">
-                {product.brand}
-              </p>
+              <p
+                className="text-elementSecondary text-base font-medium font-manrope leading-6"
+                dangerouslySetInnerHTML={{
+                  __html: t("contactDetails.brand"),
+                }}
+              />
+              <p
+                className="text-textBase font-manrope font-semibold leading-6 text-base"
+                dangerouslySetInnerHTML={{
+                  __html: product.brand,
+                }}
+              />
             </div>
 
             {product.attribute.length > 0 && (
               <div className="flex flex-col gap-1">
                 {product.attribute.map((attr: Attribute, idx: number) => (
                   <div key={idx} className="flex justify-between items-center">
-                    <p className="text-elementSecondary text-base font-medium font-manrope leading-6">
-                      {attr.key}:
-                    </p>
-                    <p className="text-textBase font-manrope font-semibold leading-6 text-base">
-                      {attr.value}
-                    </p>
+                    <p
+                      dangerouslySetInnerHTML={{ __html: `${attr.key}:` }}
+                      className="text-elementSecondary text-base font-medium font-manrope leading-6"
+                    />
+                    <p
+                      className="text-textBase font-manrope font-semibold leading-6 text-base"
+                      dangerouslySetInnerHTML={{
+                        __html: attr.value,
+                      }}
+                    />
                   </div>
                 ))}
               </div>
@@ -71,9 +88,12 @@ function DetailedInfo({ product, phone }: DetailedInfoProps) {
 
             {/* Color Availability */}
             <div className="flex justify-between items-center">
-              <p className="text-elementSecondary text-base font-medium font-manrope leading-6">
-                {t("contactDetails.color_availability")}
-              </p>
+              <p
+                className="text-elementSecondary text-base font-medium font-manrope leading-6"
+                dangerouslySetInnerHTML={{
+                  __html: t("contactDetails.color_availability"),
+                }}
+              />
               <div className="flex gap-2">
                 {[
                   ...new Map(
