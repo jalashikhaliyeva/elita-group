@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React, { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 interface InformationItem {
   title: string;
@@ -24,7 +25,7 @@ function AboutSection({ information }: AboutSectionProps) {
     new Array(information.length).fill(false)
   );
   const textRefs = useRef<(HTMLParagraphElement | null)[]>([]);
-
+  const { t } = useTranslation();
   useEffect(() => {
     const checkOverflow = () => {
       const newHasOverflow = [...hasOverflow];
@@ -148,7 +149,7 @@ function AboutSection({ information }: AboutSectionProps) {
                     onClick={() => toggleExpanded(index)}
                     className="text-elements hover:text-textBase transition-colors duration-200 text-sm xl:text-base font-medium mt-3 underline underline-offset-2"
                   >
-                    {expandedItems[index] ? 'Show less' : 'Show more'}
+                    {expandedItems[index] ? t("show_less") : t("show_more")}
                   </button>
                 )}
               </div>

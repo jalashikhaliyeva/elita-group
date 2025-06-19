@@ -67,5 +67,8 @@
     "design": "Design",
     "note": "Note",
     "enter_note": "Enter note"
-  }
+  },
+  "show_less": "Show less",
+  "show_more": "Show more",
+  "brands": "Brands"
 }

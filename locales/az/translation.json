@@ -67,5 +67,8 @@
     "design": "Dizayn",
     "note": "Qeyd",
     "enter_note": "Qeyd daxil edin"
-  }
+  },
+  "show_less": "Daha az göstər",
+  "show_more": "Daha çox göstər",
+  "brands": "Brendlər"
 }

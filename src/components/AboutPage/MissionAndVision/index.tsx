@@ -58,8 +58,7 @@ const MissionAndVision: React.FC<MissionAndVisionProps> = ({
             <p
               dangerouslySetInnerHTML={{
                 __html:
-                  missionItem?.description ??
-                  "Lorem ipsum dolor sit amet consectetur adipisicing elit...",
+                  missionItem?.description ?? "",
               }}
               className="text-elementSecondary font-manrope text-base leading-6"
             />
@@ -116,8 +115,7 @@ const MissionAndVision: React.FC<MissionAndVisionProps> = ({
             <p
               dangerouslySetInnerHTML={{
                 __html:
-                  visionItem?.description ??
-                  "Lorem ipsum dolor sit amet consectetur adipisicing elit...",
+                  visionItem?.description ?? "",
               }}
               className="text-elementSecondary font-manrope text-base leading-6"
             />
@@ -173,8 +171,7 @@ const MissionAndVision: React.FC<MissionAndVisionProps> = ({
             <p
               dangerouslySetInnerHTML={{
                 __html:
-                  valuesItem?.description ??
-                  "Lorem ipsum dolor sit amet consectetur adipisicing elit...",
+                  valuesItem?.description ?? "",
               }}
               className="text-elementSecondary font-manrope text-base leading-6"
             />

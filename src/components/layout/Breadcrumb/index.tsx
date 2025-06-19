@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 
 interface BreadcrumbProps {
   title?: string; // Optional override for the current page’s title
@@ -9,6 +10,7 @@ interface BreadcrumbProps {
 
 function Breadcrumb({ title, parentTitle }: BreadcrumbProps) {
   const router = useRouter();
+  const { t } = useTranslation();
   const pathSegments = router.asPath
     .split("/")
     .filter((segment) => segment !== "");
@@ -20,9 +22,9 @@ function Breadcrumb({ title, parentTitle }: BreadcrumbProps) {
 
   // Mapping of “normal” top-level segments → display names
   const pathDisplayNames: Record<string, string> = {
-    dizayn: "Dizayn",
-    hamam: "Hamam Aksesuarları",
-    brendler: "Brendlər",
+    dizayn: t("design"),
+    hamam: t("bath_accessories"),
+    brendler: t("brands"),
     // …add more mappings if needed
   };
 
@@ -47,7 +49,7 @@ function Breadcrumb({ title, parentTitle }: BreadcrumbProps) {
   if (isBrendlerPage && pathSegments.length >= 2) {
     // Parent crumb: “Hamam Aksesuarları” → /hamam
     breadcrumbItems.push({
-      displayName: parentTitle ?? "Hamam Aksesuarları",
+      displayName: parentTitle ?? t("bath_accessories"),
       path: "/hamam",
       isLast: false,
     });
@@ -96,7 +98,7 @@ function Breadcrumb({ title, parentTitle }: BreadcrumbProps) {
         href="/"
         className="font-manrope text-base font-normal leading-6 text-textBase hover:text-amber-700 transition-colors"
       >
-        Ana səhifə
+        {t("contactDetails.home")}
       </Link>
       <ChevronIcon />
 
