@@ -66,7 +66,8 @@
     "mail": "Mail",
     "design": "Design",
     "note": "Note",
-    "enter_note": "Enter note"
+    "enter_note": "Enter note",
+    "selected_color": "Selected Color"
   },
   "show_less": "Show less",
   "show_more": "Show more",

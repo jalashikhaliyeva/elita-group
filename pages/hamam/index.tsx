@@ -46,6 +46,7 @@ function Bathroom({
   colors,
   initialProducts,
 }: BathroomProps) {
+
   const { t } = useTranslation();
   const router = useRouter();
   const currentLang = router.locale || "az";

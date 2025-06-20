@@ -10,15 +10,20 @@ interface ProductItemProps {
 }
 
 function ProductItem({ product }: ProductItemProps) {
-  const defaultImage = product.image?.image;
+  const defaultImage = product.images?.[0]?.image || "";
   const [currentImage, setCurrentImage] = useState<string>(defaultImage);
   const seen = new Set<string>();
   const colorVariants = product.images.reduce<
-    { id: number; color: string; image: string }[]
+    { id: number; color: string; image: string; colorName: string }[]
   >((acc, img) => {
     if (!seen.has(img.hex)) {
       seen.add(img.hex);
-      acc.push({ id: acc.length, color: img.hex, image: img.image });
+      acc.push({ 
+        id: acc.length, 
+        color: img.hex, 
+        image: img.image,
+        colorName: img.color_name 
+      });
     }
     return acc;
   }, []);
@@ -42,7 +47,8 @@ function ProductItem({ product }: ProductItemProps) {
                 style={{ backgroundColor: variant.color }}
                 onMouseEnter={() => setCurrentImage(variant.image)}
                 onMouseLeave={() => setCurrentImage(defaultImage)}
-                aria-label={`Change color to ${variant.color}`}
+                aria-label={`Change color to ${variant.colorName}`}
+                title={variant.colorName}
               />
             ))}
           </div>
@@ -82,7 +88,7 @@ export default function Products({
   hasSearched = false,
 }: ProductsProps) {
   const { t } = useTranslation();
-  
+  console.log(products, "products");
 
   if (loading) {
     return (

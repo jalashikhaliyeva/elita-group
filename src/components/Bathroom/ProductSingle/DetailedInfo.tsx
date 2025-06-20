@@ -7,11 +7,23 @@ import { useTranslation } from "react-i18next";
 interface DetailedInfoProps {
   product: Product;
   phone: string;
+  selectedColor?: { color_name: string; hex: string };
+  onColorSelect?: (colorName: string, hex: string) => void;
 }
 
-function DetailedInfo({ product, phone }: DetailedInfoProps) {
+function DetailedInfo({ product, phone, selectedColor, onColorSelect }: DetailedInfoProps) {
   const { t } = useTranslation();
   const sanitizedPhone = phone.replace(/\D/g, "");
+
+  // Group unique colors
+  const uniqueColors = [
+    ...new Map(
+      product.images.map((img: ImageVariant) => [
+        `${img.color_name}-${img.hex}`,
+        { color_name: img.color_name, hex: img.hex }
+      ])
+    ).values(),
+  ];
 
   return (
     <div className="flex flex-col h-full">
@@ -86,28 +98,55 @@ function DetailedInfo({ product, phone }: DetailedInfoProps) {
               </div>
             )}
 
+            {/* Selected Color */}
+            {selectedColor && (
+              <div className="flex justify-between items-center">
+                <p
+                  className="text-elementSecondary text-base font-medium font-manrope leading-6"
+                  dangerouslySetInnerHTML={{
+                    __html: t("contactDetails.selected_color") || "Selected Color",
+                  }}
+                />
+                <div className="flex items-center gap-2">
+                  <span
+                    className="w-5 h-5 rounded-full border border-gray-300"
+                    style={{ backgroundColor: selectedColor.hex }}
+                  />
+                  <span className="text-textBase font-manrope font-semibold leading-6 text-base">
+                    {selectedColor.color_name}
+                  </span>
+                </div>
+              </div>
+            )}
+
             {/* Color Availability */}
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-start">
               <p
                 className="text-elementSecondary text-base font-medium font-manrope leading-6"
                 dangerouslySetInnerHTML={{
                   __html: t("contactDetails.color_availability"),
                 }}
               />
-              <div className="flex gap-2">
-                {[
-                  ...new Map(
-                    product.images.map((img: ImageVariant) => [
-                      img.hex,
-                      img.hex,
-                    ])
-                  ).values(),
-                ].map((hexValue) => (
-                  <span
-                    key={hexValue}
-                    className="w-5 h-5 rounded-full border"
-                    style={{ backgroundColor: hexValue }}
-                  />
+              <div className="flex gap-2 flex-wrap justify-end">
+                {uniqueColors.map((color) => (
+                  <button
+                    key={`${color.color_name}-${color.hex}`}
+                    onClick={() => onColorSelect?.(color.color_name, color.hex)}
+                    className={`flex items-center text-neutral-700 gap-1 px-2 py-1 rounded border transition-all hover:bg-gray-50 ${
+                      selectedColor && 
+                      selectedColor.color_name === color.color_name && 
+                      selectedColor.hex === color.hex
+                        ? "border-gray-800 bg-gray-100"
+                        : "border-gray-300"
+                    }`}
+                    title={color.color_name}
+                  >
+                    <span
+                      className="w-4 h-4 rounded-full border border-gray-300"
+                      style={{ backgroundColor: color.hex }}
+                    />
+                    <span className="text-xs font-medium">{color.color_name}</span>
+                  </button>
                 ))}
               </div>
             </div>
