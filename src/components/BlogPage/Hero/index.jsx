@@ -2,7 +2,6 @@ import Image from "next/image";
 import React from "react";
 
 function Hero({blogBreadcrumb}) {
-  console.log(blogBreadcrumb, "blogBreadcrumb blog");
   
   return (
     <div className="relative w-full h-[300px] md:h-[620px] bg-gray-200">

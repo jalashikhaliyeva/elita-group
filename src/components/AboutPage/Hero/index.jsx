@@ -2,7 +2,6 @@ import Image from "next/image";
 import React from "react";
 
 function Hero({data , aboutBreadcrumb}) {
-  console.log(aboutBreadcrumb, "aboutBreadcrumb about");
   
   return (
     <div className="relative w-full h-[300px] md:h-[620px] bg-gray-200">

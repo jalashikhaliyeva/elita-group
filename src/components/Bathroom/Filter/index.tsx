@@ -40,22 +40,19 @@ function Filter({
 
   // Updated to use category slug instead of name
   const handleCategoryClick = (categorySlug: string) => {
-    console.log("🏷️ Category slug clicked:", categorySlug);
     
     const newCategories = filters.categories.includes(categorySlug)
       ? filters.categories.filter((c) => c !== categorySlug)
       : [...filters.categories, categorySlug];
 
-    console.log("📋 Previous category slugs:", filters.categories);
-    console.log("📋 New category slugs:", newCategories);
+
 
     const updatedFilters = {
       ...filters,
       categories: newCategories,
     };
 
-    console.log("🔄 Updated filters being sent (with slugs):", updatedFilters);
-    
+
     onFilterChange(updatedFilters);
   };
 

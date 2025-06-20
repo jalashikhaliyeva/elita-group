@@ -60,7 +60,6 @@ function ContactBanner({ contactData }: ContactBannerProps) {
         });
       }
 
-      console.log(response, "response");
     } catch (error) {
       console.error("Form submission error:", error);
       setSubmitMessage({

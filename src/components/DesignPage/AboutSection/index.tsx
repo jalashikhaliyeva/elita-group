@@ -32,7 +32,7 @@ function AboutSection({ information }: AboutSectionProps) {
       textRefs.current.forEach((ref, index) => {
         if (ref) {
           // Create a temporary element to measure the full text height
-          const tempElement = document.createElement('div');
+          const tempElement = document.createElement("div");
           tempElement.style.cssText = `
             position: absolute;
             visibility: hidden;
@@ -46,14 +46,14 @@ function AboutSection({ information }: AboutSectionProps) {
           `;
           tempElement.textContent = ref.textContent;
           document.body.appendChild(tempElement);
-          
+
           const fullHeight = tempElement.offsetHeight;
           document.body.removeChild(tempElement);
-          
+
           // Get the height when clamped to 4 lines
           const lineHeight = parseInt(window.getComputedStyle(ref).lineHeight);
           const clampedHeight = lineHeight * 4;
-          
+
           newHasOverflow[index] = fullHeight > clampedHeight;
         }
       });
@@ -62,17 +62,17 @@ function AboutSection({ information }: AboutSectionProps) {
 
     // Small delay to ensure DOM is ready
     const timer = setTimeout(checkOverflow, 100);
-    
-    window.addEventListener('resize', checkOverflow);
-    
+
+    window.addEventListener("resize", checkOverflow);
+
     return () => {
       clearTimeout(timer);
-      window.removeEventListener('resize', checkOverflow);
+      window.removeEventListener("resize", checkOverflow);
     };
   }, [information, hasOverflow.length]);
 
   const toggleExpanded = (index: number) => {
-    setExpandedItems(prev => {
+    setExpandedItems((prev) => {
       const newExpanded = [...prev];
       newExpanded[index] = !newExpanded[index];
       return newExpanded;
@@ -132,18 +132,17 @@ function AboutSection({ information }: AboutSectionProps) {
                 <span className="h-[1px] w-full bg-elements"></span>
               </div>
               <div className="pt-6 xl:pt-8">
-                <p  dangerouslySetInnerHTML={{ __html: item.description }}
+                <p
+                  dangerouslySetInnerHTML={{ __html: item.description }}
                   ref={(el) => {
                     textRefs.current[index] = el;
                   }}
                   className={`text-secondary text-left text-sm xl:text-base font-manrope max-w-full xl:max-w-[805px] transition-all duration-300 ${
-                    expandedItems[index] 
-                      ? '' 
-                      : 'line-clamp-4'
+                    expandedItems[index] ? "" : "line-clamp-4"
                   }`}
                 />
-                  {/* {item.description} */}
-                
+                {/* {item.description} */}
+
                 {hasOverflow[index] && (
                   <button
                     onClick={() => toggleExpanded(index)}
@@ -154,7 +153,7 @@ function AboutSection({ information }: AboutSectionProps) {
                 )}
               </div>
             </div>
-            
+
             {/* Right Image with same height as left images container */}
             <div className="w-full xl:w-auto flex items-center">
               <Image

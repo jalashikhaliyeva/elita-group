@@ -62,7 +62,6 @@ function Bathroom({
   });
 
   const applyFilters = useCallback(async (newFilters: FilterState) => {
-    console.log("🚀 applyFilters called with:", newFilters);
     setLoading(true);
 
     if (

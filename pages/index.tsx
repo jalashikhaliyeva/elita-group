@@ -9,6 +9,7 @@ interface HomeProps {
 }
 
 export default function Home({ introData }: HomeProps) {
+
   return (
     <>
       <Head>

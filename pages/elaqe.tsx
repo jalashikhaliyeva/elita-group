@@ -18,7 +18,6 @@ interface AboutPageProps {
 }
 
 export default function About({ contactData, metaData }: AboutPageProps) {
-  console.log(contactData, "contactData");
   const { t } = useTranslation();
   return (
     <>

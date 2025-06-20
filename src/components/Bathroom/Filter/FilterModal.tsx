@@ -52,14 +52,12 @@ const FilterModal: React.FC<FilterModalProps> = ({
     section: keyof Omit<FilterState, "search">,
     value: string
   ) => {
-    console.log(`🔄 FilterModal: Changing ${section} with value:`, value);
     
     setLocalFilters((prev) => {
       const list = prev[section].includes(value)
         ? prev[section].filter((v) => v !== value)
         : [...prev[section], value];
       
-      console.log(`📋 FilterModal: Updated ${section}:`, list);
       
       return { ...prev, [section]: list };
     });
@@ -67,12 +65,10 @@ const FilterModal: React.FC<FilterModalProps> = ({
 
   // Updated to handle category slugs
   const handleCategoryChange = (categorySlug: string) => {
-    console.log("🏷️ FilterModal: Category slug selected:", categorySlug);
     handleFilterChange("categories", categorySlug);
   };
 
   const clearAllFilters = () => {
-    console.log("🧹 FilterModal: Clearing all filters");
     setLocalFilters({
       categories: [],
       brands: [],
@@ -82,7 +78,6 @@ const FilterModal: React.FC<FilterModalProps> = ({
   };
 
   const applyFilters = () => {
-    console.log("✅ FilterModal: Applying filters:", localFilters);
     onApplyFilters(localFilters);
     handleClose();
   };

@@ -69,7 +69,6 @@ function BrandPage({
   );
 
   const applyFilters = async (newFilters: FilterState) => {
-    console.log("🚀 applyFilters called with:", newFilters);
     setLoading(true);
 
     try {
@@ -95,7 +94,6 @@ function BrandPage({
   };
 
   const handleFilterChange = (newFilters: FilterState) => {
-    console.log("🎯 handleFilterChange received:", newFilters);
     // Always keep `selectedBrand` in the brand list if provided
     const filtersWithBrand: FilterState = selectedBrand
       ? {
@@ -104,7 +102,6 @@ function BrandPage({
         }
       : newFilters;
 
-    console.log("🔄 Setting filters:", filtersWithBrand);
 
     setFilters(filtersWithBrand);
     applyFilters(filtersWithBrand);
