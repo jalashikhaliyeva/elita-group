@@ -145,13 +145,13 @@ function Bathroom({
       setFilters(updatedFilters);
       applyFilters(updatedFilters);
     },
-    [filters, currentLang, applyFilters]
+    [filters, applyFilters]
   );
 
   // Effect to refetch products when language changes
   useEffect(() => {
     applyFilters(filters);
-  }, [currentLang, applyFilters]);
+  }, [currentLang, filters, applyFilters]);
 
   return (
     <>

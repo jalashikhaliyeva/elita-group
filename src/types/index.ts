@@ -281,9 +281,10 @@ export interface Category {
   id: number;
   name: string;
   slug: string;
-  image?: string; // optional if your categories have images
-  description?: string; // optional
-  // Add any other category-specific properties you need
+  image?: string; 
+  description?: string; 
+  service_description?: string;
+ 
 }
 
 export interface CategoriesApiResponse {

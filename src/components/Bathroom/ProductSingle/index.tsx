@@ -1,5 +1,5 @@
 // src/components/Bathroom/ProductSingle.tsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import ProductSlider from "./ProductSlider";
 import DetailedInfo from "./DetailedInfo";
 import { ImageVariant, Product } from "@/src/types";
@@ -12,15 +12,15 @@ interface ProductSingleProps {
 function ProductSingle({ product, phone }: ProductSingleProps) {
   console.log(product, "product");
   
-  // Get unique colors
-  const uniqueColors = [
+  // Get unique colors with useMemo to prevent unnecessary recalculations
+  const uniqueColors = useMemo(() => [
     ...new Map(
       product.images.map((img: ImageVariant) => [
         `${img.color_name}-${img.hex}`,
         { color_name: img.color_name, hex: img.hex }
       ])
     ).values(),
-  ];
+  ], [product.images]);
 
   // State for selected color (default to first color)
   const [selectedColor, setSelectedColor] = useState<{ color_name: string; hex: string } | undefined>(
@@ -44,7 +44,6 @@ function ProductSingle({ product, phone }: ProductSingleProps) {
         <ProductSlider 
           images={product.images} 
           selectedColor={selectedColor}
-          onColorSelect={handleColorSelect}
         />
       </div>
 

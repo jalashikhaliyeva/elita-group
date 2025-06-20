@@ -28,7 +28,7 @@ function AboutSection({ information }: AboutSectionProps) {
   const { t } = useTranslation();
   useEffect(() => {
     const checkOverflow = () => {
-      const newHasOverflow = [...hasOverflow];
+      const newHasOverflow = new Array(information.length).fill(false);
       textRefs.current.forEach((ref, index) => {
         if (ref) {
           // Create a temporary element to measure the full text height
@@ -69,7 +69,7 @@ function AboutSection({ information }: AboutSectionProps) {
       clearTimeout(timer);
       window.removeEventListener("resize", checkOverflow);
     };
-  }, [information, hasOverflow.length]);
+  }, [information]);
 
   const toggleExpanded = (index: number) => {
     setExpandedItems((prev) => {

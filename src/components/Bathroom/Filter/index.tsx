@@ -36,7 +36,7 @@ function Filter({
     }, 500);
 
     return () => clearTimeout(timeoutId);
-  }, [localSearch]);
+  }, [localSearch, onSearchChange]);
 
   // Updated to use category slug instead of name
   const handleCategoryClick = (categorySlug: string) => {

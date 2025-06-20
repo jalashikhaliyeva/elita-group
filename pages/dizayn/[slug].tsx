@@ -8,25 +8,30 @@ import ProjectImages from "@/src/components/ProjectDetailed/ProjectImages";
 import ProjectVideo from "@/src/components/ProjectDetailed/ProjectVideo";
 import React from "react";
 import { getContactInfo } from "../api/services/contactService";
-import { ContactData, ServiceItem } from "@/src/types";
+import { Category, ContactData, ServiceItem } from "@/src/types";
 import Hero from "@/src/components/ProjectDetailed/Hero.tsx";
 import { getSingleService } from "../api/services/fetchServices";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import Head from "next/head";
+import { fetchIntroServices } from "../api/services/fetchIntroCategories";
 
 interface ProjectDetailedProps {
   contactData: ContactData | null;
   serviceData: ServiceItem | null;
+  categories: Category[] | null;
 }
 
 export default function ProjectDetailed({
   contactData,
   serviceData,
+  categories,
 }: ProjectDetailedProps) {
   if (!serviceData) {
-    return <div>Loading...</div>; // Or handle the error state appropriately
+    return <div>Loading...</div>; 
   }
 
+
+  const firstCategoryDescription = categories?.[0]?.service_description || '';    
   return (
     <>
        <Head>
@@ -36,7 +41,7 @@ export default function ProjectDetailed({
       <Container>
         <Header activeItem="dizayn" />
       </Container>
-      <Container>
+      <Container> 
       <Breadcrumb title={serviceData.title} />
       </Container>
       <Hero
@@ -46,7 +51,7 @@ export default function ProjectDetailed({
       />
       <Container>
         <ProjectDetails
-          description={serviceData.description}
+          description={firstCategoryDescription}
         />
         <ProjectVideo videoUrl={serviceData.video} />
         <ProjectImages images={serviceData.images} />
@@ -67,9 +72,10 @@ export const getServerSideProps: GetServerSideProps = async (
     const { slug } = context.params as { slug: string };
     const lang = context.locale || "az"; 
     
-    const [contactData, serviceData] = await Promise.all([
+    const [contactData, serviceData, categories] = await Promise.all([
       getContactInfo(lang),
       getSingleService(slug, lang), 
+      fetchIntroServices(lang),
     ]);
 
     if (!contactData || !serviceData) {
@@ -80,6 +86,7 @@ export const getServerSideProps: GetServerSideProps = async (
       props: {
         contactData: contactData || null,
         serviceData: serviceData || null,
+        categories: categories || null,
       },
     };
   } catch (error) {

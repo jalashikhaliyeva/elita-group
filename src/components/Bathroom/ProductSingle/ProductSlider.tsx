@@ -10,10 +10,9 @@ interface ProductSliderProps {
    */
   images: ImageVariant[];
   selectedColor?: { color_name: string; hex: string };
-  onColorSelect?: (colorName: string, hex: string) => void;
 }
 
-function ProductSlider({ images, selectedColor, onColorSelect }: ProductSliderProps) {
+function ProductSlider({ images, selectedColor }: ProductSliderProps) {
   // Group images by color
   const colorGroups = images.reduce((acc, img) => {
     const key = `${img.color_name}-${img.hex}`;
@@ -67,12 +66,7 @@ function ProductSlider({ images, selectedColor, onColorSelect }: ProductSliderPr
     setCurrentImageIndex(index);
   };
 
-  const selectColor = (index: number) => {
-    const colorGroup = colorOptions[index];
-    if (colorGroup && onColorSelect) {
-      onColorSelect(colorGroup.color_name, colorGroup.hex);
-    }
-  };
+
 
   // Dragging functionality for thumbnails
   const startDrag = (e: React.MouseEvent) => {
