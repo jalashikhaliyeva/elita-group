@@ -71,5 +71,8 @@
   },
   "show_less": "Daha az göstər",
   "show_more": "Daha çox göstər",
-  "brands": "Brendlər"
+  "brands": "Brendlər",
+  "faq": {
+    "title": "Tez-tez soruşulan suallar"
+  }
 }

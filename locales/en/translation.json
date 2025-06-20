@@ -71,5 +71,8 @@
   },
   "show_less": "Show less",
   "show_more": "Show more",
-  "brands": "Brands"
+  "brands": "Brands",
+  "faq": {
+    "title": "Frequently Asked Questions"
+  }
 }

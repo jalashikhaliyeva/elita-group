@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaqData } from "@/src/types";
+import { useTranslation } from "react-i18next";
 
 interface FaqProps {
   data: FaqData[];
@@ -7,7 +8,7 @@ interface FaqProps {
 
 export default function Faq({ data: faqData }: FaqProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-
+  const { t } = useTranslation();
   const toggleFaq = (faqIndex: number) => {
     setActiveIndex(activeIndex === faqIndex ? null : faqIndex);
   };
@@ -24,7 +25,7 @@ export default function Faq({ data: faqData }: FaqProps) {
             <span className="h-[1px] w-full bg-elements" />
           </div>
           <h2 className="text-gray-900 pt-6 lg:pt-8 text-2xl md:text-3xl lg:text-4xl font-medium leading-9">
-            Tez-tez soruşulan suallar
+            {t("faq.title")}
           </h2>
         </div>
       </div>
