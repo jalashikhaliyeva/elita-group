@@ -90,11 +90,25 @@ function AboutSection({ information }: AboutSectionProps) {
           <div className="col-span-1 flex flex-col">
             {/* Title Section */}
             <div className="mb-10 xl:mb-[100px]">
-              <div className="flex gap-3 xl:gap-5 items-center">
+              <div className="flex gap-3 items-center">
                 <span className="text-elements text-[1.125rem] xl:text-[1.25rem] font-medium font-Moneta">
                   ({String(index + 1).padStart(2, "0")})
                 </span>
-                <span className="h-[1px] w-full bg-elements"></span>
+                <svg
+                  className="flex-1 h-[1px]"
+                  preserveAspectRatio="none"
+                  viewBox="0 0 100 1"
+                >
+                  <line
+                    x1="0"
+                    y1="0.5"
+                    x2="100"
+                    y2="0.5"
+                    stroke="currentColor"
+                    strokeWidth="1"
+                    className="text-elements"
+                  />
+                </svg>
               </div>
               <h2 className="text-textBase text-right pt-6 xl:pt-8 font-archivo text-2xl md:text-3xl xl:text-4xl font-medium leading-9">
                 {item.title}
@@ -127,9 +141,23 @@ function AboutSection({ information }: AboutSectionProps) {
           {/* Second Column - Description and Right Image */}
           <div className="col-span-2 flex flex-col">
             {/* Description */}
-            <div className="w-full xl:w-auto mt-1 mb-[100px]">
-              <div className="hidden xl:flex items-center h-[21px]">
-                <span className="h-[1px] w-full bg-elements"></span>
+            <div className="w-full mt-1 mb-[100px]">
+              <div className="hidden xl:flex items-center h-[23px]">
+                <svg
+                  className="w-full h-[1px]"
+                  preserveAspectRatio="none"
+                  viewBox="0 0 100 1"
+                >
+                  <line
+                    x1="0"
+                    y1="0.5"
+                    x2="100"
+                    y2="0.5"
+                    stroke="currentColor"
+                    strokeWidth="1"
+                    className="text-elements"
+                  />
+                </svg>
               </div>
               <div className="pt-6 xl:pt-8">
                 <p
@@ -155,7 +183,7 @@ function AboutSection({ information }: AboutSectionProps) {
             </div>
 
             {/* Right Image with same height as left images container */}
-            <div className="w-full xl:w-auto flex items-center">
+            <div className="w-full flex items-center">
               <Image
                 width={800}
                 height={500}

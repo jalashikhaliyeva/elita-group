@@ -177,27 +177,18 @@ function Bathroom({
       clearTimeout(searchTimeoutRef.current);
     }
     
-    // Update filters state immediately for UI responsiveness
-    setFilters(prevFilters => ({
-      ...prevFilters,
-      search: term,
-    }));
-    
     // Debounce the API call
     searchTimeoutRef.current = setTimeout(() => {
-      setFilters(prevFilters => {
-        const updatedFilters: FilterState = {
-          ...prevFilters,
-          search: term,
-        };
-        
-        // Apply filters with the new state
-        applyFilters(updatedFilters);
-        
-        return updatedFilters;
-      });
-    }, 300); // 300ms debounce
-  }, [applyFilters]);
+      const updatedFilters: FilterState = {
+        ...filters,
+        search: term,
+      };
+      
+      // Update filters and apply them
+      setFilters(updatedFilters);
+      applyFilters(updatedFilters);
+    }, 100); // 300ms debounce
+  }, [applyFilters, filters]);
 
   // Handle language changes by redirecting to reload the page with new data
   const prevLangRef = useRef(currentLang);

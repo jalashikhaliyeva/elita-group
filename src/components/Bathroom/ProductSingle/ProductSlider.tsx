@@ -20,7 +20,7 @@ function ProductSlider({ images, selectedColor }: ProductSliderProps) {
       acc[key] = {
         color_name: img.color_name,
         hex: img.hex,
-        images: []
+        images: [],
       };
     }
     acc[key].images.push(img);
@@ -28,11 +28,13 @@ function ProductSlider({ images, selectedColor }: ProductSliderProps) {
   }, {} as Record<string, { color_name: string; hex: string; images: ImageVariant[] }>);
 
   const colorOptions = Object.values(colorGroups);
-  
+
   // Find the index of the selected color
-  const selectedColorIndex = selectedColor 
+  const selectedColorIndex = selectedColor
     ? colorOptions.findIndex(
-        option => option.color_name === selectedColor.color_name && option.hex === selectedColor.hex
+        (option) =>
+          option.color_name === selectedColor.color_name &&
+          option.hex === selectedColor.hex
       )
     : 0;
 
@@ -43,7 +45,9 @@ function ProductSlider({ images, selectedColor }: ProductSliderProps) {
   const thumbnailsRef = useRef<HTMLDivElement>(null);
 
   // Get current color's images
-  const currentColorImages = colorOptions[selectedColorIndex >= 0 ? selectedColorIndex : 0]?.images || [];
+  const currentColorImages =
+    colorOptions[selectedColorIndex >= 0 ? selectedColorIndex : 0]?.images ||
+    [];
 
   // Reset image index when color changes
   useEffect(() => {
@@ -65,8 +69,6 @@ function ProductSlider({ images, selectedColor }: ProductSliderProps) {
   const goToImage = (index: number) => {
     setCurrentImageIndex(index);
   };
-
-
 
   // Dragging functionality for thumbnails
   const startDrag = (e: React.MouseEvent) => {
@@ -139,7 +141,9 @@ function ProductSlider({ images, selectedColor }: ProductSliderProps) {
         {currentColorImages.length > 0 && (
           <Image
             src={currentColorImages[currentImageIndex].image}
-            alt={`${colorOptions[activeColorIndex].color_name} - Image ${currentImageIndex + 1}`}
+            alt={`${colorOptions[activeColorIndex].color_name} - Image ${
+              currentImageIndex + 1
+            }`}
             fill
             className="object-contain"
           />
@@ -165,34 +169,36 @@ function ProductSlider({ images, selectedColor }: ProductSliderProps) {
       </div>
 
       {/* Thumbnail strip - only show if more than 1 image for current color */}
-      {currentColorImages.length > 1 && (
-        <div
-          ref={thumbnailsRef}
-          className="w-full h-32 flex gap-2 overflow-x-auto scrollbar-hide cursor-grab select-none snap-x snap-mandatory"
-          onMouseDown={startDrag}
-          onMouseMove={duringDrag}
-          onMouseUp={endDrag}
-          onMouseLeave={endDrag}
-        >
-          {currentColorImages.map((image, index) => (
-            <div
-              key={`${image.image}-${index}`}
-              onClick={() => goToImage(index)}
-              className={`flex-shrink-0 w-24 h-24 md:w-32 md:h-32 overflow-hidden border-2 transition-all snap-center cursor-pointer ${
-                currentImageIndex === index ? "border-neutral-200" : "border-transparent"
+      <div
+        ref={thumbnailsRef}
+        className="w-full h-32 flex gap-2 overflow-x-auto scrollbar-hide cursor-grab select-none snap-x snap-mandatory"
+        onMouseDown={startDrag}
+        onMouseMove={duringDrag}
+        onMouseUp={endDrag}
+        onMouseLeave={endDrag}
+      >
+        {currentColorImages.map((image, index) => (
+          <div
+            key={`${image.image}-${index}`}
+            onClick={() => goToImage(index)}
+            className={`flex-shrink-0 w-24 h-24 md:w-32 md:h-32 overflow-hidden border-2 transition-all snap-center cursor-pointer ${
+              currentImageIndex === index
+                ? "border-neutral-200"
+                : "border-transparent"
+            }`}
+          >
+            <Image
+              src={image.thumb_image || image.image}
+              alt={`${colorOptions[activeColorIndex].color_name} Thumbnail ${
+                index + 1
               }`}
-            >
-              <Image
-                src={image.thumb_image || image.image}
-                alt={`${colorOptions[activeColorIndex].color_name} Thumbnail ${index + 1}`}
-                width={100}
-                height={100}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
-        </div>
-      )}
+              width={100}
+              height={100}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
