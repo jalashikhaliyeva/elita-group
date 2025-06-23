@@ -1,4 +1,3 @@
-// src/components/Bathroom/ProductSingle.tsx
 import React, { useState, useEffect, useMemo } from "react";
 import ProductSlider from "./ProductSlider";
 import DetailedInfo from "./DetailedInfo";
@@ -10,9 +9,6 @@ interface ProductSingleProps {
 }
 
 function ProductSingle({ product, phone }: ProductSingleProps) {
-  console.log(product, "product");
-  
-  // Get unique colors with useMemo to prevent unnecessary recalculations
   const uniqueColors = useMemo(() => [
     ...new Map(
       product.images.map((img: ImageVariant) => [
@@ -22,12 +18,10 @@ function ProductSingle({ product, phone }: ProductSingleProps) {
     ).values(),
   ], [product.images]);
 
-  // State for selected color (default to first color)
   const [selectedColor, setSelectedColor] = useState<{ color_name: string; hex: string } | undefined>(
     uniqueColors.length > 0 ? uniqueColors[0] : undefined
   );
 
-  // Update selected color when product changes
   useEffect(() => {
     if (uniqueColors.length > 0 && !selectedColor) {
       setSelectedColor(uniqueColors[0]);

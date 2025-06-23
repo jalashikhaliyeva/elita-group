@@ -1,6 +1,4 @@
-// Updated Filter.tsx - Change to use category.slug instead of category.name
-
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import FilterModal from "./FilterModal";
 import { Category, Brand, Color } from "@/src/types";
@@ -27,31 +25,18 @@ function Filter({
   onClearFilters,
 }: FilterProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [localSearch, setLocalSearch] = useState(filters.search);
   const { t } = useTranslation();
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      onSearchChange(localSearch);
-    }, 500);
-
-    return () => clearTimeout(timeoutId);
-  }, [localSearch, onSearchChange]);
 
   // Updated to use category slug instead of name
   const handleCategoryClick = (categorySlug: string) => {
-    
     const newCategories = filters.categories.includes(categorySlug)
       ? filters.categories.filter((c) => c !== categorySlug)
       : [...filters.categories, categorySlug];
-
-
 
     const updatedFilters = {
       ...filters,
       categories: newCategories,
     };
-
 
     onFilterChange(updatedFilters);
   };
@@ -121,8 +106,8 @@ function Filter({
         <div className="relative font-manrope w-full md:w-auto">
           <input
             type="text"
-            value={localSearch}
-            onChange={(e) => setLocalSearch(e.target.value)}
+            value={filters.search}
+            onChange={(e) => onSearchChange(e.target.value)}
             className="border-b border-neutral-800 text-neutral-800 outline-none py-1 pr-8 focus:border-b-2 w-full"
             placeholder={t("search_placeholder")}
           />
