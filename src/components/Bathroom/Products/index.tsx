@@ -18,11 +18,11 @@ function ProductItem({ product }: ProductItemProps) {
   >((acc, img) => {
     if (!seen.has(img.hex)) {
       seen.add(img.hex);
-      acc.push({ 
-        id: acc.length, 
-        color: img.hex, 
+      acc.push({
+        id: acc.length,
+        color: img.hex,
         image: img.image,
-        colorName: img.color_name 
+        colorName: img.color_name,
       });
     }
     return acc;
@@ -64,6 +64,7 @@ function ProductItem({ product }: ProductItemProps) {
     </Link>
   );
 }
+
 interface ProductsProps {
   products?: Product[];
   loading?: boolean;
@@ -82,14 +83,14 @@ function LoadingSkeleton() {
 }
 
 export default function Products({
-  products,
+  products = [],
   loading = false,
   searchTerm = "",
   hasSearched = false,
 }: ProductsProps) {
   const { t } = useTranslation();
-  console.log(products, "products");
 
+  // Show loading skeleton when loading is true
   if (loading) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-4 gap-5 my-10">
@@ -119,6 +120,7 @@ export default function Products({
     );
   }
 
+  // Show actual products when not loading and products exist
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-5 my-10">
       {products.map((product) => (

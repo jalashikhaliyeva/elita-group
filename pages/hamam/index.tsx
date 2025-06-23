@@ -2,7 +2,7 @@
 import Hero from "@/src/components/ProjectDetailed/Hero.tsx";
 import Container from "@/src/components/layout/Container";
 import Header from "@/src/components/layout/Header";
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect, useRef } from "react";
 import Footer from "@/src/components/layout/Footer";
 import Breadcrumb from "@/src/components/layout/Breadcrumb";
 import Filter from "@/src/components/Bathroom/Filter";
@@ -62,28 +62,49 @@ function Bathroom({
     search: "",
   });
 
-  const applyFilters = useCallback(async (newFilters: FilterState) => {
-    setLoading(true);
+  // Use ref to track if we're currently processing to prevent multiple simultaneous calls
+  const isProcessingRef = useRef(false);
+  
+  // Add debounce timer ref for search
+  const searchTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Track last applied filters to prevent unnecessary API calls
+  const lastAppliedFiltersRef = useRef<FilterState | null>(null);
 
-    if (
-      newFilters.categories.length === 0 &&
-      newFilters.brands.length === 0 &&
-      newFilters.colors.length === 0 &&
-      !newFilters.search.trim()
-    ) {
-      setHasSearched(false);
-      try {
-        const allProducts = await fetchProducts(currentLang);
-        setProducts(allProducts);
-      } catch (error) {
-        console.error("Error applying filters:", error);
-      } finally {
-        setLoading(false);
-      }
+  const applyFilters = useCallback(async (newFilters: FilterState) => {
+    // Check if filters have actually changed
+    const lastFilters = lastAppliedFiltersRef.current;
+    if (lastFilters && 
+        JSON.stringify(lastFilters) === JSON.stringify(newFilters)) {
+      console.log("Filters unchanged, skipping API call");
       return;
     }
 
+    // Prevent multiple simultaneous calls
+    if (isProcessingRef.current) {
+      console.log("Already processing, skipping...");
+      return;
+    }
+
+    isProcessingRef.current = true;
+    setLoading(true);
+    lastAppliedFiltersRef.current = newFilters;
+
+    console.log("Applying filters:", newFilters);
+
     try {
+      if (
+        newFilters.categories.length === 0 &&
+        newFilters.brands.length === 0 &&
+        newFilters.colors.length === 0 &&
+        !newFilters.search.trim()
+      ) {
+        setHasSearched(false);
+        const allProducts = await fetchProducts(currentLang);
+        setProducts(allProducts);
+        return;
+      }
+
       const isSearchOnly =
         newFilters.search.trim() &&
         newFilters.categories.length === 0 &&
@@ -114,15 +135,19 @@ function Bathroom({
       }
     } catch (error) {
       console.error("Error applying filters:", error);
+      // Reset last applied filters on error so retry is possible
+      lastAppliedFiltersRef.current = null;
     } finally {
       setLoading(false);
+      isProcessingRef.current = false;
     }
   }, [currentLang]);
 
-  const handleFilterChange = (newFilters: FilterState) => {
+  const handleFilterChange = useCallback((newFilters: FilterState) => {
+    console.log("Filter change triggered:", newFilters);
     setFilters(newFilters);
     applyFilters(newFilters);
-  };
+  }, [applyFilters]);
 
   const clearAllFilters = useCallback(() => {
     const emptyFilters: FilterState = {
@@ -131,27 +156,74 @@ function Bathroom({
       colors: [],
       search: "",
     };
+    console.log("Clearing all filters");
+    
+    // Clear any pending search timeout
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
+    
     setFilters(emptyFilters);
     setHasSearched(false);
+    lastAppliedFiltersRef.current = null; // Reset tracking
     applyFilters(emptyFilters);
   }, [applyFilters]);
 
-  const onSearchChange = useCallback(
-    (term: string) => {
-      const updatedFilters: FilterState = {
-        ...filters,
-        search: term,
-      };
-      setFilters(updatedFilters);
-      applyFilters(updatedFilters);
-    },
-    [filters, applyFilters]
-  );
+  const onSearchChange = useCallback((term: string) => {
+    console.log("Search change triggered:", term);
+    
+    // Clear existing timeout
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
+    
+    // Update filters state immediately for UI responsiveness
+    setFilters(prevFilters => ({
+      ...prevFilters,
+      search: term,
+    }));
+    
+    // Debounce the API call
+    searchTimeoutRef.current = setTimeout(() => {
+      setFilters(prevFilters => {
+        const updatedFilters: FilterState = {
+          ...prevFilters,
+          search: term,
+        };
+        
+        // Apply filters with the new state
+        applyFilters(updatedFilters);
+        
+        return updatedFilters;
+      });
+    }, 300); // 300ms debounce
+  }, [applyFilters]);
 
-  // Effect to refetch products when language changes
+  // Handle language changes by redirecting to reload the page with new data
+  const prevLangRef = useRef(currentLang);
   useEffect(() => {
-    applyFilters(filters);
-  }, [currentLang, filters, applyFilters]);
+    if (prevLangRef.current !== currentLang) {
+      prevLangRef.current = currentLang;
+      // When language changes, reload the page to get fresh SSR data
+      router.reload();
+    }
+  }, [currentLang, router]);
+
+  // Debug: Log when component re-renders
+  useEffect(() => {
+    console.log("Component re-rendered. Products count:", products.length, "Loading:", loading);
+  });
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (searchTimeoutRef.current) {
+        clearTimeout(searchTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  console.log(products);
 
   return (
     <>
