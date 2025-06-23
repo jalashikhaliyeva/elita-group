@@ -180,7 +180,7 @@ const IntroSection: FC<IntroSectionProps> = ({ introData }) => {
                     transition-all duration-1000 ease-in-out overflow-hidden
                     ${
                       isHovered
-                        ? "max-h-40 opacity-100 mt-4"
+                        ? "max-h-60 opacity-100 mt-4"
                         : "max-h-0 opacity-0"
                     }
                   `}
