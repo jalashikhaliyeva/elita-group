@@ -7,13 +7,14 @@ import AboutSection from "@/src/components/DesignPage/AboutSection";
 import ServicesSection from "@/src/components/DesignPage/ServicesSection";
 import ServicesSlider from "@/src/components/DesignPage/ServicesSlider";
 import Footer from "@/src/components/layout/Footer";
-import { BannerItem, ServiceData } from "@/src/types";
+import { BannerItem, Category, ServiceData } from "@/src/types";
 import { fetchServices } from "../api/services/fetchServices";
 import { getBanner } from "../api/services/fetchBanner";
 import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 import { useTranslation } from "react-i18next";
-  
+import { fetchIntroServices } from "../api/services/fetchIntroCategories";
+
 interface InformationItem {
   title: string;
   description: string;
@@ -30,9 +31,10 @@ interface DesignPageProps {
   bannerData: BannerItem & {
     information: InformationItem[];
   };
+  categories: Category[];
 }
 
-function Design({ services, bannerData }: DesignPageProps) {
+function Design({ services, bannerData, categories }: DesignPageProps) {
   const { t } = useTranslation();
   return (
     <>
@@ -54,7 +56,9 @@ function Design({ services, bannerData }: DesignPageProps) {
         <AboutSection information={bannerData.information} />
       </Container>
       <Container>
-        <ServicesSection description={services[0]?.description || ""} />
+        <ServicesSection
+          description={categories[0]?.service_description || ""}
+        />
         <ServicesSlider services={services} />
         <Footer />
       </Container>
@@ -68,10 +72,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     const slug = "dizayn";
     const services = await fetchServices(lang);
     const bannerData = await getBanner(slug, lang);
+    const categories = await fetchIntroServices(lang);
     return {
       props: {
         services,
         bannerData,
+        categories,
       },
     };
   } catch (error) {
@@ -86,6 +92,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
           description: "",
           information: [],
         },
+        categories: [],
       },
     };
   }

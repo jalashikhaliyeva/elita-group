@@ -30,7 +30,6 @@ export default function ProjectDetailed({
     return <div>Loading...</div>; 
   }
 
-
   const firstCategoryDescription = categories?.[0]?.service_description || '';    
   return (
     <>
