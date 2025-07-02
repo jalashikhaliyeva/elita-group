@@ -186,7 +186,7 @@ const IntroSection: FC<IntroSectionProps> = ({ introData }) => {
                   `}
                   >
                     <p
-                      className="text-lightSageGreen font-manrope text-sm md:text-base leading-6 font-normal mb-4 md:mb-6"
+                      className="text-lightSageGreen line-clamp-5 font-manrope text-sm md:text-base leading-6 font-normal mb-4 md:mb-6"
                       dangerouslySetInnerHTML={{ __html: item.description }}
                     />
                     <div
