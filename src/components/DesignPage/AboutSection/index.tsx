@@ -84,7 +84,7 @@ function AboutSection({ information }: AboutSectionProps) {
       {information.map((item, index) => (
         <div
           key={index}
-          className="w-full grid grid-cols-1 xl:grid-cols-3 md:gap-[160px] py-8 xl:py-14"
+          className="w-full grid grid-cols-1 xl:grid-cols-3 md:gap-[100px] py-8 xl:py-14"
         >
           {/* First Column - Title and Left Images */}
           <div className="col-span-1 flex flex-col">
