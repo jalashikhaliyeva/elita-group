@@ -123,7 +123,7 @@ function AboutSection({ information }: AboutSectionProps) {
                   height={400}
                   src={item.image_1}
                   alt={`${item.title} - Image 1`}
-                  className="h-[200px] xl:h-[300px] w-[150px] xl:w-[200px] object-cover"
+                  className="h-[200px] xl:h-[300px] w-[150px] xl:w-[450px] object-cover"
                 />
               </div>
               <div className="flex self-end xl:block">
@@ -132,7 +132,7 @@ function AboutSection({ information }: AboutSectionProps) {
                   height={400}
                   src={item.image_2}
                   alt={`${item.title} - Image 2`}
-                  className="h-[200px] xl:h-[300px] w-[150px] xl:w-[200px] object-cover"
+                  className="h-[200px] xl:h-[300px] w-[150px] xl:w-[450px] object-cover"
                 />
               </div>
             </div>
