@@ -31,7 +31,7 @@ function ProjectDetails({ description }: ProjectDetailsProps) {
         <div className="flex flex-col gap-6 lg:gap-8">
           <p
             dangerouslySetInnerHTML={{ __html: description }}
-            className="text-secondary pt-6 lg:pt-8 text-left flex items-start text-sm lg:text-base font-manrope max-w-full lg:max-w-[805px]"
+            className="text-secondary pt-6 lg:pt-8 text-left flex flex-col items-start text-sm lg:text-base font-manrope max-w-full lg:max-w-[805px]"
           />
         </div>
       </div>

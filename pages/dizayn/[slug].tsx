@@ -27,21 +27,21 @@ export default function ProjectDetailed({
   categories,
 }: ProjectDetailedProps) {
   if (!serviceData) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
-  const firstCategoryDescription = categories?.[0]?.service_description || '';    
+  const firstCategoryDescription = categories?.[0]?.service_description || "";
   return (
     <>
-       <Head>
+      <Head>
         <meta name="author" content="https://markup.az/" />
         <title>{"Elita Group | " + serviceData.title}</title>
-          </Head>
+      </Head>
       <Container>
         <Header activeItem="dizayn" />
       </Container>
-      <Container> 
-      <Breadcrumb title={serviceData.title} />
+      <Container>
+        <Breadcrumb title={serviceData.title} />
       </Container>
       <Hero
         title={serviceData.title}
@@ -49,9 +49,7 @@ export default function ProjectDetailed({
         short_description={serviceData.short_description}
       />
       <Container>
-        <ProjectDetails
-          description={firstCategoryDescription}
-        />
+        <ProjectDetails description={firstCategoryDescription} />
         <ProjectVideo videoUrl={serviceData.video} />
         <ProjectImages images={serviceData.images} />
       </Container>
@@ -69,11 +67,11 @@ export const getServerSideProps: GetServerSideProps = async (
 ) => {
   try {
     const { slug } = context.params as { slug: string };
-    const lang = context.locale || "az"; 
-    
+    const lang = context.locale || "az";
+
     const [contactData, serviceData, categories] = await Promise.all([
       getContactInfo(lang),
-      getSingleService(slug, lang), 
+      getSingleService(slug, lang),
       fetchIntroServices(lang),
     ]);
 
