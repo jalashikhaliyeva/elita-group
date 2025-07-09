@@ -217,7 +217,7 @@ function Header({ activeItem = "" }) {
           {/* Sidebar content */}
           <div className="absolute inset-y-0 right-0 flex max-w-full pl-10 font-archivo">
             <div
-              className={`relative w-screen max-w-md transform transition-all duration-500 ease-out ${
+              className={`relative w-screen max-w-[300px] transform transition-all duration-500 ease-out ${
                 isSidebarVisible ? "translate-x-0" : "translate-x-full"
               }`}
               style={{
