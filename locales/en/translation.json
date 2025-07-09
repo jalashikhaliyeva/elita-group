@@ -74,5 +74,7 @@
   "brands": "Brands",
   "faq": {
     "title": "Frequently Asked Questions"
-  }
+  },
+    "menu": "Menu",
+    "share": "Share"
 }

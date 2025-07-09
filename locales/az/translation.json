@@ -30,7 +30,7 @@
   "color": "Rəng",
   "apply": "Tətbiq et",
   "clear_all": "Hamısını təmizlə",
-   "service_about": "Xidmət haqqında",
+  "service_about": "Xidmət haqqında",
   "contact_success": "Müraciətiniz uğurla göndərildi!",
   "contact_error_send": "Göndərilmə zamanı xəta baş verdi",
   "error_try_again": "Xəta baş verdi, zəhmət olmasa yenidən cəhd edin",
@@ -42,8 +42,8 @@
   "phone_number": "Telefon nömrəniz",
   "sending": "Göndərilir...",
   "send": "Göndər",
-   "services": "Xidmətlər",
-    "contactDetails": {
+  "services": "Xidmətlər",
+  "contactDetails": {
     "whatsapp": "WhatsApp-la əlaqə",
     "contact_us": "Bizimlə əlaqə",
     "general_info": "Ümumi məlumat",
@@ -74,5 +74,7 @@
   "brands": "Brendlər",
   "faq": {
     "title": "Tez-tez soruşulan suallar"
-  }
+  },
+  "menu": "Menu",
+  "share": "Paylaş"
 }

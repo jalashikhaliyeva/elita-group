@@ -4,12 +4,14 @@ import React from "react";
 import { BlogItem } from "@/src/types";
 import { FaFacebookF, FaLinkedinIn } from "react-icons/fa";
 import { LuInstagram } from "react-icons/lu";
+import { useTranslation } from "react-i18next";
 
 interface BlogDetailsProps {
   blog: BlogItem;
 }
 
 function BlogDetails({ blog }: BlogDetailsProps) {
+  const { t } = useTranslation();
   const dateString = new Date().toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -57,7 +59,16 @@ function BlogDetails({ blog }: BlogDetailsProps) {
       <p className="text-elementSecondaryDate text-base font-normal leading-6 text-right">
         {dateString}
       </p>
+
+      <div
+        className="text-elementSecondaryDate text-base font-normal leading-6"
+        dangerouslySetInnerHTML={{ __html: blog.description }}
+      />
+
       <div className="flex gap-5 items-center justify-end ">
+        <p className="text-elementSecondaryDate text-lg font-normal leading-6">
+          {t("share")} :
+        </p>
         <button
           onClick={() => handleSocialShare("instagram")}
           aria-label="Share on Instagram"
@@ -80,11 +91,6 @@ function BlogDetails({ blog }: BlogDetailsProps) {
           <FaLinkedinIn className="text-2xl text-neutral-800" />
         </button>
       </div>
-
-      <div
-        className="text-elementSecondaryDate text-base font-normal leading-6"
-        dangerouslySetInnerHTML={{ __html: blog.description }}
-      />
     </div>
   );
 }

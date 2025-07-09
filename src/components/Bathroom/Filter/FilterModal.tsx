@@ -106,7 +106,7 @@ const FilterModal: React.FC<FilterModalProps> = ({
             <div className="flex items-center justify-between px-4 py-5 border-b border-neutral-200">
               <h2 className="text-lg text-neutral-800">{t("filters")}</h2>
               <button onClick={handleClose}>
-                <IoClose className="h-6 w-6" />
+                <IoClose className="h-6 w-6 text-neutral-800" />
               </button>
             </div>
 
