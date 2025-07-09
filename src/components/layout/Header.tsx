@@ -67,6 +67,7 @@ function Header({ activeItem = "" }) {
             <div>
               <Link href="/">
                 <Image
+                className="w-[110px]"
                   src="/images/logo/logo-elita2.png"
                   width={90}
                   height={20}
